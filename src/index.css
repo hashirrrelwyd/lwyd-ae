@@ -1,0 +1,33 @@
+@import "tailwindcss";
+
+body {
+  font-family: "Montserrat", sans-serif;
+  background-color: #FFFCF5;
+}
+.section-padding {
+  padding-left: 2.5rem;
+  padding-right: 2.5rem;
+  box-sizing: border-box;
+}
+
+:root {
+  --lwyd-yellow: #ffcc00;
+}
+
+.text-lwyd-yellow {
+  color: var(--lwyd-yellow);
+}
+
+.bg-lwyd-yellow {
+  background-color: var(--lwyd-yellow);
+}
+
+
+/* hide scroll bar when no need */
+/* .no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+} */
