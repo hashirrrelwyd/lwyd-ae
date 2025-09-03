@@ -1,8 +1,10 @@
 import { FaLinkedinIn } from "react-icons/fa";
 import { FiInstagram } from "react-icons/fi";
 import NavItem from "../ui/NavItem";
+import { useNavigate } from "react-router-dom";
 
 export default function Footer() {
+  const navigate = useNavigate()
   return (
     <footer className="section-padding bg-[#111111] text-white w-full py-12 rounded-t-[32px] flex flex-col gap-8">
       {/* Top block: brand + social on the left; lists to the right on desktop.
@@ -107,11 +109,11 @@ export default function Footer() {
         </p>
 
         {/* Policy links: first on mobile, right-aligned on desktop */}
-        <div className="order-1 md:order-2 flex justify-center gap-12">
+        <div className="order-1 md:order-2 flex justify-center gap-12 md:gap-25">
           <a
-            href="#"
+            onClick={()=> navigate("/privacy")}
             class="relative text-sm cursor-pointer text-white hover:text-[#ffcc00]
-         after:content-[''] after:absolute after:left-0 after:bottom-0 after:h-[2px]
+         after:content-[''] after:absolute after:left-0 after:bottom-0 after:h-[0.1px]
          after:w-0 after:bg-[#ffcc00] after:transition-all after:duration-500
          hover:after:w-full"
           >
@@ -119,9 +121,9 @@ export default function Footer() {
           </a>
 
           <a
-            href="#"
+            onClick={()=> navigate("/terms")}
             class="relative text-sm cursor-pointer text-white hover:text-[#ffcc00]
-         after:content-[''] after:absolute after:left-0 after:bottom-0 after:h-[2px]
+         after:content-[''] after:absolute after:left-0 after:bottom-0 after:h-[0.1px]
          after:w-0 after:bg-[#ffcc00] after:transition-all after:duration-500
          hover:after:w-full"
           >

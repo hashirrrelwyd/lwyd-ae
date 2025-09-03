@@ -151,7 +151,7 @@ export default function Header() {
         aria-modal="true"
         aria-hidden={!menuOpen}
         className={[
-          "fixed right-0 top-0 h-dvh w-full md:w-1/2 md:rounded-l-2xl",
+          "fixed right-0 top-0 h-dvh w-full md:w-1/3 md:rounded-l-2xl",
           "z-[70] bg-neutral-900 text-white",
           "transition-transform duration-500 ease-out",
           menuOpen ? "translate-x-0" : "translate-x-full",
@@ -188,27 +188,27 @@ export default function Header() {
             <NavItem
               text="HOME"
               link="/"
-              className="text-3xl md:text-[3rem] font-semibold tracking-tight"
+              className="text-3xl md:text-[2.4rem] 2xl:text-[3rem] font-semibold tracking-tight"
             />
             <NavItem
               text="ABOUT US"
               link="/about"
-              className="text-3xl md:text-[3rem] font-semibold tracking-tight"
+              className="text-3xl md:text-[2.4rem] 2xl:text-[3rem] font-semibold tracking-tight"
             />
             <NavItem
               text="SERVICES"
               link="/service"
-              className="text-3xl md:text-[3rem] font-semibold tracking-tight"
+              className="text-3xl md:text-[2.4rem] 2xl:text-[3rem] font-semibold tracking-tight"
             />
             <NavItem
               text="OUR WORK"
               link="/work"
-              className="text-3xl md:text-[3rem] font-semibold tracking-tight"
+              className="text-3xl md:text-[2.4rem] 2xl:text-[3rem] font-semibold tracking-tight"
             />
             <NavItem
               text="CONTACT"
               link="/contact"
-              className="text-3xl md:text-[3rem] font-semibold tracking-tight"
+              className="text-3xl md:text-[2.4rem] 2xl:text-[3rem] font-semibold tracking-tight"
             />
           </ul>
 

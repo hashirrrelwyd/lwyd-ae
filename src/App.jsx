@@ -6,7 +6,7 @@ export default function hello() {
     <>
       <Router>
         <Routes>
-          <Route path="/" element={<UserRoutes />} />
+          <Route path="/*" element={<UserRoutes />} />
         </Routes>
       </Router>
     </>
