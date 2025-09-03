@@ -1,69 +1,192 @@
-import React, { useState } from 'react'
-import Button from '../ui/Button'
-import { ArrowUpRight } from "lucide-react";
+"use client"
+
+import { useRef } from "react"
+import Button from "../ui/Button"
+import { ArrowUpRight } from "lucide-react"
+import gsap from "gsap"
+
 const menuItems = [
-  { title: "Creative Development", link: "#", bg: "/images/bg1.jpg" },
-  { title: "Experience Design", link: "#", bg: "/images/bg2.jpg" },
-  { title: "Digital Strategy", link: "#", bg: "/images/bg3.jpg" },
-  { title: "Media Services", link: "#", bg: "/images/bg4.jpg" },
-  { title: "Video Production", link: "#", bg: "/images/bg5.jpg" },
-  { title: "Social Media Marketing", link: "#", bg: "/images/bg6.jpg" },
-];
+  { title: "Creative Development", link: "#", bg: "/images/creative.webp" },
+  { title: "Experience Design", link: "#", bg: "/images/experience.webp" },
+  { title: "Digital Strategy", link: "#", bg: "/images/digital.webp" },
+  { title: "Media Services", link: "#", bg: "/images/media.webp" },
+  { title: "Video Production", link: "#", bg: "/images/video.webp" },
+  { title: "Social Media Marketing", link: "#", bg: "/images/social.webp" },
+]
 
 export default function OurService() {
-    const [hovered, setHovered] = useState(null);
+  // refs to animate with GSAP per item
+  const arrowRefs = useRef([])
+  const textRefs = useRef([])
+  const bgRefs = useRef([])
+  const overlayRefs = useRef([])
+
+  const setArrowRef = (el, i) => (arrowRefs.current[i] = el)
+  const setTextRef = (el, i) => (textRefs.current[i] = el)
+  const setBgRef = (el, i) => (bgRefs.current[i] = el)
+  const setOverlayRef = (el, i) => (overlayRefs.current[i] = el)
+
+  const handleEnter = (i) => {
+    const arrow = arrowRefs.current[i]
+    const text = textRefs.current[i]
+    const bg = bgRefs.current[i]
+    const overlay = overlayRefs.current[i]
+
+    gsap.killTweensOf([arrow, text, bg, overlay])
+
+    gsap.set(arrow, { y: 10, opacity: 0 })
+    const tl = gsap.timeline({ defaults: { duration: 0.45, ease: "power3.out" } })
+    tl.to(arrow, { y: 0, opacity: 1 }, 0)
+      .to(
+        text,
+        {
+          x: 12,
+          // color change + weight change
+          color: "#ffffff",
+          fontWeight: 500,
+        },
+        0,
+      )
+      .to(bg, { opacity: 1 }, 0)
+      .to(overlay, { opacity: 0.45 }, 0)
+  }
+
+  const handleLeave = (i) => {
+    const arrow = arrowRefs.current[i]
+    const text = textRefs.current[i]
+    const bg = bgRefs.current[i]
+    const overlay = overlayRefs.current[i]
+
+    gsap.killTweensOf([arrow, text, bg, overlay])
+    const tl = gsap.timeline({ defaults: { duration: 0.35, ease: "power2.out" } })
+    tl.to(arrow, { y: 10, opacity: 0 }, 0)
+      .to(
+        text,
+        {
+          x: 0,
+          color: "rgba(125,125,125,0.5)",
+          fontWeight: 300,
+        },
+        0,
+      )
+      .to(overlay, { opacity: 0 }, 0)
+      .to(bg, { opacity: 0 }, 0)
+  }
+
+  const left = menuItems.slice(0, 3)
+  const right = menuItems.slice(3)
+
   return (
-    <section className='section-padding'>
-        <div className="flex justify-between">
-            <div><h2 className='text-3xl font-[500]'><span className='font-[750] italic text-lwyd-yellow'>Our</span> <span className="relative -mb-1 inline-flex align-middle">
-              <img
-                src="/images/button-img.png"
-                alt=""
-                className="h-8 mb-2 w-16 rounded-full object-cover"
-              />
-            </span> Service</h2></div>
-            <div><Button title={"View All Services"}  /></div>
+    <section className="section-padding py-12">
+      {/* Header */}
+      <div className="flex items-center justify-between mb-8">
+        <h2 className="text-2xl sm:text-3xl lg:text-3xl font-[500]">
+          <span className="font-[750] italic text-lwyd-yellow">Our</span>{" "}
+          <span className="relative -mb-1 inline-flex align-middle">
+            <img
+              src="/images/button-img.png"
+              alt=""
+              className="h-7 w-14 sm:h-8 sm:w-16 mb-2 rounded-full object-cover"
+            />
+          </span>{" "}
+          Service
+        </h2>
+
+        <Button title={"View All Services"} />
+      </div>
+
+      {/* Grid: Desktop 2 columns (3/3). Mobile 1 column with no vertical gaps */}
+      <div className="grid grid-cols-1 md:grid-cols-2 md:gap-x-6 gap-y-0 md:gap-y-4">
+        {/* Left column */}
+        <div className="flex flex-col ">
+          {left.map((item, idx) => {
+            const i = idx // 0..2
+            return (
+              <a
+                key={item.title}
+                href={item.link}
+                onMouseEnter={() => handleEnter(i)}
+                onMouseLeave={() => handleLeave(i)}
+                onFocus={() => handleEnter(i)}
+                onBlur={() => handleLeave(i)}
+                className="relative group flex items-center w-full justify-between px-6 py-4 border border-[#7D7D7D1A] rounded-full overflow-hidden cursor-pointer"
+              >
+                {/* Background + dark overlay */}
+                <div className="pointer-events-none absolute inset-0 rounded-full overflow-hidden">
+                  <div
+                    ref={(el) => setBgRef(el, i)}
+                    className="absolute inset-0 bg-cover bg-center opacity-0"
+                    style={{ backgroundImage: `url(${item.bg})` }}
+                  />
+                  <div ref={(el) => setOverlayRef(el, i)} className="absolute inset-0 bg-black opacity-0" />
+                </div>
+
+                <div className="relative z-10 flex items-center">
+                  {/* Reserve space for arrow to avoid layout shift */}
+                  <span className="inline-flex w-7 sm:w-8 lg:w-10 justify-center">
+                    <ArrowUpRight ref={(el) => setArrowRef(el, i)} className="text-white" size={40} />
+                  </span>
+
+                  {/* Title */}
+                  <span
+                    ref={(el) => setTextRef(el, i)}
+                    className="ml-1 font-[300] text-[#7D7D7D80] text-[16px] sm:text-[20px] md:text-[24px] lg:text-[28px] transition-none"
+                  >
+                    {item.title.split(" ")[0]}{" "}
+                    <span className="group-hover:text-yellow-400 group-hover:font-[750] group-hover:italic">
+                      {item.title.split(" ")[1] || ""}
+                    </span>
+                  </span>
+                </div>
+              </a>
+            )
+          })}
         </div>
-        <div className="flex flex-wrap justify-between gap-4 w-full max-w-4xl mx-auto">
-      {menuItems.map((item, idx) => (
-        <a
-          key={idx}
-          href={item.link}
-          className={`relative group flex items-center justify-between px-6 py-4 
-                      rounded-full text-lg font-medium text-gray-600 
-                      overflow-hidden transition-all duration-500 ease-in-out 
-                      w-[48%] cursor-pointer`}
-          onMouseEnter={() => setHovered(idx)}
-          onMouseLeave={() => setHovered(null)}
-        >
-          {/* background */}
-          <div
-            className={`absolute inset-0 rounded-full bg-cover bg-center opacity-0 
-                        group-hover:opacity-100 transition-all duration-500`}
-            style={{
-              backgroundImage: `url(${item.bg})`,
-            }}
-          />
 
-          {/* text */}
-          <span
-            className={`relative z-10 transition-all duration-500 
-                        group-hover:text-white group-hover:font-semibold`}
-          >
-            {item.title.split(" ")[0]}{" "}
-            <span className="group-hover:text-yellow-400">{item.title.split(" ")[1] || ""}</span>
-          </span>
+        {/* Right column */}
+        <div className="flex flex-col ">
+          {right.map((item, idx) => {
+            const i = 3 + idx // continue indices for refs
+            return (
+              <a
+                key={item.title}
+                href={item.link}
+                onMouseEnter={() => handleEnter(i)}
+                onMouseLeave={() => handleLeave(i)}
+                onFocus={() => handleEnter(i)}
+                onBlur={() => handleLeave(i)}
+                className="relative group flex items-center w-full justify-between px-6 py-4 border border-[#7D7D7D1A] rounded-full overflow-hidden cursor-pointer"
+              >
+                {/* Background + dark overlay */}
+                <div className="pointer-events-none absolute inset-0 rounded-full overflow-hidden">
+                  <div
+                    ref={(el) => setBgRef(el, i)}
+                    className="absolute inset-0 bg-cover bg-center opacity-0"
+                    style={{ backgroundImage: `url(${item.bg})` }}
+                  />
+                  <div ref={(el) => setOverlayRef(el, i)} className="absolute inset-0 bg-black opacity-0" />
+                </div>
 
-          {/* arrow */}
-          <ArrowUpRight
-            className={`relative z-10 transform translate-x-3 opacity-0 
-                        group-hover:opacity-100 group-hover:translate-x-0 
-                        transition-all duration-500 text-white`}
-            size={20}
-          />
-        </a>
-      ))}
-    </div>
+                <div className="relative z-10 flex items-center">
+                  <span className="inline-flex w-7 sm:w-8 lg:w-10 justify-center">
+                    <ArrowUpRight ref={(el) => setArrowRef(el, i)} className="text-white" size={40} />
+                  </span>
+
+                  <span
+                    ref={(el) => setTextRef(el, i)}
+                    className="ml-1 font-[300] text-[#7D7D7D80] text-[16px] sm:text-[20px] md:text-[24px] lg:text-[28px] transition-none"
+                  >
+                    {item.title.split(" ")[0]}{" "}
+                    <span className="group-hover:text-yellow-400 group-hover:font-[750] group-hover:italic">
+                      {item.title.split(" ")[1] || ""}
+                    </span>
+                  </span>
+                </div>
+              </a>
+            )
+          })}
+        </div>
+      </div>
     </section>
   )
 }
