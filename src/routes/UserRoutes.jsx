@@ -18,7 +18,7 @@ export default function UserRoutes() {
         <Route path="/about" element={<AboutPage/>} />
         <Route path="/service" element={<ServicePage/>} />
         <Route path="/work" element={<WorkPage/>} />
-        <Route path="/career" element={<CareerPage/>} />
+        <Route path="/careers" element={<CareerPage/>} />
         <Route path="/contact" element={<ContactUsPage/>} />
         <Route path="/privacy" element={<PrivacyPolicy/>} />
         <Route path="/terms" element={<TermsConditions/>} />

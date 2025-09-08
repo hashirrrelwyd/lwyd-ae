@@ -61,15 +61,15 @@ export default function AboutUs() {
 
   return (
     <section ref={ref} className="section-padding py-12">
-      <div className="grid md:grid-cols-2 gap-12 mb-24">
+      <div className="x-auto grid  grid-cols-1 gap-10 py-14 md:flex justify-between mb-24">
         {/* Left side */}
-        <div>
-          <h3 className="text-sm font-[500] text-gray-800 mb-2">
+        <div className="md:w-6/12">
+          <h3 className="text-[22px] font-[500] text-gray-800 mb-2">
             Who <span className="text-lwyd-yellow font-[750] italic">We</span>{" "}
             are
           </h3>
         </div>
-        <div>
+        <div className="md:w-6/12 lg:w-4/12">
           <h2 className="text-3xl md:text-4xl font-[500] mb-4">
             Lorem{" "}
             <span className="text-lwyd-yellow italic font-[750]">ipsum</span>{" "}

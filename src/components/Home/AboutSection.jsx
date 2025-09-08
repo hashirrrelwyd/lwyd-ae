@@ -51,7 +51,7 @@ export default function AboutSection() {
         </div>
 
         {/* Right headline + CTA */}
-        <div className="flex flex-col items-start gap-4 md:w-3/6">
+        <div className="flex flex-col items-start gap-4 md:w-4/12">
           <h2 className="text-pretty text-3xl font-[500] leading-tight text-[#0F172A] md:text-4xl mb-7">
             Lorem <span className="italic text-lwyd-yellow font-[750]">ipsum</span> dolor dolor consectetur{" "}
             <span className="relative -mb-1 inline-flex align-middle">

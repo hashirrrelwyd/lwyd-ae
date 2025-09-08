@@ -85,7 +85,7 @@ export default function Header() {
         <div
           className={[
             "pointer-events-auto mx-4 mt-3 w-full",
-            "flex items-center justify-between px-6 md:px-10 py-3 md:py-2",
+            "flex items-center justify-between px-6 py-3 md:py-2",
             "transition-all duration-300",
             scrolled
               ? "rounded-full bg-white/10 backdrop-blur-3xl shadow-sm"
@@ -188,27 +188,32 @@ export default function Header() {
             <NavItem
               text="HOME"
               link="/"
-              className="text-3xl md:text-[2.4rem] 2xl:text-[3rem] font-semibold tracking-tight"
+              className="text-3xl md:text-[1.8rem] 2xl:text-[2.5rem] font-semibold tracking-tight"
             />
             <NavItem
               text="ABOUT US"
               link="/about"
-              className="text-3xl md:text-[2.4rem] 2xl:text-[3rem] font-semibold tracking-tight"
+              className="text-3xl md:text-[1.8rem] 2xl:text-[2.5rem] font-semibold tracking-tight"
             />
             <NavItem
               text="SERVICES"
               link="/service"
-              className="text-3xl md:text-[2.4rem] 2xl:text-[3rem] font-semibold tracking-tight"
+              className="text-3xl md:text-[1.8rem] 2xl:text-[2.5rem] font-semibold tracking-tight"
             />
             <NavItem
               text="OUR WORK"
               link="/work"
-              className="text-3xl md:text-[2.4rem] 2xl:text-[3rem] font-semibold tracking-tight"
+              className="text-3xl md:text-[1.8rem] 2xl:text-[2.5rem] font-semibold tracking-tight"
+            />
+            <NavItem
+              text="CAREERS"
+              link="/careers"
+              className="text-3xl md:text-[1.8rem] 2xl:text-[2.5rem] font-semibold tracking-tight"
             />
             <NavItem
               text="CONTACT"
               link="/contact"
-              className="text-3xl md:text-[2.4rem] 2xl:text-[3rem] font-semibold tracking-tight"
+              className="text-3xl md:text-[1.8rem] 2xl:text-[2.5rem] font-semibold tracking-tight"
             />
           </ul>
 
