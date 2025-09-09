@@ -34,7 +34,7 @@ const whatDrivesUs = [
 
 export default function WhatDrivesUs() {
   return (
-    <div className="bg-[#111111] px-6 md:px-10 py-12 rounded-t-4xl rounded-b-4xl text-white">
+    <div className="bg-[#111111] m-1.5 px-[34px] py-12 rounded-t-4xl rounded-b-4xl text-white">
       {/* Title */}
       <div className="flex">
         <h3 className="text-[22px] font-[500] text-white mb-8">
