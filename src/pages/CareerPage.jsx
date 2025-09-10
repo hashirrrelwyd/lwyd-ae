@@ -5,6 +5,8 @@ import LifeAtLwyd from '../components/Career/LifeAtLwyd'
 import Culture from '../components/Career/Culture'
 import ScrollingTextSection from "../components/Common/ScrollingTextSection";
 import Footer from '../components/Common/Footer'
+import OpenRoles from '../components/Career/OpenRoles'
+import Faqs from '../components/Career/Faqs'
 
 export default function CareerPage() {
   return (
@@ -13,6 +15,8 @@ export default function CareerPage() {
     <HeroSection />
     <LifeAtLwyd />
     <Culture />
+    <OpenRoles/>
+    <Faqs/>
     <ScrollingTextSection/>
     <Footer/>
     </>
