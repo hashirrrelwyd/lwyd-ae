@@ -2,7 +2,7 @@ export default function Button({ title, onClick }) {
   return (
     <button
       onClick={onClick}
-      className="relative rounded-4xl text-sm hover:rounded-lg bg-lwyd-yellow px-5 py-2 text-black cursor-pointer transition-all duration-700 ease-in-out group"
+      className="relative rounded-4xl text-sm font-light hover:rounded-lg bg-lwyd-yellow px-5 py-2 text-black cursor-pointer transition-all duration-700 ease-in-out group"
     >
       {/* Text wrapper (clipping only text, not button) */}
       <span className="relative flex h-[1em] overflow-hidden items-center justify-center">
