@@ -19,7 +19,7 @@ const ROW_HEIGHT = 60; // px, spacing between title rows on the left
 const PEEK = 72; // px of the next image visible at the bottom of the frame
 const IMAGE_GAP = 24; // px, gap between stacked work images
 
-export default function WorkSection() {
+export default function WorkSection({ connected = false }) {
   const sectionRef = useRef(null);
   const frameRef = useRef(null);
   const trackRef = useRef(null);
@@ -70,8 +70,13 @@ export default function WorkSection() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative h-screen w-full p-1.5">
-      <div className="relative flex h-full w-full flex-col overflow-hidden rounded-2xl bg-[#0B0B0B] text-white section-padding py-10">
+    <section
+      ref={sectionRef}
+      className={`relative h-screen w-full ${connected ? "px-1.5 pb-1.5" : "p-1.5"}`}
+    >
+      <div
+        className={`relative flex h-full w-full flex-col overflow-hidden ${connected ? "rounded-b-2xl" : "rounded-2xl"} bg-[#111111] text-white section-padding py-10`}
+      >
         <h2 className="mb-10 text-xl font-[500] md:text-2xl">
           Lorem <span className="italic font-[750] text-lwyd-yellow">ipsum</span> dolor
         </h2>

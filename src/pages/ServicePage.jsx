@@ -14,7 +14,7 @@ export default function ServicePage() {
     <HeroSection />
     <OurServices />
     <WhyChooseUs />
-    <WorkSection />
+    <WorkSection connected />
     <WorkTogether />
     <ScrollingTextSection/>
     <Footer />
