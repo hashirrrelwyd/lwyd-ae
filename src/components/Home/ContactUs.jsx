@@ -13,7 +13,7 @@ gsap.registerPlugin(ScrollTrigger);
  * - Cards start stacked with slight rotations
  * - Scroll animates cards one-by-one upward (revealing the next)
  * - Hover lifts individual card slightly
- * - After the last card, a centered CTA button appears and stays during the pin
+ * - A centered CTA button sits behind the stack the whole time, revealed once the cards fly away
  *
  * Add or remove cards by editing the `items` array below.
  */
@@ -26,26 +26,42 @@ export default function ContactUs(props) {
   const items = [
     {
       id: "c1",
-      title: "Project Inquiry",
-      desc: "Tell us about your project goals, timeline, and budget.",
+      title: (
+        <>
+          Slide into our <span className="text-[#FFCC00] font-bold italic">DMs</span>
+        </>
+      ),
+      desc: "Drop us a line. Tell us your wildest ideas, your biggest challenges, or just say “hi.”",
       img: "/images/creative.webp",
     },
     {
       id: "c2",
-      title: "Partnerships",
-      desc: "We collaborate with teams to ship ambitious products.",
+      title: (
+        <>
+          We cook up <span className="text-white font-bold italic">something</span> spicy.
+        </>
+      ),
+      desc: "Our brains + your brand = sparks flying. We’ll brew a strategy that’s bold, smart, and a little bit rebellious.",
       img: "/images/digital.webp",
     },
     {
       id: "c3",
-      title: "Support",
-      desc: "Need help with your existing product? We’ve got you.",
+      title: (
+        <>
+          Launch. <span className="text-[#FFCC00] font-bold italic">Loud</span>. Together.
+        </>
+      ),
+      desc: "We don’t just deliver—we create noise, impact, and results that turn heads.",
       img: "/images/media.webp",
     },
     {
       id: "c4",
-      title: "Careers",
-      desc: "Join a team that values craft and impact.",
+      title: (
+        <>
+          Let’s cause a little <span className="text-[#FFCC00] font-bold italic">chaos</span>
+        </>
+      ),
+      desc: "No boring emails. Just real talk about your next big move.",
       img: "/images/social.webp",
     },
   ];
@@ -74,9 +90,9 @@ export default function ContactUs(props) {
         });
       });
 
-      // CTA hidden initially
+      // CTA sits behind the cards from the start (lower z-index), revealed as cards fly away
       if (ctaRef.current) {
-        gsap.set(ctaRef.current, { autoAlpha: 0 });
+        gsap.set(ctaRef.current, { autoAlpha: 1, zIndex: 0 });
       }
 
       const tl = gsap.timeline({
@@ -103,11 +119,6 @@ export default function ContactUs(props) {
           i === 0 ? 0 : "-=2" // overlap animations so next card follows closely
         );
       });
-
-      // Button fades in right after last card leaves
-      if (ctaRef.current) {
-        tl.to(ctaRef.current, { autoAlpha: 1, duration: 1 }, "-=1.5");
-      }
     }, containerRef);
 
     return () => ctx.revert();
@@ -121,36 +132,35 @@ export default function ContactUs(props) {
     <section
       ref={containerRef}
       aria-label="Contact Us"
-      className="relative min-h-[100svh] w-full overflow-hidden bg-background"
+      className="relative h-screen w-full overflow-hidden bg-background"
     >
       {/* Cards stack (GSAP positions these absolutely and pins the section) */}
-      <div className="relative mx-auto h-[100svh] w-full max-w-4xl">
+      <div className="relative mx-auto h-full w-full max-w-4xl">
         {items.map((item, i) => {
           const variant = i % 3; // 0: black, 1: yellow, 2: white
           const wrapperBg =
             variant === 0
               ? "bg-black"
               : variant === 1
-              ? "bg-[#ffcc00]"
+              ? "bg-[#FFD34E]"
               : "bg-white";
-          const headingColor = variant === 0 ? "text-white" : "text-black";
+          const headingColor = variant === 0 ? "text-white" : "text-[#111111]";
           const paragraphColor =
-            variant === 0 ? "text-neutral-200" : "text-neutral-700";
+            variant === 1 ? "text-[#111111]/60" : "text-[#7D7D7D]";
+          const borderClass = variant === 2 ? "border border-black/10" : "";
 
           return (
             <article
               key={item.id}
               ref={(el) => setCardRef(el, i)}
-              className="group/card pointer-events-auto w-[350px] max-w-md select-none rounded-[16px]"
+              className="group/card pointer-events-auto aspect-square w-[440px] max-w-[90vw] select-none rounded-[20px]"
             >
               {/* Inner wrapper gets the hover lift so GSAP transforms on outer don't conflict */}
               <div
                 tabIndex={0}
-                className={`rounded-[16px] ${wrapperBg}  outline-none transition-transform duration-200 ease-out focus:-translate-y-2`}
+                className={`flex h-full w-full flex-col items-center justify-center gap-8 rounded-[20px] ${wrapperBg} ${borderClass} p-12 outline-none transition-transform duration-200 ease-out focus:-translate-y-2`}
               >
-                <div
-                  className={`overflow-hidden rounded-t-2xl flex justify-center items-center`}
-                >
+                <div className="flex shrink-0 items-center justify-center overflow-hidden rounded-[20px]">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={
@@ -158,13 +168,13 @@ export default function ContactUs(props) {
                       "/placeholder.svg?height=224&width=400&query=contact%20card"
                     }
                     alt=""
-                    className="h-36 my-10 w-40 object-cover rounded-[16px]"
+                    className="h-44 w-44 object-cover rounded-[20px]"
                     crossOrigin="anonymous"
                   />
                 </div>
-                <div className="space-y-1.5 p-5 flex flex-col justify-center items-center">
+                <div className="flex flex-col items-center gap-4">
                   <h3
-                    className={`font-sans text-lg font-semibold ${headingColor}`}
+                    className={`font-sans text-2xl font-normal ${headingColor}`}
                   >
                     {item.title}
                   </h3>
@@ -179,7 +189,7 @@ export default function ContactUs(props) {
           );
         })}
 
-        {/* Center CTA (reveals after cards animate) */}
+        {/* Center CTA, sits behind the card stack (lower z-index) */}
         <div
           ref={ctaRef}
           className="pointer-events-auto absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
