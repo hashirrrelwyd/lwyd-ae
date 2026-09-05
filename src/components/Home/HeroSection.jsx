@@ -20,7 +20,7 @@ export default function HeroSection() {
             </p>
           </div>
           <div>
-            <p className="text-[#FFFFFFB2] text-sm font-400 w-80">
+            <p className="text-white/70 text-sm font-light w-80">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed Lorem
               ipsum dolor sit amet, consectetur adipiscing
             </p>

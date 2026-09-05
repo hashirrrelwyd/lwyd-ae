@@ -11,7 +11,7 @@ export default function AboutSection() {
       {/* Two-column content */}
       <div className="mx-auto grid  grid-cols-1 gap-10 py-14 md:flex justify-between">
         {/* Left copy */}
-        <div className="md:w-2/6 text-sm leading-6 text-[#6B7280]">
+        <div className="md:w-2/6 text-sm font-light leading-6 text-[#6B7280]">
           <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed Lorem
             ipsum dolor sit amet, consectetur adipiscing Lorem ipsum dolor sit
@@ -25,11 +25,11 @@ export default function AboutSection() {
             Lorem{" "}
             <span className="italic text-lwyd-yellow font-[750]">ipsum</span>{" "}
             dolor dolor consectetur{" "}
-            <span className="relative -mb-1 inline-flex align-middle">
+            <span className="relative -mb-1 inline-flex -translate-y-1 align-middle">
               <img
                 src="/images/button-img.png"
                 alt=""
-                className="h-10 w-16 rounded-full object-cover"
+                className="h-8 w-16 rounded-full object-cover"
               />
             </span>
           </h2>

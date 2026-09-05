@@ -96,8 +96,8 @@ export default function WorkSection() {
                     <h3
                       className={`leading-none transition-all duration-500 ${
                         i === currentIndex
-                          ? "text-2xl font-bold text-white md:text-3xl"
-                          : "text-xl font-normal text-[#7D7D7D] md:text-2xl"
+                          ? "text-2xl font-bold italic text-white md:text-3xl"
+                          : "text-2xl font-normal text-[#7D7D7D] md:text-3xl"
                       }`}
                     >
                       {work.title}
