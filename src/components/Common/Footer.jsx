@@ -49,50 +49,50 @@ export default function Footer() {
         {/* Lists: side-by-side on desktop, stacked on mobile (Explore first, then Inquiries) */}
         <div className="flex flex-col md:flex-row gap-8 md:gap-32">
           <ul>
-            <li className="text-sm mb-4 text-[#FFFFFF99]">Explore</li>
+            <li className="text-sm font-light mb-4 text-[#FFFFFF99]">Explore</li>
             <NavItem
               link={"/"}
               text={"Home"}
-              className="text-sm mb-2 cursor-pointer"
+              className="text-sm font-light mb-2 cursor-pointer"
             />
             <NavItem
               link={"/about"}
               text={"About Us"}
-              className="text-sm mb-2 cursor-pointer"
+              className="text-sm font-light mb-2 cursor-pointer"
             />
             <NavItem
               link={"/service"}
               text={"Services"}
-              className="text-sm mb-2 cursor-pointer"
+              className="text-sm font-light mb-2 cursor-pointer"
             />
             <NavItem
               link={"/work"}
               text={"Our Work"}
-              className="text-sm mb-2 cursor-pointer"
+              className="text-sm font-light mb-2 cursor-pointer"
             />
             <NavItem
               link={"/contact"}
               text={"Contact Us"}
-              className="text-sm mb-2 cursor-pointer"
+              className="text-sm font-light mb-2 cursor-pointer"
             />
           </ul>
 
           <ul>
-            <li className="text-sm mb-4 text-[#FFFFFF99]">Inquiries</li>
+            <li className="text-sm font-light mb-4 text-[#FFFFFF99]">Inquiries</li>
             <NavItem
               href={"tel:917019215020"}
               text={"+91 70192 15020"}
-              className="text-sm mb-2 cursor-pointer"
+              className="text-sm font-light mb-2 cursor-pointer"
             />
             <NavItem
               href={"tel:919677207522"}
               text={"+91 96772 07522"}
-              className="text-sm mb-2 cursor-pointer"
+              className="text-sm font-light mb-2 cursor-pointer"
             />
             <NavItem
               href={"mailto:contact@lwyd.in"}
               text={"contact@lwyd.in"}
-              className="text-sm mb-2 cursor-pointer"
+              className="text-sm font-light mb-2 cursor-pointer"
             />
           </ul>
         </div>
@@ -104,7 +104,7 @@ export default function Footer() {
           On desktop, return to left/right alignment. */}
       <div className="flex flex-col items-center text-center gap-3 md:flex-row md:justify-between md:text-left">
         {/* Copyright: second on mobile, first on desktop */}
-        <p className="order-2 md:order-1 text-sm text-[#FFFFFF99]">
+        <p className="order-2 md:order-1 text-sm font-light text-[#FFFFFF99]">
           © 2025 LWYD Limited. All rights reserved.
         </p>
 
@@ -112,7 +112,7 @@ export default function Footer() {
         <div className="order-1 md:order-2 flex justify-center gap-12 md:gap-25">
           <a
             onClick={()=> navigate("/privacy")}
-            class="relative text-sm cursor-pointer text-white hover:text-[#ffcc00]
+            className="relative text-xs font-light cursor-pointer text-white hover:text-[#ffcc00]
          after:content-[''] after:absolute after:left-0 after:bottom-0 after:h-[0.1px]
          after:w-0 after:bg-[#ffcc00] after:transition-all after:duration-500
          hover:after:w-full"
@@ -122,7 +122,7 @@ export default function Footer() {
 
           <a
             onClick={()=> navigate("/terms")}
-            class="relative text-sm cursor-pointer text-white hover:text-[#ffcc00]
+            className="relative text-xs font-light cursor-pointer text-white hover:text-[#ffcc00]
          after:content-[''] after:absolute after:left-0 after:bottom-0 after:h-[0.1px]
          after:w-0 after:bg-[#ffcc00] after:transition-all after:duration-500
          hover:after:w-full"
