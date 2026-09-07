@@ -87,10 +87,10 @@ export default function Team() {
           >
             <div className="flex w-full flex-col items-center gap-6 sm:w-[70%] sm:flex-row sm:justify-evenly sm:gap-0">
               <div className="order-2 shrink-0 text-center sm:order-1 sm:text-left">
-                <h2 className="text-3xl font-medium text-white md:text-4xl lg:text-6xl">
+                <h2 className="text-3xl font-normal text-white md:text-4xl lg:text-6xl">
                   {current?.title}
                 </h2>
-                <p className="mt-3 text-center text-base text-[#7D7D7D] md:text-lg lg:text-xl">
+                <p className="mt-3 text-center text-base font-light text-[#7D7D7D] md:text-lg lg:text-xl">
                   “{current?.subtitle}”
                 </p>
               </div>
@@ -107,10 +107,10 @@ export default function Team() {
               onClick={() => goTo(nextIndex)}
               className="hidden w-[30%] shrink-0 cursor-pointer text-center sm:block"
             >
-              <h3 className="text-2xl font-medium text-white/60 md:text-3xl">
+              <h3 className="text-2xl font-light text-white/60 md:text-3xl">
                 {next?.title}
               </h3>
-              <p className="mt-2 text-sm text-white/40 md:text-base">
+              <p className="mt-2 text-sm font-light text-white/40 md:text-base">
                 “{next?.subtitle}”
               </p>
             </button>

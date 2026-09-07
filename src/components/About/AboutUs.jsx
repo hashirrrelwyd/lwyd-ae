@@ -4,25 +4,44 @@ import { useEffect, useRef, useState } from "react";
 import Button from "../ui/Button";
 
 // Custom hook to detect when element is visible on screen
-function useOnScreen(ref, rootMargin = "0px") {
+function useOnScreen(ref, rootMargin = "0px", threshold = 0) {
   const [isIntersecting, setIntersecting] = useState(false);
 
   useEffect(() => {
     if (!ref.current) return;
     const observer = new IntersectionObserver(
       ([entry]) => setIntersecting(entry.isIntersecting),
-      { rootMargin }
+      { rootMargin, threshold }
     );
     observer.observe(ref.current);
     return () => observer.disconnect();
-  }, [ref, rootMargin]);
+  }, [ref, rootMargin, threshold]);
 
   return isIntersecting;
 }
 
+// Responsive digit size for the rolling counters: small on mobile, full size from md up
+function useDigitHeight() {
+  const getHeight = () => (window.innerWidth < 768 ? 56 : 120);
+  const [digitHeight, setDigitHeight] = useState(
+    typeof window !== "undefined" ? getHeight() : 120
+  );
+
+  useEffect(() => {
+    const onResize = () => setDigitHeight(getHeight());
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+
+  return digitHeight;
+}
+
 export default function AboutUs() {
   const ref = useRef(null);
-  const isVisible = useOnScreen(ref);
+  // threshold 1 => only start once the counters row itself is fully inside the viewport
+  // (watching the row, not the whole section, so it can still be satisfied on short/mobile viewports)
+  const isVisible = useOnScreen(ref, "0px", 1);
+  const digitHeight = useDigitHeight();
 
   const [counters, setCounters] = useState([0, 0, 0, 0]);
   const [animated, setAnimated] = useState(false); // prevent re-trigger
@@ -33,7 +52,7 @@ export default function AboutUs() {
     if (isVisible && !animated) {
       setAnimated(true); // run only once
 
-      const duration = 2500; // total roll time
+      const duration = 5000; // total roll time
       const startTime = Date.now();
 
       const animate = () => {
@@ -60,7 +79,7 @@ export default function AboutUs() {
   }, [isVisible, animated]);
 
   return (
-    <section ref={ref} className="section-padding py-12">
+    <section className="section-padding py-12">
       <div className="x-auto grid  grid-cols-1 gap-10 py-14 md:flex justify-between mb-24">
         {/* Left side */}
         <div className="md:w-6/12">
@@ -80,7 +99,7 @@ export default function AboutUs() {
       </div>
 
       {/* Right side - Counters */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 text-center">
+      <div ref={ref} className="grid grid-cols-2 sm:grid-cols-4 gap-6 text-center">
         {counters.map((count, i) => (
           <div key={i} className="p-4">
             <div className="flex justify-center">
@@ -91,18 +110,19 @@ export default function AboutUs() {
                   <div
                     key={idx}
                     className="relative overflow-hidden"
-                    style={{ height: "120px", width: "auto" }}
+                    style={{ height: digitHeight, width: "auto" }}
                   >
                     <div
-                      className="transition-transform duration-500 ease-out"
+                      className="transition-transform duration-700 ease-out"
                       style={{
-                        transform: `translateY(-${parseInt(digit) * 120}px)`,
+                        transform: `translateY(-${parseInt(digit) * digitHeight}px)`,
                       }}
                     >
                       {[...Array(10).keys()].map((n) => (
                         <div
                           key={n}
-                          className="h-[120px] flex items-center justify-center text-[120px] font-[500] leading-none"
+                          className="flex items-center justify-center font-[500] leading-none"
+                          style={{ height: digitHeight, fontSize: digitHeight }}
                         >
                           {n}
                         </div>
@@ -111,7 +131,12 @@ export default function AboutUs() {
                   </div>
                 ))}
               {i === 3 && (
-                <span className="text-[120px] font-[500] leading-none">+</span>
+                <span
+                  className="font-[500] leading-none"
+                  style={{ fontSize: digitHeight }}
+                >
+                  +
+                </span>
               )}
             </div>
             <p className="text-[#7d7d7d] text-[20px]">Lorem ipsum dolor</p>

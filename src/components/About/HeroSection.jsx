@@ -85,7 +85,7 @@ export default function HeroSection() {
 
       {/* Title */}
       <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
-        <h1 className="text-[44px] text-black font-[300] text-center">
+        <h1 className="text-[36px] sm:text-[72px] text-black font-[200] text-center">
           Lorem{" "}
           <span className="text-lwyd-yellow font-[700] italic">ipsum</span>{" "}
           dolor dolor <br />
@@ -94,12 +94,15 @@ export default function HeroSection() {
       </div>
 
       {/* Paragraph */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 pointer-events-none">
-        <p className="text-black text-sm font-400 w-full text-center">
+      <div className="absolute bottom-16 left-1/2 -translate-x-1/2 z-20 pointer-events-none">
+        <p className="text-[#7D7D7D] text-base font-normal max-w-md text-center">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed Lorem
           ipsum dolor sit amet, consectetur adipiscing
         </p>
       </div>
+
+      {/* Section bottom border, inset from the edges */}
+      <div className="absolute bottom-0 inset-x-10 h-px bg-black/10 z-20" />
     </div>
   );
 }
