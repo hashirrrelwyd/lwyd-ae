@@ -95,7 +95,6 @@ export const teamData = [
     category: "Designer",
     image: "/team-imgs/Ruthik-1.png",
   },
-  ,
   {
     title: "Sagar",
     subtitle: "Lights, Camera, Caffiene!",
@@ -108,7 +107,6 @@ export const teamData = [
     category: "Designer",
     image: "/team-imgs/Samuel-1.png",
   },
-  ,
   {
     title: "Muhammed Hashir",
     subtitle: "Let's go wild!",

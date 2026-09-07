@@ -15,7 +15,7 @@ export default function AboutPage() {
     <HeroSection />
     <AboutUs />
     <WhatDrivesUs />
-    {/* <Team /> */}
+    <Team />
     <WorkTogether/>
     <ScrollingTextSection/>
     <Footer />

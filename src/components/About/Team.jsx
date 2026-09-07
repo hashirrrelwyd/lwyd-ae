@@ -1,252 +1,182 @@
-import { useState } from "react";
+"use client";
+
+import { useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useCursor } from "../../context/CursorContext";
-// import "./css/lwydteam.css"
 import { teamData } from "../../data/team";
+
+const CATEGORY_LABELS = {
+  all: "All",
+  AM: "Account Manager",
+  "Hr&Finance": "HR & Finance",
+};
+
+const slideVariants = {
+  enter: (direction) => ({
+    x: direction >= 0 ? 60 : -60,
+    opacity: 0,
+  }),
+  center: {
+    x: 0,
+    opacity: 1,
+  },
+  exit: (direction) => ({
+    x: direction >= 0 ? -60 : 60,
+    opacity: 0,
+  }),
+};
 
 export default function Team() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [currentCategory, setCurrentCategory] = useState("all");
+  const [direction, setDirection] = useState(1);
 
-  const { setHoverType } = useCursor();
+  const categories = useMemo(
+    () => ["all", ...Array.from(new Set(teamData.map((m) => m.category)))],
+    []
+  );
 
-  const filteredTeam =
-    currentCategory === "all"
-      ? teamData
-      : teamData.filter((member) => member.category === currentCategory);
+  const filteredTeam = useMemo(
+    () =>
+      currentCategory === "all"
+        ? teamData
+        : teamData.filter((member) => member.category === currentCategory),
+    [currentCategory]
+  );
 
   const current = filteredTeam[currentIndex];
   const nextIndex = (currentIndex + 1) % filteredTeam.length;
   const next = filteredTeam[nextIndex];
 
-  const handleNextClick = () => {
-    setCurrentIndex(nextIndex);
+  const goTo = (index) => {
+    if (index === currentIndex) return;
+    setDirection(index > currentIndex ? 1 : -1);
+    setCurrentIndex(index);
+  };
+
+  const handleCategoryChange = (category) => {
+    setCurrentCategory(category);
+    setDirection(1);
+    setCurrentIndex(0);
+  };
+
+  const handleWheel = (e) => {
+    if (e.deltaY !== 0) {
+      e.currentTarget.scrollLeft += e.deltaY;
+    }
   };
 
   return (
-    <div className="h-screen bg-[#111111] rounded-b-4xl px-6 md:px-10 py-10 text-white">
-      <h3 className="text-[22px] font-[500] text-white mb-8">
-          Meet{" "}
-          <span className="text-lwyd-yellow font-[750] italic">Our</span> Team
-        </h3>
+    <div className="mx-1.5 mb-1.5 flex h-auto flex-col rounded-b-4xl bg-[#111111] px-6 py-10 text-white sm:h-screen md:px-10">
+      <h3 className="mb-8 text-[22px] font-[500] text-white">
+        Meet <span className="text-lwyd-yellow font-[750] italic">Our</span>{" "}
+        Team
+      </h3>
 
-      <div className="flex pt-12">
-        {/* Left panel: current content */}
-        <AnimatePresence mode="wait" initial={false}>
+      {/* Center stage: previous(current) name | image | next name */}
+      <div className="relative flex min-h-0 flex-1 items-center justify-center overflow-hidden py-6 sm:py-0">
+        <AnimatePresence mode="wait" custom={direction} initial={false}>
           <motion.div
-            key={currentIndex}
-            initial={{ opacity: 0, x: 100 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -100 }}
-            transition={{ duration: 0.5 }}
-            className="text-center w-2/3 items-center justify-center relative overflow-hidden"
+            key={`${currentCategory}-${currentIndex}`}
+            custom={direction}
+            variants={slideVariants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={{ duration: 0.5, ease: "easeInOut" }}
+            className="flex w-full flex-col items-center gap-6 sm:flex-row sm:gap-8"
           >
-            <div className="flex justify-around">
-              <div className="flex flex-col items-center justify-center w-2/4">
-                <h2
-                  
-                  className="text-4xl mb-4"
-                >
-                  {current.title}
-                  <span className="text-lwyd-yellow">.</span>
+            <div className="flex w-full flex-col items-center gap-6 sm:w-[70%] sm:flex-row sm:justify-evenly sm:gap-0">
+              <div className="order-2 shrink-0 text-center sm:order-1 sm:text-left">
+                <h2 className="text-3xl font-medium text-white md:text-4xl lg:text-6xl">
+                  {current?.title}
                 </h2>
-                <p
-                 
-                  className="text-xl mb-8 text-[#7D7D7D]"
-                >
-                  "{current.subtitle}"
+                <p className="mt-3 text-center text-base text-[#7D7D7D] md:text-lg lg:text-xl">
+                  “{current?.subtitle}”
                 </p>
               </div>
-              <div className="w-2/4">
-                <img
-                  src={current.image}
-                  alt={current.title}
-                  className="mx-auto rounded-lg max-h-[400px] object-cover"
-                />
-              </div>
+
+              <img
+                src={current?.image}
+                alt={current?.title}
+                className="order-1 h-[300px] w-auto shrink-0 rounded-2xl object-contain sm:order-2 md:h-[380px] lg:h-[520px] md:rounded-3xl"
+              />
             </div>
+
+            <button
+              type="button"
+              onClick={() => goTo(nextIndex)}
+              className="hidden w-[30%] shrink-0 cursor-pointer text-center sm:block"
+            >
+              <h3 className="text-2xl font-medium text-white/60 md:text-3xl">
+                {next?.title}
+              </h3>
+              <p className="mt-2 text-sm text-white/40 md:text-base">
+                “{next?.subtitle}”
+              </p>
+            </button>
           </motion.div>
         </AnimatePresence>
-
-        {/* Right panel: next content preview */}
-        <div
-          className="w-1/3 flex flex-col justify-center items-center text-[#7D7D7D] cursor-none"
-          onClick={handleNextClick}
-          onMouseEnter={() => setHoverType("next")}
-          onMouseLeave={() => setHoverType("default")}
-        >
-          <h3 className="text-xl mb-2 transition-colors">{next.title}</h3>
-          <p className="text-sm">"{next.subtitle}"</p>
-        </div>
       </div>
 
-      {/* Filter and Preview Images */}
-      <div className="flex flex-col mt-12">
-        {/* Category selection */}
-        <div className="flex gap-4 mb-4">
-          <div
-            className={`flex ${
-              currentCategory === "all" ? "text-lwyd-yellow" : ""
-            } text-[#7D7D7D] items-center gap-2`}
-          >
+      {/* Filter row */}
+      <div className="mb-5 flex flex-wrap items-center gap-x-8 gap-y-2 text-base">
+        {categories.map((category) => {
+          const active = currentCategory === category;
+          return (
             <button
-              onClick={() => {
-                setCurrentCategory("all");
-                setCurrentIndex(0);
-              }}
-              className={`text-lg px-2 py-2 rounded-full cursor-none ${
-                currentCategory === "all"
-                  ? "bg-yellow-400"
-                  : "border border-[#7D7D7D]"
+              key={category}
+              type="button"
+              onClick={() => handleCategoryChange(category)}
+              className={`flex items-center gap-2 transition-colors ${
+                active ? "text-lwyd-yellow" : "text-[#7D7D7D]"
               }`}
-            ></button>
-            All
-          </div>
-          <div
-            className={`flex ${
-              currentCategory === "Leadership" ? "text-lwyd-yellow" : ""
-            } text-[#7D7D7D] items-center gap-2`}
-          >
-            <button
-              onClick={() => {
-                setCurrentCategory("Leadership");
-                setCurrentIndex(0);
-              }}
-              className={`text-lg px-2 py-2 rounded-full cursor-none ${
-                currentCategory === "Leadership"
-                  ? "bg-yellow-400"
-                  : "border border-[#7D7D7D]"
-              }`}
-            ></button>
-            Leadership
-          </div>
-          <div
-            className={`flex ${
-              currentCategory === "Lead" ? "text-lwyd-yellow" : ""
-            } text-[#7D7D7D] items-center gap-2`}
-          >
-            <button
-              onClick={() => {
-                setCurrentCategory("Lead");
-                setCurrentIndex(0);
-              }}
-              className={`text-lg px-2 py-2 rounded-full cursor-none ${
-                currentCategory === "Lead"
-                  ? "bg-yellow-400"
-                  : "border border-[#7D7D7D]"
-              }`}
-            ></button>
-            Lead
-          </div>
-          <div
-            className={`flex ${
-              currentCategory === "Designer" ? "text-lwyd-yellow" : ""
-            } text-[#7D7D7D] items-center gap-2`}
-          >
-            <button
-              onClick={() => {
-                setCurrentCategory("Designer");
-                setCurrentIndex(0);
-              }}
-              className={`text-lg px-2 py-2 rounded-full cursor-none ${
-                currentCategory === "Designer"
-                  ? "bg-yellow-400"
-                  : "border border-[#7D7D7D]"
-              }`}
-            ></button>
-            Designer
-          </div>
+            >
+              <span
+                className={`h-4 w-4 rounded-full ${
+                  active
+                    ? "bg-lwyd-yellow"
+                    : "border border-[#7D7D7D]"
+                }`}
+              />
+              {CATEGORY_LABELS[category] || category}
+            </button>
+          );
+        })}
 
-          <div
-            className={`flex ${
-              currentCategory === "AM" ? "text-lwyd-yellow" : ""
-            } text-[#7D7D7D] items-center gap-2`}
-          >
-            <button
-              onClick={() => {
-                setCurrentCategory("AM");
-                setCurrentIndex(0);
-              }}
-              className={`text-lg px-2 py-2 rounded-full cursor-none ${
-                currentCategory === "AM"
-                  ? "bg-yellow-400"
-                  : "border border-[#7D7D7D]"
-              }`}
-            ></button>
-            Account Managers
-          </div>
-          <div
-            className={`flex ${
-              currentCategory === "Developer" ? "text-lwyd-yellow" : ""
-            } text-[#7D7D7D] items-center gap-2`}
-          >
-            <button
-              onClick={() => {
-                setCurrentCategory("Developer");
-                setCurrentIndex(0);
-              }}
-              className={`text-lg px-2 py-2 rounded-full cursor-none ${
-                currentCategory === "Developer"
-                  ? "bg-yellow-400"
-                  : "border border-[#7D7D7D]"
-              }`}
-            ></button>
-            Developer
-          </div>
-          <div
-            className={`flex ${
-              currentCategory === "Friyay" ? "text-lwyd-yellow" : ""
-            } text-[#7D7D7D] items-center gap-2`}
-          >
-            <button
-              onClick={() => {
-                setCurrentCategory("Friyay");
-                setCurrentIndex(0);
-              }}
-              className={`text-lg px-2 py-2 rounded-full cursor-none ${
-                currentCategory === "Friyay"
-                  ? "bg-yellow-400"
-                  : "border border-[#7D7D7D]"
-              }`}
-            ></button>
-            Friyay
-          </div>
-          <div
-            className={`flex ${
-              currentCategory === "Hr&Finance" ? "text-lwyd-yellow" : ""
-            } text-[#7D7D7D] items-center gap-2`}
-          >
-            <button
-              onClick={() => setCurrentCategory("Hr&Finance")}
-              className={`text-lg px-2 py-2 rounded-full cursor-none ${
-                currentCategory === "Hr&Finance"
-                  ? "bg-yellow-400"
-                  : "border border-[#7D7D7D]"
-              }`}
-            ></button>
-            HR & Finance
-          </div>
-        </div>
+        <span className="ml-auto shrink-0 text-sm text-[#7D7D7D]">
+          (<span className="font-medium text-white">
+            {String(currentIndex + 1).padStart(2, "0")}
+          </span>
+          /{String(filteredTeam.length).padStart(2, "0")})
+        </span>
       </div>
-      {/* Thumbnails Preview */}
-      <div className="flex gap-4 w-full overflow-x-auto overflow-y-hidden whitespace-nowrap" >
-        {filteredTeam.map((member, index) => (
-          <div
-            key={index}
-            className={`relative flex flex-col items-center ${
-              index === currentIndex ? "border-1 border-white rounded-lg" : ""
-            }`}
-            onClick={() => setCurrentIndex(index)}
-          >
-            <img
-              src={member.image}
-              alt={member.title}
-              className={`transition-all duration-700 rounded-md object-cover w-15 h-20 ${
-                index === currentIndex ? "scale-80" : ""
+
+      {/* Thumbnails */}
+      <div
+        onWheel={handleWheel}
+        className="no-scrollbar flex gap-4 overflow-x-auto"
+      >
+        {filteredTeam.map((member, index) => {
+          const selected = index === currentIndex;
+          return (
+            <button
+              key={`${member.title}-${index}`}
+              type="button"
+              onClick={() => goTo(index)}
+              className={`flex h-28 w-24 shrink-0 items-center justify-center rounded-xl transition-all duration-300 ${
+                selected ? "border border-white/50" : ""
               }`}
-            />
-          </div>
-        ))}
+            >
+              <img
+                src={member.image}
+                alt={member.title}
+                className={`rounded-lg object-cover transition-all duration-300 ${
+                  selected ? "h-[80%] w-[80%]" : "h-full w-full"
+                }`}
+              />
+            </button>
+          );
+        })}
       </div>
     </div>
   );
