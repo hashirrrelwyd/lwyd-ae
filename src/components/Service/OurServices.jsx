@@ -71,7 +71,7 @@ export default function OurServices() {
         start: "top top",
         end: () => `+=${steps * window.innerHeight * FRAME_VH_FRACTION}`,
         pin: true,
-        scrub: true,
+        scrub: 0.4,
         anticipatePin: 1,
         invalidateOnRefresh: true,
         onUpdate: (self) => {

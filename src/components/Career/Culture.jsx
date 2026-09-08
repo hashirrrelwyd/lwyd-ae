@@ -1,6 +1,6 @@
 "use client";
 
-import { useLayoutEffect, useRef } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -9,131 +9,206 @@ gsap.registerPlugin(ScrollTrigger);
 const items = [
   {
     id: "c1",
-    titleLeft: "12 Days",
-    titleRight: "Holiday",
-    img: "/images/digital.webp",
+    titleLeft: "Flexible",
+    titleRight: "Work Hours",
+    img: "/images/experience.webp",
   },
   {
     id: "c2",
-    titleLeft: "5 Days",
-    titleRight: "Work From Home",
-    img: "/images/media.webp",
+    titleLeft: "Unlimited",
+    titleRight: "Snacks & Coffee",
+    img: "/images/video.webp",
   },
   {
     id: "c3",
-    titleLeft: "Team",
-    titleRight: "Outing",
-    img: "/images/creative.webp",
+    titleLeft: "Weekly",
+    titleRight: "Game Nights",
+    img: "/images/social.webp",
   },
 ];
 
+const ROW_HEIGHT = 110; // px, height of the title-roll container
+// fluid sizing so the layout keeps fitting (and text never clips) across viewport widths,
+// instead of a single width tuned only for large desktop screens
+const COLUMN_WIDTH = "clamp(150px, 27vw, 450px)"; // equal width for both title columns, keeps the image centered
+const TITLE_GAP = "clamp(12px, 2.5vw, 32px)"; // space between each title column and the image
+const TITLE_FONT_SIZE = "clamp(1.25rem, 3.2vw, 3.75rem)";
+const SCALE_STEP = 0.2; // each card behind the current one is this much smaller (10 / 8 / 6 ...)
+const Y_STEP_PERCENT = 15; // nudges smaller cards down so there's a visible gap before the next one
+const EXIT_Y_PERCENT = 100; // how far the current card slides up as it exits (100 = exactly its own height, fully clear)
+const MAX_DEPTH = 2; // how many stack positions back get a distinct (non-zero) scale step
+const PEEK_FRACTION = 0.24; // the peek/gap reserve stays proportional to the card size at every screen size
+
+// current (front) card height per device category — the 620px desktop size is unchanged,
+// smaller categories get their own size instead of desktop's fixed value overflowing them
+function getCardHeightForWidth(width) {
+  let base;
+  if (width < 480) base = 360;
+  else if (width < 640) base = 420;
+  else if (width < 768) base = 460;
+  else if (width < 1024) base = 500;
+  else if (width < 1280) base = 560;
+  else base = 620;
+  // safety cap: never let the card (plus its peek reserve) exceed the actual viewport height
+  const maxByViewportHeight = (window.innerHeight * 0.72) / (1 + PEEK_FRACTION);
+  return Math.round(Math.min(base, maxByViewportHeight));
+}
+
 export default function Culture() {
-  const containerRef = useRef(null);
-  const cardsRef = useRef([]);
-  const leftTitleRef = useRef([]);
-  const rightTitleRef = useRef([]);
-  cardsRef.current = [];
-  leftTitleRef.current = [];
-  rightTitleRef.current = [];
+  const sectionRef = useRef(null);
+  const trackRef = useRef(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [cardHeight, setCardHeight] = useState(() =>
+    typeof window !== "undefined" ? getCardHeightForWidth(window.innerWidth) : 620
+  );
 
   useLayoutEffect(() => {
-    if (!containerRef.current) return;
+    const section = sectionRef.current;
+    const track = trackRef.current;
+    const cards = gsap.utils.toArray(track.children);
+    const steps = cards.length - 1;
+    if (steps <= 0) return;
 
-    const ctx = gsap.context(() => {
-      const cards = cardsRef.current.filter(Boolean);
-      const leftTitles = leftTitleRef.current.filter(Boolean);
-      const rightTitles = rightTitleRef.current.filter(Boolean);
-      const total = cards.length;
+    const applyProgress = (progress) => {
+      const raw = progress * steps;
 
-      // Setup stacking
-      cards.forEach((el, i) => {
-        gsap.set(el, {
-          xPercent: -50,
-          yPercent: -50,
-          left: "50%",
-          top: "50%",
-          position: "absolute",
-          zIndex: total - i,
-          scale: 1 - i * 0.05,
+      cards.forEach((card, i) => {
+        const depth = i - raw; // 0 = current/front, >0 = waiting behind, <0 = already exiting
+
+        let scale;
+        let yPercent;
+        if (depth >= 0) {
+          const capped = Math.min(depth, MAX_DEPTH);
+          scale = 1 - SCALE_STEP * capped;
+          yPercent = Y_STEP_PERCENT * capped;
+        } else {
+          // becomes/stays the front card, then slides up and out on its own turn
+          scale = 1;
+          yPercent = EXIT_Y_PERCENT * depth;
+        }
+        gsap.set(card, {
+          scale,
+          yPercent,
+          zIndex: Math.round((10 - depth) * 100),
         });
       });
 
-      // Setup initial titles
-      leftTitles.forEach((el, i) => gsap.set(el, { autoAlpha: i === 0 ? 1 : 0 }));
-      rightTitles.forEach((el, i) => gsap.set(el, { autoAlpha: i === 0 ? 1 : 0 }));
+      // switch as soon as the next image becomes the more-visible one (past the halfway point
+      // of the transition), instead of waiting for it to fully finish arriving
+      const idx = Math.min(steps, Math.round(raw));
+      setCurrentIndex((prev) => (prev !== idx ? idx : prev));
+    };
 
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top top",
-          end: () => "+=" + total * 600,
-          pin: true,
-          scrub: 1.2,
-        },
+    // set the correct stacking immediately, don't wait for the first scroll-driven onUpdate
+    applyProgress(0);
+
+    const onResize = () => setCardHeight(getCardHeightForWidth(window.innerWidth));
+    window.addEventListener("resize", onResize);
+
+    const ctx = gsap.context(() => {
+      const st = ScrollTrigger.create({
+        trigger: section,
+        start: "top top",
+        end: () => `+=${steps * window.innerHeight * 0.6}`,
+        pin: true,
+        scrub: true,
+        anticipatePin: 1,
+        onUpdate: (self) => applyProgress(self.progress),
       });
 
-      cards.forEach((card, i) => {
-        tl.to(
-          card,
-          {
-            y: "-120vh",
-            duration: 2,
-          },
-          i === 0 ? 0 : "-=1.5"
-        );
+      return () => st.kill();
+    }, section);
 
-        if (i < total - 1) {
-          // Fade out current titles
-          tl.to([leftTitles[i], rightTitles[i]], { autoAlpha: 0, duration: 0.5 }, "-=1");
-
-          // Fade in next titles
-          tl.to([leftTitles[i + 1], rightTitles[i + 1]], { autoAlpha: 1, duration: 0.5 });
-        }
-      });
-    }, containerRef);
-
-    return () => ctx.revert();
+    return () => {
+      window.removeEventListener("resize", onResize);
+      ctx.revert();
+    };
   }, []);
+
+  const peek = Math.round(cardHeight * PEEK_FRACTION);
 
   return (
     <section
-      ref={containerRef}
-      className="relative min-h-[100svh] w-full overflow-hidden"
+      ref={sectionRef}
+      className="relative flex h-screen w-full items-center justify-center overflow-hidden section-padding"
     >
-      {/* Image + Titles grouped together */}
-      <div className="relative mx-auto h-[100svh] w-full max-w-3xl flex items-center justify-center">
-        {items.map((item, i) => (
+      <div
+        className="relative flex w-full items-start justify-center"
+        style={{ gap: TITLE_GAP }}
+      >
+        {/* Left title roll, vertically centered on the current image (not the taller stack frame) */}
+        <div
+          className="hidden shrink-0 overflow-hidden text-right sm:block"
+          style={{
+            height: ROW_HEIGHT,
+            width: COLUMN_WIDTH,
+            marginTop: Math.max(0, (cardHeight - ROW_HEIGHT) / 2),
+          }}
+        >
           <div
-            key={item.id}
-            ref={(el) => (cardsRef.current[i] = el)}
-            className="pointer-events-none"
+            className="flex flex-col transition-transform duration-500 ease-out"
+            style={{ transform: `translateY(-${currentIndex * ROW_HEIGHT}px)` }}
           >
-            <div className="relative flex items-center gap-6">
-              {/* Left title */}
+            {items.map((item) => (
               <div
-                ref={(el) => (leftTitleRef.current[i] = el)}
-                className="text-3xl md:text-5xl font-bold absolute right-full mr-6"
+                key={item.id}
+                className="flex items-center justify-end whitespace-nowrap font-[800] italic text-[#FFCC00]"
+                style={{ height: ROW_HEIGHT, fontSize: TITLE_FONT_SIZE }}
               >
                 {item.titleLeft}
               </div>
+            ))}
+          </div>
+        </div>
 
-              {/* Image */}
-              <img
-                src={item.img}
-                alt={item.titleLeft}
-                className="h-[400px] w-[300px] object-cover rounded-2xl shadow-lg"
-              />
-
-              {/* Right title */}
+        {/* Image stack: current one full size, each behind it progressively smaller, peeking below.
+            Full width on mobile (just the page margin from section-padding); a fixed size per
+            device category from sm and up, capped so it never overflows the viewport height. */}
+        <div
+          className="relative w-full shrink-0 overflow-hidden rounded-2xl sm:w-[300px] md:w-[340px] lg:w-[380px] xl:w-[440px]"
+          style={{ height: cardHeight + peek }}
+        >
+          <div ref={trackRef} className="relative h-full w-full">
+            {items.map((item) => (
               <div
-                ref={(el) => (rightTitleRef.current[i] = el)}
-                className="text-3xl md:text-5xl font-bold absolute left-full ml-6"
+                key={item.id}
+                className="absolute inset-x-0 top-0 overflow-hidden rounded-2xl"
+                style={{ height: cardHeight }}
+              >
+                <img
+                  src={item.img}
+                  alt={`${item.titleLeft} ${item.titleRight}`}
+                  className="h-full w-full object-cover"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Right title roll, vertically centered on the current image (not the taller stack frame) */}
+        <div
+          className="hidden shrink-0 overflow-hidden text-left sm:block"
+          style={{
+            height: ROW_HEIGHT,
+            width: COLUMN_WIDTH,
+            marginTop: Math.max(0, (cardHeight - ROW_HEIGHT) / 2),
+          }}
+        >
+          <div
+            className="flex flex-col transition-transform duration-500 ease-out"
+            style={{ transform: `translateY(-${currentIndex * ROW_HEIGHT}px)` }}
+          >
+            {items.map((item) => (
+              <div
+                key={item.id}
+                className="flex items-center whitespace-nowrap font-[400] text-black"
+                style={{ height: ROW_HEIGHT, fontSize: TITLE_FONT_SIZE }}
               >
                 {item.titleRight}
               </div>
-            </div>
+            ))}
           </div>
-        ))}
+        </div>
       </div>
     </section>
   );
