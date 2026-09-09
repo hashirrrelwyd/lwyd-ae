@@ -15,7 +15,7 @@ export default function HeroSection() {
         <div className="absolute inset-0 bg-black/50 rounded-2xl"></div>
         <div className="absolute inset-0 flex items-end justify-between py-6 section-padding">
           <div>
-            <p className="text-[44px] text-white font-[300]">
+            <p className="text-[36px] sm:text-[72px] text-white font-[300]">
               Lorem{" "}
               <span className="text-lwyd-yellow font-[700] italic">ipsum</span>{" "}
               dolor dolor <br />

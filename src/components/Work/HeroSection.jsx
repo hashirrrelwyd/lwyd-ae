@@ -10,7 +10,7 @@ export default function HeroSection() {
   <div className="grid grid-cols-1 md:grid-cols-2 min-h-[150px]">
     {/* Left - Heading */}
     <div className="flex items-start justify-start">
-      <h2 className="text-pretty text-3xl font-[500] leading-tight text-[#0F172A] md:text-4xl mb-7">
+      <h2 className="text-pretty text-[36px] sm:text-[72px] font-[500] leading-tight text-[#0F172A] mb-7">
         Lorem{" "}
         <span className="italic text-lwyd-yellow font-[750]">ipsum</span>{" "}
         dolor dolor <br />
