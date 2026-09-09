@@ -2,6 +2,14 @@
 
 import Button from "../ui/Button";
 
+const countryCodes = [
+  "+1", "+7", "+20", "+27", "+30", "+31", "+32", "+33", "+34", "+39",
+  "+40", "+41", "+44", "+45", "+46", "+47", "+48", "+49", "+51", "+52",
+  "+53", "+54", "+55", "+56", "+57", "+58", "+60", "+61", "+62", "+63",
+  "+64", "+65", "+66", "+81", "+82", "+84", "+86", "+90", "+91", "+92",
+  "+93", "+94", "+95", "+98", "+353", "+966", "+971", "+972", "+974",
+];
+
 export default function ContactSection() {
   return (
     <section className="w-full py-12 section-padding pt-24">
@@ -36,56 +44,63 @@ export default function ContactSection() {
           <form className="flex flex-col gap-5">
             {/* Name */}
             <div>
-              <label className="block text-sm font-medium text-gray-700">
+              <label className="block text-sm font-light text-gray-700">
                 Call me.<span className="text-red-500">*</span>
               </label>
               <input
                 type="text"
                 placeholder="Chri"
-                className="w-full mt-2 px-4 py-2 bg-white rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                className="w-full mt-2 px-2 py-3.5 bg-white rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400"
               />
             </div>
 
             {/* Email */}
             <div>
-              <label className="block text-sm font-medium text-gray-700">
+              <label className="block text-sm font-light text-gray-700">
                 Where we can reach you<span className="text-red-500">*</span>
               </label>
               <input
                 type="email"
                 placeholder="Chri@gmail.com"
-                className="w-full mt-2 px-4 py-2 bg-white rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                className="w-full mt-2 px-2 py-3.5 bg-white rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400"
               />
             </div>
 
             {/* Phone */}
             <div>
-              <label className="block text-sm font-medium text-gray-700">
+              <label className="block text-sm font-light text-gray-700">
                 Reach me at<span className="text-red-500">*</span>
               </label>
-              <div className="flex gap-2 mt-2">
-                <input
-                  type="text"
+              <div className="flex items-center mt-2 bg-white rounded-md focus-within:ring-2 focus-within:ring-yellow-400">
+                <select
                   defaultValue="+91"
-                  className="w-16 px-3 py-2 bg-white rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400"
-                />
+                  aria-label="Country code"
+                  className="appearance-none bg-transparent py-3.5 pl-2 pr-1 focus:outline-none cursor-pointer"
+                >
+                  {countryCodes.map((code) => (
+                    <option key={code} value={code}>
+                      {code}
+                    </option>
+                  ))}
+                </select>
+                <span className="h-5 w-px shrink-0 bg-gray-300" />
                 <input
                   type="tel"
                   placeholder="00000 00000"
-                  className="flex-1 px-4 py-2 bg-white rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                  className="flex-1 min-w-0 px-2 py-3.5 bg-transparent focus:outline-none"
                 />
               </div>
             </div>
 
             {/* Message */}
             <div>
-              <label className="block text-sm font-medium text-gray-700">
+              <label className="block text-sm font-light text-gray-700">
                 This is what’s on my mind<span className="text-red-500">*</span>
               </label>
               <textarea
                 placeholder="message..."
                 rows="4"
-                className="w-full mt-2 px-4 py-2 bg-white rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                className="w-full mt-2 px-2 py-3.5 bg-white rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400"
               ></textarea>
             </div>
 
