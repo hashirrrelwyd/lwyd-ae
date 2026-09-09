@@ -39,15 +39,17 @@ export default function OurService() {
     gsap.killTweensOf([arrow, text, bg, overlay])
 
     gsap.set(arrow, { y: 10, opacity: 0 })
+    gsap.set(text, { transformOrigin: "left center" })
     const tl = gsap.timeline({ defaults: { duration: 0.45, ease: "power3.out" } })
     tl.to(arrow, { y: 0, opacity: 1 }, 0)
       .to(
         text,
         {
           x: 12,
+          scale: 1.12,
           // color change + weight change
           color: "#ffffff",
-          fontWeight: 500,
+          fontWeight: 400,
         },
         0,
       )
@@ -68,6 +70,7 @@ export default function OurService() {
         text,
         {
           x: 0,
+          scale: 1,
           color: "rgba(125,125,125,0.5)",
           fontWeight: 300,
         },
@@ -81,10 +84,10 @@ export default function OurService() {
   const right = menuItems.slice(3)
 
   return (
-    <section ref={sectionRef} className="section-padding py-12">
+    <section ref={sectionRef} className="section-padding py-20 md:py-28">
       {/* Header */}
       <div className="flex items-center justify-between mb-8">
-        <h2 className="text-2xl sm:text-3xl lg:text-3xl font-[500]">
+        <h2 className="text-pretty text-3xl font-[500] leading-tight text-[#0F172A] md:text-4xl">
           <span className="font-[750] italic text-lwyd-yellow">Our</span>{" "}
           <span className="relative -mb-1 inline-flex align-middle">
             <img
@@ -113,7 +116,7 @@ export default function OurService() {
                 onMouseLeave={() => handleLeave(i)}
                 onFocus={() => handleEnter(i)}
                 onBlur={() => handleLeave(i)}
-                className="relative group flex items-center w-full justify-between px-6 py-4 border border-[#7D7D7D1A] rounded-full overflow-hidden cursor-pointer"
+                className="relative group flex items-center w-full justify-between px-7 py-5 md:py-6 border border-[#7D7D7D1A] rounded-full overflow-hidden cursor-pointer"
               >
                 {/* Background + dark overlay */}
                 <div className="pointer-events-none absolute inset-0 rounded-full overflow-hidden">
@@ -134,7 +137,7 @@ export default function OurService() {
                   {/* Title */}
                   <span
                     ref={(el) => setTextRef(el, i)}
-                    className="ml-1 font-[300] text-[#7D7D7D80] text-[16px] sm:text-[20px] md:text-[24px] lg:text-[28px] transition-none"
+                    className="ml-1 font-[300] text-[#7D7D7D80] text-[18px] sm:text-[22px] md:text-[26px] lg:text-[30px] transition-none"
                   >
                     {item.title.split(" ")[0]}{" "}
                     <span className="group-hover:text-yellow-400 group-hover:font-[750] group-hover:italic">
@@ -159,7 +162,7 @@ export default function OurService() {
                 onMouseLeave={() => handleLeave(i)}
                 onFocus={() => handleEnter(i)}
                 onBlur={() => handleLeave(i)}
-                className="relative group flex items-center w-full justify-between px-6 py-4 border border-[#7D7D7D1A] rounded-full overflow-hidden cursor-pointer"
+                className="relative group flex items-center w-full justify-between px-7 py-5 md:py-6 border border-[#7D7D7D1A] rounded-full overflow-hidden cursor-pointer"
               >
                 {/* Background + dark overlay */}
                 <div className="pointer-events-none absolute inset-0 rounded-full overflow-hidden">
@@ -178,7 +181,7 @@ export default function OurService() {
 
                   <span
                     ref={(el) => setTextRef(el, i)}
-                    className="ml-1 font-[300] text-[#7D7D7D80] text-[16px] sm:text-[20px] md:text-[24px] lg:text-[28px] transition-none"
+                    className="ml-1 font-[300] text-[#7D7D7D80] text-[18px] sm:text-[22px] md:text-[26px] lg:text-[30px] transition-none"
                   >
                     {item.title.split(" ")[0]}{" "}
                     <span className="group-hover:text-yellow-400 group-hover:font-[750] group-hover:italic">
