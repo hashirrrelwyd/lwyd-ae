@@ -19,7 +19,7 @@ export default function HeroSection() {
           <img
             src="/images/button-img.png"
             alt=""
-            className="h-8 w-16 rounded-full object-cover"
+            className="h-10 w-20 sm:h-16 sm:w-28 rounded-full object-cover"
           />
         </span>
       </h2>

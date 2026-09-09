@@ -90,7 +90,7 @@ export default function Team() {
           >
             <div className="flex w-full flex-col items-center gap-6 sm:w-[70%] sm:flex-row sm:justify-evenly sm:gap-0">
               <div className="order-2 shrink-0 text-center sm:order-1 sm:text-left">
-                <h2 className="text-3xl font-normal text-white md:text-4xl lg:text-6xl">
+                <h2 className="text-3xl font-normal text-white md:text-4xl lg:text-5xl 2xl:text-6xl">
                   {current?.title}
                 </h2>
                 <p className="mt-3 text-center text-base font-light text-[#7D7D7D] md:text-lg lg:text-xl">
@@ -101,7 +101,7 @@ export default function Team() {
               <img
                 src={current?.image}
                 alt={current?.title}
-                className="order-1 h-[300px] w-auto shrink-0 rounded-2xl object-contain sm:order-2 md:h-[380px] lg:h-[520px] md:rounded-3xl"
+                className="order-1 h-[300px] w-auto shrink-0 rounded-2xl object-contain sm:order-2 md:h-[340px] md:rounded-3xl lg:h-[380px] 2xl:h-[520px]"
               />
             </div>
 
