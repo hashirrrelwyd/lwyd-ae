@@ -1,6 +1,11 @@
+import { useRef } from "react";
+import { useSectionTheme } from "../../hooks/useHeaderThemeSection";
+
 export default function HeroSection() {
+  const sectionRef = useRef(null);
+  useSectionTheme(sectionRef, "dark");
   return (
-    <div className="relative p-1.5 rounded-2xl h-screen">
+    <div ref={sectionRef} className="relative p-1.5 rounded-2xl h-screen">
       <div className="w-full h-full rounded-2xl overflow-hidden relative">
         <img
           src="/images/hero.jpg"

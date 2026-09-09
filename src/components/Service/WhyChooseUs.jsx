@@ -1,4 +1,6 @@
+import { useRef } from "react";
 import ScrollCards from "../Common/ScrollCards";
+import { useSectionTheme } from "../../hooks/useHeaderThemeSection";
 
 const whyChooseUs = [
   {
@@ -33,8 +35,10 @@ const whyChooseUs = [
 ];
 
 export default function WhyChooseUs() {
+  const sectionRef = useRef(null);
+  useSectionTheme(sectionRef, "dark");
   return (
-    <div className="bg-[#111111] mx-1.5 mt-1.5 px-[34px] py-12 rounded-t-4xl text-white">
+    <div ref={sectionRef} className="bg-[#111111] mx-1.5 mt-1.5 px-[34px] py-12 rounded-t-4xl text-white">
       {/* Title */}
       <div className="flex">
         <h3 className="text-[22px] font-[500] text-white mb-8">

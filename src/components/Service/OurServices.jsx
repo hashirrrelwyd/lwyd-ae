@@ -3,6 +3,7 @@
 import { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useSectionTheme } from "../../hooks/useHeaderThemeSection";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -57,6 +58,8 @@ const services = [
 export default function OurServices() {
   const sectionRef = useRef(null);
   const trackRef = useRef(null);
+
+  useSectionTheme(sectionRef, "light");
 
   useLayoutEffect(() => {
     const section = sectionRef.current;

@@ -4,6 +4,7 @@ import { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Button from "../ui/Button";
+import { useSectionTheme } from "../../hooks/useHeaderThemeSection";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -22,6 +23,8 @@ export default function ContactUs(props) {
   const ctaRef = useRef(null);
   const cardsRef = useRef([]);
   cardsRef.current = [];
+
+  useSectionTheme(containerRef, "light");
 
   const items = [
     {

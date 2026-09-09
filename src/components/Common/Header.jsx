@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { useTheme } from "../../context/HeaderThemeContext";
 import NavItem from "../ui/NavItem";
+import LogoText from "../ui/LogoText";
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false); // turns on rounded blurred bg + black hamburger
@@ -68,9 +69,7 @@ export default function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const burgerFill = theme === "dark" ? "#FFFFFFB2" : "#000000B2";
-  const logoTextSrc =
-    theme === "dark" ? "/icons/logo-text.png" : "/icons/logo-text-black.png";
+  const burgerFill = theme === "dark" ? "#FFFFFF" : "#111111B2";
 
   return (
     <>
@@ -98,10 +97,10 @@ export default function Header() {
               alt="logo"
               className="w-6 h-6 md:w-7 md:h-7"
             />
-            <img
-              src={`${logoTextSrc}`}
-              alt="logo text"
-              className="w-full h-6 hidden md:block"
+            <LogoText
+              className={`w-full h-6 hidden md:block ${
+                theme === "dark" ? "text-white" : "text-black"
+              }`}
             />
           </div>
 

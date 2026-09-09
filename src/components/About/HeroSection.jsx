@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState, useRef } from "react";
+import { useSectionTheme } from "../../hooks/useHeaderThemeSection";
 
 const sources = [
   "/images/media.webp",
@@ -12,6 +13,8 @@ export default function HeroSection() {
   const [trail, setTrail] = useState([]);
   const containerRef = useRef(null);
   const lastPosRef = useRef({ x: 0, y: 0 });
+
+  useSectionTheme(containerRef, "light");
 
   useEffect(() => {
     const handleMouseMove = (e) => {

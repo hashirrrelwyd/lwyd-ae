@@ -1,11 +1,15 @@
 "use client";
 
+import { useRef } from "react";
 import LogosMarquee from "../Common/LogosMarquee";
 import Button from "../ui/Button";
+import { useSectionTheme } from "../../hooks/useHeaderThemeSection";
 
 export default function AboutSection() {
+  const sectionRef = useRef(null);
+  useSectionTheme(sectionRef, "light");
   return (
-    <section className="section-padding">
+    <section ref={sectionRef} className="section-padding">
       <LogosMarquee />
 
       {/* Two-column content */}

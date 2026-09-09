@@ -4,6 +4,7 @@ import { useRef } from "react"
 import Button from "../ui/Button"
 import { ArrowUpRight } from "lucide-react"
 import gsap from "gsap"
+import { useSectionTheme } from "../../hooks/useHeaderThemeSection"
 
 const menuItems = [
   { title: "Creative Development", link: "#", bg: "/images/creative.webp" },
@@ -15,6 +16,9 @@ const menuItems = [
 ]
 
 export default function OurService() {
+  const sectionRef = useRef(null)
+  useSectionTheme(sectionRef, "light")
+
   // refs to animate with GSAP per item
   const arrowRefs = useRef([])
   const textRefs = useRef([])
@@ -77,7 +81,7 @@ export default function OurService() {
   const right = menuItems.slice(3)
 
   return (
-    <section className="section-padding py-12">
+    <section ref={sectionRef} className="section-padding py-12">
       {/* Header */}
       <div className="flex items-center justify-between mb-8">
         <h2 className="text-2xl sm:text-3xl lg:text-3xl font-[500]">

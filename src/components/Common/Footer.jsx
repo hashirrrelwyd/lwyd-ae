@@ -2,6 +2,7 @@ import { FaLinkedinIn } from "react-icons/fa";
 import { FiInstagram } from "react-icons/fi";
 import NavItem from "../ui/NavItem";
 import { useNavigate } from "react-router-dom";
+import LogoText from "../ui/LogoText";
 
 export default function Footer() {
   const navigate = useNavigate()
@@ -18,11 +19,7 @@ export default function Footer() {
               alt="logo"
               className="w-10 h-10 md:w-12 md:h-12"
             />
-            <img
-              src="/icons/logo-text.png"
-              alt="logo text"
-              className="w-full h-8 hidden md:block"
-            />
+            <LogoText className="w-full h-8 hidden md:block text-white" />
           </div>
 
           <div className="flex gap-4">

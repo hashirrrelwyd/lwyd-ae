@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useCursor } from "../../context/CursorContext";
 import { useNavigate } from "react-router-dom";
+import { useSectionTheme } from "../../hooks/useHeaderThemeSection";
 
 export default function DraggableMarquee({
   text = "Make It Happen with LWYD",
@@ -24,6 +25,8 @@ export default function DraggableMarquee({
   const dragStartX = useRef(0);
   const offsetStart = useRef(0);
   const [offsetX, setOffsetX] = useState(0);
+
+  useSectionTheme(containerRef, "light");
 
   // Split last word for highlight
   const i = text.lastIndexOf(highlight);

@@ -1,8 +1,12 @@
+import { useRef } from "react";
 import Button from "../ui/Button";
+import { useSectionTheme } from "../../hooks/useHeaderThemeSection";
 
 export default function HeroSection() {
+  const sectionRef = useRef(null);
+  useSectionTheme(sectionRef, "light");
   return (
-    <section className="relative mx-auto section-padding mt-24 py-12">
+    <section ref={sectionRef} className="relative mx-auto section-padding mt-24 py-12">
   <div className="grid grid-cols-1 md:grid-cols-2 min-h-[150px]">
     {/* Left - Heading */}
     <div className="flex items-start justify-start">

@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { useSectionTheme } from "../../hooks/useHeaderThemeSection";
 
 const locations = [
   {
@@ -20,11 +21,13 @@ const locations = [
 ];
 
 export default function WhereToFindUs() {
+  const sectionRef = useRef(null);
+  useSectionTheme(sectionRef, "light");
   const [activeIndex, setActiveIndex] = useState(null); // for mobile expand
   const [hoveredIndex, setHoveredIndex] = useState(null); // for desktop hover
 
   return (
-    <section className="bg-[#fdfbf6] py-12 section-padding">
+    <section ref={sectionRef} className="bg-[#fdfbf6] py-12 section-padding">
       <div className="mx-auto">
         {/* Heading */}
         <h3 className="text-[22px] font-[500] text-gray-800 mb-6">

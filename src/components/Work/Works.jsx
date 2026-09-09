@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import Button from "../ui/Button";
+import { useSectionTheme } from "../../hooks/useHeaderThemeSection";
 
 const worksData = [
   {
@@ -62,6 +63,8 @@ const worksData = [
 ];
 
 export default function Works() {
+  const sectionRef = useRef(null);
+  useSectionTheme(sectionRef, "light");
   const [visible, setVisible] = useState(4);
 
   const ballVariants = {
@@ -74,7 +77,7 @@ export default function Works() {
   };
 
   return (
-    <section className="section-padding py-12 mx-auto">
+    <section ref={sectionRef} className="section-padding py-12 mx-auto">
       <div className="hidden lg:flex flex-col gap-6">
         {/* Group works in pairs (2 per row) */}
         {Array.from({

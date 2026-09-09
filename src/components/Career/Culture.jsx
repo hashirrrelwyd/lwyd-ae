@@ -3,6 +3,7 @@
 import { useLayoutEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useSectionTheme } from "../../hooks/useHeaderThemeSection";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -61,6 +62,8 @@ export default function Culture() {
   const [cardHeight, setCardHeight] = useState(() =>
     typeof window !== "undefined" ? getCardHeightForWidth(window.innerWidth) : 620
   );
+
+  useSectionTheme(sectionRef, "light");
 
   useLayoutEffect(() => {
     const section = sectionRef.current;

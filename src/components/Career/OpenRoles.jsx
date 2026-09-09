@@ -1,8 +1,11 @@
 import { GoChevronDown, GoChevronRight } from "react-icons/go";
 import { openRoles, roleDepartments } from "../../data/roles";
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { useSectionTheme } from "../../hooks/useHeaderThemeSection";
 
 export default function OpenRoles() {
+  const sectionRef = useRef(null);
+  useSectionTheme(sectionRef, "dark");
   const [selectedLocation, setSelectedLocation] = useState("Location");
   const [selectedDepartment, setSelectedDepartment] = useState("Department");
 
@@ -12,7 +15,7 @@ export default function OpenRoles() {
   const locations = ["Location", "Onsite", "Remote"];
 
   return (
-    <section className="relative h-screen w-full p-1.5">
+    <section ref={sectionRef} className="relative h-screen w-full p-1.5">
       <div className="relative flex h-full w-full flex-col rounded-b-4xl rounded-t-4xl bg-[#111111] px-[34px] py-12 text-white">
       <div className="flex shrink-0 justify-between pb-6">
         <div>

@@ -1,6 +1,8 @@
 "use client";
 
+import { useRef } from "react";
 import Button from "../ui/Button";
+import { useSectionTheme } from "../../hooks/useHeaderThemeSection";
 
 const countryCodes = [
   "+1", "+7", "+20", "+27", "+30", "+31", "+32", "+33", "+34", "+39",
@@ -11,8 +13,10 @@ const countryCodes = [
 ];
 
 export default function ContactSection() {
+  const sectionRef = useRef(null);
+  useSectionTheme(sectionRef, "light");
   return (
-    <section className="w-full py-12 section-padding pt-24">
+    <section ref={sectionRef} className="w-full py-12 section-padding pt-24">
       <div className="mx-auto grid md:grid-cols-2 gap-8 rounded-2xl overflow-hidden">
         {/* Left Content */}
         <div className="relative bg-black/60 rounded-2xl overflow-hidden flex flex-col justify-between p-6 md:p-10 text-white">

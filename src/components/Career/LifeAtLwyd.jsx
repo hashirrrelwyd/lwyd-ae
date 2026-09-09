@@ -1,11 +1,15 @@
 "use client";
 
+import { useRef } from "react";
 import Button from "../ui/Button";
 import LogosMarquee from "../Common/LogosMarquee";
+import { useSectionTheme } from "../../hooks/useHeaderThemeSection";
 
 export default function LifeAtLwyd() {
+  const sectionRef = useRef(null);
+  useSectionTheme(sectionRef, "light");
   return (
-    <section className="section-padding py-12">
+    <section ref={sectionRef} className="section-padding py-12">
       <div>
         <div className="x-auto grid  grid-cols-1 gap-10 pt-12 md:flex justify-between mb-12">
           {/* Left side */}

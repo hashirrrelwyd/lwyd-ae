@@ -1,8 +1,9 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { teamData } from "../../data/team";
+import { useSectionTheme } from "../../hooks/useHeaderThemeSection";
 
 const CATEGORY_LABELS = {
   all: "All",
@@ -26,6 +27,8 @@ const slideVariants = {
 };
 
 export default function Team() {
+  const sectionRef = useRef(null);
+  useSectionTheme(sectionRef, "dark");
   const [currentIndex, setCurrentIndex] = useState(0);
   const [currentCategory, setCurrentCategory] = useState("all");
   const [direction, setDirection] = useState(1);
@@ -66,7 +69,7 @@ export default function Team() {
   };
 
   return (
-    <div className="mx-1.5 mb-1.5 flex h-auto flex-col rounded-b-4xl bg-[#111111] px-6 py-10 text-white sm:h-screen md:px-10">
+    <div ref={sectionRef} className="mx-1.5 mb-1.5 flex h-auto flex-col rounded-b-4xl bg-[#111111] px-6 py-10 text-white sm:h-screen md:px-10">
       <h3 className="mb-8 text-[22px] font-[500] text-white">
         Meet <span className="text-lwyd-yellow font-[750] italic">Our</span>{" "}
         Team

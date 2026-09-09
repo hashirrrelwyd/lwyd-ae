@@ -1,8 +1,12 @@
+import { useRef } from "react";
 import Button from "../ui/Button";
+import { useSectionTheme } from "../../hooks/useHeaderThemeSection";
 
 export default function HeroSection() {
+  const sectionRef = useRef(null);
+  useSectionTheme(sectionRef, "light");
   return (
-    <section className="relative mx-auto grid h-[50vh] grid-cols-1 items-center gap-10 py-12 md:flex justify-between section-padding mt-24">
+    <section ref={sectionRef} className="relative mx-auto grid h-[50vh] grid-cols-1 items-center gap-10 py-12 md:flex justify-between section-padding mt-24">
       <div className="flex flex-col items-start gap-4 md:w-3/6">
         <h2 className="text-pretty text-[36px] sm:text-[72px] font-[500] leading-tight text-[#0F172A] mb-7">
           Lorem{" "}

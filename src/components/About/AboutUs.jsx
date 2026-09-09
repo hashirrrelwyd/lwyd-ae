@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Button from "../ui/Button";
+import { useSectionTheme } from "../../hooks/useHeaderThemeSection";
 
 // Custom hook to detect when element is visible on screen
 function useOnScreen(ref, rootMargin = "0px", threshold = 0) {
@@ -37,6 +38,8 @@ function useDigitHeight() {
 }
 
 export default function AboutUs() {
+  const sectionRef = useRef(null);
+  useSectionTheme(sectionRef, "light");
   const ref = useRef(null);
   // threshold 1 => only start once the counters row itself is fully inside the viewport
   // (watching the row, not the whole section, so it can still be satisfied on short/mobile viewports)
@@ -79,7 +82,7 @@ export default function AboutUs() {
   }, [isVisible, animated]);
 
   return (
-    <section className="section-padding py-12">
+    <section ref={sectionRef} className="section-padding py-12">
       <div className="x-auto grid  grid-cols-1 gap-10 py-14 md:flex justify-between mb-24">
         {/* Left side */}
         <div className="md:w-6/12">

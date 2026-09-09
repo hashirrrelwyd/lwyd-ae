@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Plus } from "lucide-react"; // only Plus
+import { useSectionTheme } from "../../hooks/useHeaderThemeSection";
 
 const faqs = [
   {
@@ -22,6 +23,8 @@ const faqs = [
 ];
 
 export default function FAQSection() {
+  const sectionRef = useRef(null);
+  useSectionTheme(sectionRef, "light");
   const [activeIndex, setActiveIndex] = useState(null);
 
   const toggleFAQ = (index) => {
@@ -29,7 +32,7 @@ export default function FAQSection() {
   };
 
   return (
-    <section className="bg-[#fdfbf6] py-12 section-padding">
+    <section ref={sectionRef} className="bg-[#fdfbf6] py-12 section-padding">
       <div className="mx-auto">
         <h3 className="text-[22px] font-[500] text-gray-800 mb-6">
           FAQ<span className="text-lwyd-yellow font-[750] italic">’s</span>
