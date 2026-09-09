@@ -44,11 +44,13 @@ export default function FAQSection() {
               {/* Question */}
               <button
                 onClick={() => toggleFAQ(index)}
-                className="w-full flex justify-between items-center px-5 py-4 text-left text-[#7D7D7D] font-medium hover:bg-[#F2EFE94D] transition-colors"
+                className="w-full flex justify-between items-center px-5 py-4 text-left text-[#7D7D7D] font-medium text-lg cursor-pointer"
               >
                 <span
                   className={`transition-all duration-500 ${
-                    activeIndex === index ? "text-black font-[600]" : ""
+                    activeIndex === index
+                      ? "text-black font-normal text-xl"
+                      : ""
                   }`}
                 >
                   {faq.question}
@@ -70,7 +72,7 @@ export default function FAQSection() {
                     : "max-h-0 opacity-0 py-0"
                 } overflow-hidden`}
               >
-                <p className="text-gray-600 text-sm leading-relaxed">
+                <p className="text-gray-600 text-base font-light leading-relaxed">
                   {faq.answer}
                 </p>
               </div>
