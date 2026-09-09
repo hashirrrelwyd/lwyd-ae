@@ -133,9 +133,33 @@ export default function Culture() {
       className="relative flex h-screen w-full items-center justify-center overflow-hidden section-padding"
     >
       <div
-        className="relative flex w-full items-start justify-center"
+        className="relative flex w-full flex-col items-center sm:flex-row sm:items-start sm:justify-center"
         style={{ gap: TITLE_GAP }}
       >
+        {/* Mobile only: both titles together, above the image (sides don't fit next to it on a narrow screen) */}
+        <div
+          className="w-full overflow-hidden sm:hidden"
+          style={{ height: ROW_HEIGHT }}
+        >
+          <div
+            className="flex flex-col transition-transform duration-500 ease-out"
+            style={{ transform: `translateY(-${currentIndex * ROW_HEIGHT}px)` }}
+          >
+            {items.map((item) => (
+              <div
+                key={item.id}
+                className="flex items-center justify-center gap-2 whitespace-nowrap text-2xl"
+                style={{ height: ROW_HEIGHT }}
+              >
+                <span className="font-[800] italic text-[#FFCC00]">
+                  {item.titleLeft}
+                </span>
+                <span className="font-[400] text-black">{item.titleRight}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
         {/* Left title roll, vertically centered on the current image (not the taller stack frame) */}
         <div
           className="hidden shrink-0 overflow-hidden text-right sm:block"
