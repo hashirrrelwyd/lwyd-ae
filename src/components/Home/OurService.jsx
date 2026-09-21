@@ -1,6 +1,7 @@
 "use client"
 
 import { useRef } from "react"
+import { useNavigate } from "react-router-dom"
 import Button from "../ui/Button"
 import { ArrowUpRight } from "lucide-react"
 import gsap from "gsap"
@@ -9,14 +10,15 @@ import { useSectionTheme } from "../../hooks/useHeaderThemeSection"
 const menuItems = [
   { title: "Creative Studio", link: "#", bg: "/images/creative.webp" },
   { title: "Retail Theatre", link: "#", bg: "/images/experience.webp" },
-  { title: "Print & Production", link: "#", bg: "/images/digital.webp" },
-  { title: "Experiential", link: "#", bg: "/images/media.webp" },
-  { title: "Quick Adapts", link: "#", bg: "/images/video.webp" },
-  { title: "Social Media Marketing", link: "#", bg: "/images/social.webp" },
+  { title: "Photography & Videography", link: "#", bg: "/images/digital.webp" },
+  { title: "Influencer Marketing", link: "#", bg: "/images/media.webp" },
+  { title: "Social Media Marketing", link: "#", bg: "/images/video.webp" },
+  { title: "Performance Marketing", link: "#", bg: "/images/social.webp" },
 ]
 
 export default function OurService() {
   const sectionRef = useRef(null)
+  const navigate = useNavigate()
   useSectionTheme(sectionRef, "light")
 
   // refs to animate with GSAP per item
@@ -99,7 +101,7 @@ export default function OurService() {
           Service
         </h2>
 
-        <Button title={"View All Services"} />
+        <Button title={"View All Services"} onClick={() => navigate("/service")} />
       </div>
 
       {/* Grid: Desktop 2 columns (3/3). Mobile 1 column with no vertical gaps */}
@@ -139,10 +141,19 @@ export default function OurService() {
                     ref={(el) => setTextRef(el, i)}
                     className="ml-1 font-[300] text-[#7D7D7D80] text-[18px] sm:text-[22px] md:text-[26px] lg:text-[30px] transition-none"
                   >
-                    {item.title.split(" ")[0]}{" "}
-                    <span className="group-hover:text-yellow-400 group-hover:font-[750] group-hover:italic">
-                      {item.title.split(" ")[1] || ""}
-                    </span>
+                    {(() => {
+                      const words = item.title.split(" ")
+                      const last = words.pop()
+                      const rest = words.join(" ")
+                      return (
+                        <>
+                          {rest && `${rest} `}
+                          <span className="group-hover:text-yellow-400 group-hover:font-[750] group-hover:italic">
+                            {last}
+                          </span>
+                        </>
+                      )
+                    })()}
                   </span>
                 </div>
               </a>
@@ -183,10 +194,19 @@ export default function OurService() {
                     ref={(el) => setTextRef(el, i)}
                     className="ml-1 font-[300] text-[#7D7D7D80] text-[18px] sm:text-[22px] md:text-[26px] lg:text-[30px] transition-none"
                   >
-                    {item.title.split(" ")[0]}{" "}
-                    <span className="group-hover:text-yellow-400 group-hover:font-[750] group-hover:italic">
-                      {item.title.split(" ")[1] || ""}
-                    </span>
+                    {(() => {
+                      const words = item.title.split(" ")
+                      const last = words.pop()
+                      const rest = words.join(" ")
+                      return (
+                        <>
+                          {rest && `${rest} `}
+                          <span className="group-hover:text-yellow-400 group-hover:font-[750] group-hover:italic">
+                            {last}
+                          </span>
+                        </>
+                      )
+                    })()}
                   </span>
                 </div>
               </a>
