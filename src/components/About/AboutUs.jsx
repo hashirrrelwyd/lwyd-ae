@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Button from "../ui/Button";
 import { useSectionTheme } from "../../hooks/useHeaderThemeSection";
 
@@ -39,6 +40,7 @@ function useDigitHeight() {
 
 export default function AboutUs() {
   const sectionRef = useRef(null);
+  const navigate = useNavigate();
   useSectionTheme(sectionRef, "light");
   const ref = useRef(null);
   // threshold 1 => only start once the counters row itself is fully inside the viewport
@@ -49,7 +51,13 @@ export default function AboutUs() {
   const [counters, setCounters] = useState([0, 0, 0, 0]);
   const [animated, setAnimated] = useState(false); // prevent re-trigger
 
-  const targetNumbers = [99, 158, 325, 128];
+  const stats = [
+    { value: 10, suffix: "+", label: "Clients" },
+    { value: 2, suffix: "", label: "Cities" },
+    { value: 100, suffix: "+", label: "Team Members" },
+    { value: 99, suffix: "+", label: "Lorem ipsum dolor" },
+  ];
+  const targetNumbers = stats.map((s) => s.value);
 
   useEffect(() => {
     if (isVisible && !animated) {
@@ -84,20 +92,25 @@ export default function AboutUs() {
   return (
     <section ref={sectionRef} className="section-padding py-12">
       <div className="x-auto grid  grid-cols-1 gap-10 py-14 md:flex justify-between mb-24">
-        {/* Left side */}
-        <div className="md:w-6/12">
+        {/* Left side: small title (top) + big headline (bottom) */}
+        <div className="flex flex-col justify-between md:w-6/12">
           <h3 className="text-[22px] font-[500] text-gray-800 mb-2">
             Who <span className="text-lwyd-yellow font-[750] italic">We</span>{" "}
             are
           </h3>
-        </div>
-        <div className="md:w-6/12 lg:w-4/12">
-          <h2 className="text-3xl md:text-4xl font-[500] mb-4">
-            Lorem{" "}
-            <span className="text-lwyd-yellow italic font-[750]">ipsum</span>{" "}
-            dolor dolor consectetur consectetur adipiscing Lorem
+          <h2 className="text-3xl md:text-4xl font-[500]">
+            Built by{" "}
+            <span className="text-lwyd-yellow italic font-[750]">people</span>{" "}
+            who've lived inside this industry
           </h2>
-          <Button title={"Our Service"} />
+        </div>
+
+        {/* Right side: small copy + CTA */}
+        <div className="md:w-6/12 lg:w-4/12">
+          <p className="mb-4 text-base font-light leading-6 text-[#6B7280]">
+            LWYD Interactive is a Bengaluru-founded creative and digital agency working exclusively in alco-bev bar to retail, concept to production. It's the only space we build for, and it shows in every brief we take on.
+          </p>
+          <Button title={"Our Service"} onClick={() => navigate("/service")} />
         </div>
       </div>
 
@@ -133,16 +146,16 @@ export default function AboutUs() {
                     </div>
                   </div>
                 ))}
-              {i === 3 && (
+              {stats[i].suffix && (
                 <span
                   className="font-[500] leading-none"
                   style={{ fontSize: digitHeight }}
                 >
-                  +
+                  {stats[i].suffix}
                 </span>
               )}
             </div>
-            <p className="text-[#7d7d7d] text-[20px]">Lorem ipsum dolor</p>
+            <p className="text-[#7d7d7d] text-[20px]">{stats[i].label}</p>
           </div>
         ))}
       </div>
