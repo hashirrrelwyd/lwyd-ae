@@ -54,7 +54,7 @@ export default function AboutUs() {
   const stats = [
     { value: 10, suffix: "+", label: "Clients" },
     { value: 2, suffix: "", label: "Cities" },
-    { value: 100, suffix: "+", label: "Team Members" },
+    { value: 80, suffix: "+", label: "Team Members" },
     { value: 99, suffix: "+", label: "Lorem ipsum dolor" },
   ];
   const targetNumbers = stats.map((s) => s.value);
