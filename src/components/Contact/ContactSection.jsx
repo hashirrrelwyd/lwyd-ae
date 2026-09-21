@@ -27,17 +27,15 @@ export default function ContactSection() {
           />
           <div>
             <h2 className="text-3xl md:text-4xl font-[500] leading-snug">
-              Lorem <span className="italic text-yellow-400 font-[750]">ipsum</span> dolor
-              dolor <br />
-              <span className="font-bold text-yellow-400">consectetur</span>
+              <span className="italic text-yellow-400 font-[750]">Tell us</span> what you're
+               <br />
+              <span className="font-bold text-yellow-400">building</span>
             </h2>
             
           </div>
           <div>
             <p className="mb-6 text-sm md:text-base max-w-md leading-relaxed">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed Lorem
-              ipsum dolor sit amet, consectetur adipiscing Lorem ipsum dolor sit
-              amet, consectetur
+              Campaign, partnership, or platform - whatever it is, let's talk. 
             </p>
             <Button title={"Join Us"} />
           </div>
