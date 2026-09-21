@@ -89,18 +89,17 @@ export default function HeroSection() {
       {/* Title */}
       <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
         <h1 className="text-[36px] sm:text-[72px] text-black font-[200] text-center">
-          Lorem{" "}
-          <span className="text-lwyd-yellow font-[700] italic">ipsum</span>{" "}
-          dolor dolor <br />
-          <span className="text-lwyd-yellow font-[700] italic">consectetur</span>
+          We only{" "}
+          <span className="text-lwyd-yellow font-[700] italic">built</span>{" "}
+          for one space and <br /> we've gotten
+          <span className="text-lwyd-yellow font-[700] italic"> very good at it </span>
         </h1>
       </div>
 
       {/* Paragraph */}
       <div className="absolute bottom-16 left-1/2 -translate-x-1/2 z-20 pointer-events-none">
         <p className="text-[#7D7D7D] text-base font-normal max-w-md text-center">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed Lorem
-          ipsum dolor sit amet, consectetur adipiscing
+          LWYD was built inside the alco-bev world, not adapted for it. Here's who we are and how we work. 
         </p>
       </div>
 
