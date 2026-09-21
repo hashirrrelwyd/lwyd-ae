@@ -4,24 +4,19 @@ import { useSectionTheme } from "../../hooks/useHeaderThemeSection";
 
 const whyChooseUs = [
   {
-    title: "Innovative Approach",
+    title: "End-to-End Execution",
     description:
-      "We apply fresh thinking to every project, crafting solutions that truly stand out.",
+      "Concept, production, and delivery, under one roof — not stitched together across three vendors. ",
   },
   {
     title: "Proven Track Record",
     description:
-      "Trusted by clients across industries, we consistently deliver on our promises.",
+      "Years of work across the country's biggest spirits and beer portfolios.",
   },
   {
-    title: "Dedicated Support",
+    title: "Dedicated Team",
     description:
-      "We're always here for you — pre, during, and post project delivery.",
-  },
-  {
-    title: "Expert Team",
-    description:
-      "Our skilled team blends tech expertise with business insight.",
+      "Specialists who only do this kind of work, not generalists juggling five other industries. ",
   },
   {
     title: "Client-Centric",
