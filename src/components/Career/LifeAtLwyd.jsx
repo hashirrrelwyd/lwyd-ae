@@ -21,9 +21,7 @@ export default function LifeAtLwyd() {
           </div>
           <div className="md:w-6/12 lg:w-4/12">
             <h2 className="text-3xl md:text-4xl font-[500] mb-4">
-              Lorem{" "}
-              <span className="text-lwyd-yellow italic font-[750]">ipsum</span>{" "}
-              dolor dolor consectetur consectetur adipiscing Lorem
+              Where <span className="text-lwyd-yellow italic font-[750]">bold ideas</span>{" "} turn into things you can actually point to
             </h2>
             <Button title={"Join Us"} />
           </div>

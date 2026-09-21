@@ -16,18 +16,17 @@ export default function HeroSection() {
         <div className="absolute inset-0 flex items-end justify-between py-6 section-padding">
           <div>
             <p className="text-[36px] sm:text-[72px] text-white font-[300]">
-              Lorem{" "}
-              <span className="text-lwyd-yellow font-[700] italic">ipsum</span>{" "}
-              dolor dolor <br />
+              Come make{" "}
+              <span className="text-lwyd-yellow font-[700] italic">things</span>{" "}
+              people actually <br />
               <span className="text-lwyd-yellow font-[700] italic">
-                consectetur
+                notice
               </span>
             </p>
           </div>
           <div>
-            <p className="text-[#FFFFFFB2] text-sm font-400 w-80">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed Lorem
-              ipsum dolor sit amet, consectetur adipiscing
+            <p className="text-[#FFFFFFB2] text-base font-400 w-96">
+              Join a team that ships fast and doesn't sit still.
             </p>
           </div>
         </div>
