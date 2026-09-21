@@ -11,10 +11,8 @@ export default function HeroSection() {
     {/* Left - Heading */}
     <div className="flex items-start justify-start">
       <h2 className="text-pretty text-[36px] sm:text-[72px] font-[500] leading-tight text-[#0F172A] mb-7">
-        Lorem{" "}
-        <span className="italic text-lwyd-yellow font-[750]">ipsum</span>{" "}
-        dolor dolor <br />
-        <span className="italic text-lwyd-yellow font-[750]">consectetur</span>{" "}
+        Proof, not {" "}
+        <span className="italic text-lwyd-yellow font-[750]">promises</span>{" "}
         <span className="relative -mb-1 inline-flex align-middle">
           <img
             src="/images/button-img.png"
@@ -29,12 +27,10 @@ export default function HeroSection() {
     <div className="
       mt-6                       /* mobile: normal stacked flow */
       md:mt-0 md:flex md:items-end md:justify-end /* desktop: bottom-right */
-      text-sm leading-6 text-[#6B7280]
+      text-base font-light leading-6 text-[#6B7280]
     ">
       <p className="max-w-xs">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed Lorem
-        ipsum dolor sit amet, consectetur adipiscing Lorem ipsum dolor sit
-        amet, consectetur adipiscing elit,
+        A running look at what we've actually shipped - shot, produced, and put out into the world.
       </p>
     </div>
   </div>

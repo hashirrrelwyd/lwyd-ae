@@ -12,7 +12,6 @@ const worksData = [
     year: "2024",
     image: "/images/media.webp",
     description: "This is a brief description of Project One.",
-    color: "#E07B39", // brown-orange
     width: "w-2/6",
   },
   {
@@ -21,7 +20,6 @@ const worksData = [
     year: "2025",
     image: "/images/media.webp",
     description: "This is a brief description of Project Two.",
-    color: "#4ADE80", // green
     width: "w-4/6",
   },
   {
@@ -30,7 +28,6 @@ const worksData = [
     year: "2025",
     image: "/images/media.webp",
     description: "This is a brief description of Project Three.",
-    color: "#60A5FA", // blue
     width: "w-2/4",
   },
   {
@@ -39,7 +36,6 @@ const worksData = [
     year: "2025",
     image: "/images/media.webp",
     description: "This is a brief description of Project Four.",
-    color: "#FACC15", // yellow
     width: "w-2/4",
   },
   {
@@ -48,7 +44,6 @@ const worksData = [
     year: "2025",
     image: "/images/media.webp",
     description: "This is a brief description of Project Five.",
-    color: "#A78BFA", // purple
     width: "w-4/6",
   },
   {
@@ -57,7 +52,6 @@ const worksData = [
     year: "2025",
     image: "/images/media.webp",
     description: "This is a brief description of Project Six.",
-    color: "#FB7185", // pink
     width: "w-2/6",
   },
 ];
@@ -99,7 +93,7 @@ export default function Works() {
                 {/* Expanding Ball */}
                 <motion.div
                   className="absolute bottom-0 left-1/2 -translate-x-1/2 w-24 h-24 rounded-full z-10"
-                  style={{ backgroundColor: work.color }}
+                  style={{ backgroundColor: "#FFCC00" }}
                   variants={ballVariants}
                 />
 
@@ -172,7 +166,7 @@ export default function Works() {
       {/* Expanding Ball */}
       <motion.div
         className="absolute bottom-0 left-1/2 -translate-x-1/2 w-20 h-20 rounded-full z-10"
-        style={{ backgroundColor: work.color }}
+        style={{ backgroundColor: "#FFCC00" }}
         variants={ballVariants}
       />
 
