@@ -9,7 +9,7 @@ export default function DraggableMarquee({
   text = "Make It Happen with LWYD",
   speed = 1,
   highlight = "LWYD",
-  chipSrc = "/images/media.webp",
+  chipSrc = "/images/teams.webp",
   chipAlt = "Chip",
   gap = 350, // spacing between repeated text
   className = "",
