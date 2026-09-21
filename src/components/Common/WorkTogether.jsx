@@ -16,9 +16,9 @@ export default function WorkTogether() {
       </div>
       <div>
         <h2 className="text-3xl md:text-4xl font-[500] mb-4">
-          Lorem{" "}
-          <span className="text-lwyd-yellow italic font-[750]">ipsum</span>{" "}
-          dolor dolor consectetur consectetur adipiscing Lorem
+          Got a brand you want to build with us?{" "}
+          <span className="text-lwyd-yellow italic font-[750]">Let's talk.</span>{" "}
+          
         </h2>
         <Button title={"Contact Us"} />
       </div>

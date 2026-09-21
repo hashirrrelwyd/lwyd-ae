@@ -4,34 +4,25 @@ import { useSectionTheme } from "../../hooks/useHeaderThemeSection";
 
 const whatDrivesUs = [
   {
-    title: "Innovative Approach",
+    title: "Creativity with Purpose",
     description:
-      "We apply fresh thinking to every project, crafting solutions that truly stand out.",
+      "Every idea earns its place - nothing built just to look good in a deck.",
   },
   {
-    title: "Proven Track Record",
+    title: "Boldness",
     description:
-      "Trusted by clients across industries, we consistently deliver on our promises.",
+      "We chase the braver idea first, then engineer the smart way to actually land it.",
   },
   {
-    title: "Dedicated Support",
+    title: "Collaboration",
     description:
-      "We're always here for you — pre, during, and post project delivery.",
+      "Client, agency, culture - the best work happens when none of them work in silos.",
   },
   {
     title: "Expert Team",
     description:
-      "Our skilled team blends tech expertise with business insight.",
-  },
-  {
-    title: "Client-Centric",
-    description:
-      "Our approach starts and ends with understanding your goals and needs.",
-  },
-  {
-    title: "Cutting-Edge Technology",
-    description: "We use the latest tools to keep you ahead of the curve.",
-  },
+      "Our skilled team blends creativity, strategy, and technical expertise to deliver exceptional results.",
+  }
 ];
 
 export default function WhatDrivesUs() {
