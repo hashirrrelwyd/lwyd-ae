@@ -8,12 +8,11 @@ import { useSectionTheme } from "../../hooks/useHeaderThemeSection";
 gsap.registerPlugin(ScrollTrigger);
 
 const worksData = [
-  { id: 1, title: "Lorem ipsum dolor dolor", year: "2025", image: "/images/media.webp" },
-  { id: 2, title: "Lorem ipsum dolor dolor", year: "2025", image: "/images/creative.webp" },
-  { id: 3, title: "Lorem ipsum dolor dolor", year: "2025", image: "/images/digital.webp" },
-  { id: 4, title: "Lorem ipsum dolor dolor", year: "2025", image: "/images/experience.webp" },
-  { id: 5, title: "Lorem ipsum dolor dolor", year: "2025", image: "/images/social.webp" },
-  { id: 6, title: "Lorem ipsum dolor dolor", year: "2025", image: "/images/video.webp" },
+  { id: 1, title: "Jameson x Bluorng", year: "2026", image: "/images/media.webp" },
+  { id: 2, title: "Jameson x Gully Labs", year: "2025", image: "/images/creative.webp" },
+  { id: 3, title: "Royal Challenge Packaged Drinking Water x Gully Labs", year: "2025", image: "/images/digital.webp" },
+  { id: 4, title: "Don Julio x Anamika Khanna - Minis Launch Campaign", year: "2026", image: "/images/experience.webp" },
+  { id: 5, title: "Grey Goose Altius x ICW", year: "2025", image: "/images/social.webp" },
 ];
 
 const ROW_HEIGHT = 60; // px, spacing between title rows on the left
@@ -81,12 +80,12 @@ export default function WorkSection({ connected = false }) {
         className={`relative flex h-full w-full flex-col overflow-hidden ${connected ? "rounded-b-2xl" : "rounded-2xl"} bg-[#111111] text-white section-padding py-10`}
       >
         <h2 className="mb-10 text-xl font-[500] md:text-2xl">
-          Lorem <span className="italic font-[750] text-lwyd-yellow">ipsum</span> dolor
+          Featured <span className="italic font-[750] text-lwyd-yellow">Work</span>
         </h2>
 
         <div className="flex min-h-0 flex-1 items-stretch gap-10">
           {/* Left: work titles */}
-          <div className="flex w-2/5 flex-col justify-end pb-4">
+          <div className="flex flex-1 flex-col justify-end pb-4">
             <div
               className="relative overflow-hidden"
               style={{
@@ -122,7 +121,7 @@ export default function WorkSection({ connected = false }) {
           </div>
 
           {/* Right: work images */}
-          <div ref={frameRef} className="relative h-full w-3/5 overflow-hidden rounded-2xl">
+          <div ref={frameRef} className="relative aspect-square h-full shrink-0 overflow-hidden rounded-2xl">
             <div ref={trackRef} className="absolute inset-x-0 top-0 flex flex-col">
               {worksData.map((work) => (
                 <div key={work.id} className="w-full shrink-0 overflow-hidden rounded-2xl">

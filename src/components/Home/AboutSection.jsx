@@ -12,33 +12,43 @@ export default function AboutSection() {
     <section ref={sectionRef} className="section-padding">
       <LogosMarquee />
 
-      {/* Two-column content */}
-      <div className="mx-auto grid  grid-cols-1 gap-10 py-14 md:flex justify-between">
-        {/* Left copy */}
-        <div className="md:w-2/6 text-sm font-light leading-6 text-[#6B7280]">
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed Lorem
-            ipsum dolor sit amet, consectetur adipiscing Lorem ipsum dolor sit
-            amet, consectetur adipiscing elit,
-          </p>
+      {/* Two-column, two-row content */}
+      <div className="mx-auto flex flex-col gap-8 py-14">
+        {/* Row 1: headline (left) + intro copy (right) */}
+        <div className="flex flex-col gap-6 md:flex-row md:justify-between">
+          <div className="md:w-4/12">
+            <h2 className="text-pretty text-3xl font-[500] leading-tight text-[#0F172A] md:text-4xl">
+              The{" "}
+              <span className="italic text-lwyd-yellow font-[750]">agency</span>{" "}
+              that gets what you're actually selling{" "}
+              <span className="relative -mb-1 inline-flex -translate-y-1 align-middle">
+                <img
+                  src="/images/button-img.png"
+                  alt=""
+                  className="h-8 w-16 rounded-full object-cover"
+                />
+              </span>
+            </h2>
+          </div>
+
+          <div className="md:w-2/6 text-base font-light leading-6 text-[#6B7280]">
+            <p>
+              We don't bolt drinks work onto a generalist playbook. Every strategy, campaign, and platform we build starts from how this industry actually behaves - what sells at the bar, on the shelf, and everywhere in between.
+            </p>
+          </div>
         </div>
 
-        {/* Right headline + CTA */}
-        <div className="flex flex-col items-start gap-4 md:w-4/12">
-          <h2 className="text-pretty text-3xl font-[500] leading-tight text-[#0F172A] md:text-4xl mb-7">
-            Lorem{" "}
-            <span className="italic text-lwyd-yellow font-[750]">ipsum</span>{" "}
-            dolor dolor consectetur{" "}
-            <span className="relative -mb-1 inline-flex -translate-y-1 align-middle">
-              <img
-                src="/images/button-img.png"
-                alt=""
-                className="h-8 w-16 rounded-full object-cover"
-              />
-            </span>
-          </h2>
+        {/* Row 2: small copy (left) + Learn more button, same line */}
+        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+          <div className="md:w-4/12 text-base font-light leading-6 text-[#6B7280]">
+            <p>
+              Trusted by brands that own every point of purchase - the bar, the events floor, the retail shelf, and everything people reach for after 7pm.
+            </p>
+          </div>
 
-          <Button title={"Learn more"} />
+          <div className="md:w-2/6">
+            <Button title={"Learn more"} />
+          </div>
         </div>
       </div>
     </section>

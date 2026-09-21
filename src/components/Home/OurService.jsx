@@ -7,11 +7,11 @@ import gsap from "gsap"
 import { useSectionTheme } from "../../hooks/useHeaderThemeSection"
 
 const menuItems = [
-  { title: "Creative Development", link: "#", bg: "/images/creative.webp" },
-  { title: "Experience Design", link: "#", bg: "/images/experience.webp" },
-  { title: "Digital Strategy", link: "#", bg: "/images/digital.webp" },
-  { title: "Media Services", link: "#", bg: "/images/media.webp" },
-  { title: "Video Production", link: "#", bg: "/images/video.webp" },
+  { title: "Creative Studio", link: "#", bg: "/images/creative.webp" },
+  { title: "Retail Theatre", link: "#", bg: "/images/experience.webp" },
+  { title: "Print & Production", link: "#", bg: "/images/digital.webp" },
+  { title: "Experiential", link: "#", bg: "/images/media.webp" },
+  { title: "Quick Adapts", link: "#", bg: "/images/video.webp" },
   { title: "Social Media Marketing", link: "#", bg: "/images/social.webp" },
 ]
 
