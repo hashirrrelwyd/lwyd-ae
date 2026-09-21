@@ -15,7 +15,8 @@ const worksData = [
   { id: 5, title: "Grey Goose Altius x ICW", year: "2025", image: "/images/social.webp" },
 ];
 
-const ROW_HEIGHT = 60; // px, spacing between title rows on the left
+const ROW_HEIGHT = 60; // px, mask viewport height reference on the left
+const ROW_GAP = 20; // px, equal space between title rows, wrapped or not
 const PEEK = 72; // px of the next image visible at the bottom of the frame
 const IMAGE_GAP = 24; // px, gap between stacked work images
 
@@ -23,9 +24,20 @@ export default function WorkSection({ connected = false }) {
   const sectionRef = useRef(null);
   const frameRef = useRef(null);
   const trackRef = useRef(null);
+  const titleRowRefs = useRef([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [rowOffsets, setRowOffsets] = useState([]);
 
   useSectionTheme(sectionRef, "dark");
+
+  useLayoutEffect(() => {
+    const measureRows = () => {
+      setRowOffsets(titleRowRefs.current.map((el) => el?.offsetTop ?? 0));
+    };
+    measureRows();
+    window.addEventListener("resize", measureRows);
+    return () => window.removeEventListener("resize", measureRows);
+  }, []);
 
   useLayoutEffect(() => {
     const section = sectionRef.current;
@@ -77,15 +89,15 @@ export default function WorkSection({ connected = false }) {
       className={`relative h-screen w-full ${connected ? "px-1.5 pb-1.5" : "p-1.5"}`}
     >
       <div
-        className={`relative flex h-full w-full flex-col overflow-hidden ${connected ? "rounded-b-2xl" : "rounded-2xl"} bg-[#111111] text-white section-padding py-10`}
+        className={`relative flex h-full w-full overflow-hidden ${connected ? "rounded-b-2xl" : "rounded-2xl"} bg-[#111111] text-white section-padding py-10`}
       >
-        <h2 className="mb-10 text-xl font-[500] md:text-2xl">
-          Featured <span className="italic font-[750] text-lwyd-yellow">Work</span>
-        </h2>
-
         <div className="flex min-h-0 flex-1 items-stretch gap-10">
-          {/* Left: work titles */}
-          <div className="flex flex-1 flex-col justify-end pb-4">
+          {/* Left: title (top) + work titles (bottom) */}
+          <div className="flex flex-1 flex-col justify-between pb-4">
+            <h2 className="text-xl font-[500] md:text-2xl">
+              Featured <span className="italic font-[750] text-lwyd-yellow">Work</span>
+            </h2>
+
             <div
               className="relative overflow-hidden"
               style={{
@@ -96,21 +108,28 @@ export default function WorkSection({ connected = false }) {
             >
               <div
                 className="flex flex-col transition-transform duration-500 ease-out"
-                style={{ transform: `translateY(-${currentIndex * ROW_HEIGHT}px)` }}
+                style={{
+                  gap: ROW_GAP,
+                  transform: `translateY(-${rowOffsets[currentIndex] ?? 0}px)`,
+                }}
               >
                 {worksData.map((work, i) => (
-                  <div key={work.id} className="flex items-end gap-2" style={{ height: ROW_HEIGHT }}>
+                  <div
+                    key={work.id}
+                    ref={(el) => (titleRowRefs.current[i] = el)}
+                    className="flex items-end gap-2"
+                  >
                     <h3
-                      className={`leading-none transition-all duration-500 ${
+                      className={`leading-snug transition-all duration-500 ${
                         i === currentIndex
-                          ? "text-2xl font-bold italic text-white md:text-3xl"
-                          : "text-2xl font-normal text-[#7D7D7D] md:text-3xl"
+                          ? "text-[22px] font-bold italic text-white md:text-[28px]"
+                          : "text-[22px] font-normal text-[#7D7D7D] md:text-[28px]"
                       }`}
                     >
                       {work.title}
                     </h3>
                     {i === currentIndex && (
-                      <span className="translate-y-1/2 whitespace-nowrap text-xs text-[#7D7D7D]">
+                      <span className="whitespace-nowrap text-xs text-[#7D7D7D]">
                         [{work.year}]
                       </span>
                     )}
