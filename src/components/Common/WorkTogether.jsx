@@ -2,7 +2,7 @@ import { useRef } from "react";
 import Button from "../ui/Button";
 import { useSectionTheme } from "../../hooks/useHeaderThemeSection";
 
-export default function WorkTogether() {
+export default function WorkTogether({ heading }) {
   const sectionRef = useRef(null);
   useSectionTheme(sectionRef, "light");
   return (
@@ -16,9 +16,12 @@ export default function WorkTogether() {
       </div>
       <div>
         <h2 className="text-3xl md:text-4xl font-[500] mb-4">
-          Got a brand you want to build with us?{" "}
-          <span className="text-lwyd-yellow italic font-[750]">Let's talk.</span>{" "}
-          
+          {heading ?? (
+            <>
+              Got a brand you want to build with us?{" "}
+              <span className="text-lwyd-yellow italic font-[750]">Let's talk.</span>
+            </>
+          )}
         </h2>
         <Button title={"Contact Us"} />
       </div>

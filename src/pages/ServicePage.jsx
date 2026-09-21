@@ -15,7 +15,14 @@ export default function ServicePage() {
     <OurServices />
     <WhyChooseUs />
     <WorkSection connected />
-    <WorkTogether />
+    <WorkTogether
+      heading={
+        <>
+          Ready to build something{" "}
+          <span className="text-lwyd-yellow italic font-[750]">together?</span>
+        </>
+      }
+    />
     <ScrollingTextSection/>
     <Footer />
     </>
