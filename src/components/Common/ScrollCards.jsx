@@ -1,9 +1,13 @@
-import { motion, useScroll } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { useEffect, useRef } from "react";
 
 export default function ScrollCards({Data}) {
   const scrollRef = useRef(null);
   const { scrollXProgress } = useScroll({ container: scrollRef });
+
+  // Scrollbar thumb: a short fixed-width bar (~3/4 of a card, as in Figma) that slides along the track
+  const THUMB_SHARE = 0.29; // share of the track width (Figma)
+  const thumbLeft = useTransform(scrollXProgress, (p) => `${p * (1 - THUMB_SHARE) * 100}%`);
 
   const isDragging = useRef(false);
   const startX = useRef(0);
@@ -58,27 +62,30 @@ export default function ScrollCards({Data}) {
               key={index}
               className="@container relative flex-shrink-0 aspect-[578/600] w-[80vw] md:w-[calc((100vw-2*var(--side-padding)-1.5rem-28px)/2)] lg:w-[calc((100vw-2*var(--side-padding)-4rem-28px)/3)] bg-[#212121] rounded-2xl overflow-hidden"
             >
-              {/* Big faded number, cut off at the top edge (~150px on a 578px card) */}
-              <span className="absolute left-[-2cqw] top-[-10.5cqw] text-[26cqw] leading-none font-[500] text-white/20">
+              {/* Big faded number (~150px on a 578px card). As in Figma it runs past the
+                  card's top-left corner: the "0" is partly cut off and the tops of the digits too */}
+              <span className="absolute left-[-8.6cqw] top-[-9.3cqw] text-[26cqw] leading-none font-[500] text-white/20">
                 0{index + 1}
               </span>
 
-              {/* 2nd Dashed circle (as wide as the card) */}
+              {/* Dashed circles, centred just outside the top corner (left on odd cards,
+                  right on even), measured from Figma. top % is of the card height. */}
+              {/* Outer circle: radius ~56% of the card width */}
               <span
-                className={`absolute w-full aspect-square border-2 border-dashed border-white/10 rounded-full
+                className={`absolute w-[112%] aspect-square border border-dashed border-white/15 rounded-full
                         ${
                           index % 2 === 0
-                            ? "left-[-51%] top-[-55%]"
-                            : "right-[-53%] top-[-55%]"
+                            ? "left-[-58%] top-[-59.7%]"
+                            : "right-[-58%] top-[-59.7%]"
                         }`}
               ></span>
-              {/* 1st Dashed circle (~58% of the card) */}
+              {/* Inner circle: radius ~30% of the card width */}
               <span
-                className={`absolute w-[58%] aspect-square border-2 border-dashed border-white/10 rounded-full
+                className={`absolute w-[60%] aspect-square border border-dashed border-white/15 rounded-full
                         ${
                           index % 2 === 0
-                            ? "left-[-27%] top-[-27.5%]"
-                            : "right-[-28.5%] top-[-27.5%]"
+                            ? "left-[-29.5%] top-[-34.2%]"
+                            : "right-[-29.5%] top-[-34.2%]"
                         }`}
               ></span>
 
@@ -97,11 +104,11 @@ export default function ScrollCards({Data}) {
         </div>
       </div>
 
-      {/* Scroll Indicator: grey track with the yellow progress on top */}
-      <div className="relative mb-4 h-px w-full bg-white/10">
+      {/* Scroll Indicator: grey track with a yellow thumb that slides as you scroll */}
+      <div className="relative mb-4 h-[2px] w-full bg-white/15">
         <motion.div
-          className="absolute inset-0 bg-lwyd-yellow"
-          style={{ scaleX: scrollXProgress, transformOrigin: "left" }}
+          className="absolute inset-y-0 bg-lwyd-yellow"
+          style={{ left: thumbLeft, width: `${THUMB_SHARE * 100}%` }}
         />
       </div>
     </>

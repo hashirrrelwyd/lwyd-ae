@@ -1,9 +1,11 @@
 import { useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import Button from "../ui/Button";
 import { useSectionTheme } from "../../hooks/useHeaderThemeSection";
 
 export default function WorkTogether({ heading }) {
   const sectionRef = useRef(null);
+  const navigate = useNavigate();
   useSectionTheme(sectionRef, "light");
   return (
     <section ref={sectionRef} className="grid md:grid-cols-2 gap-12 mb-24 section-padding py-24">
@@ -23,7 +25,7 @@ export default function WorkTogether({ heading }) {
             </>
           )}
         </h2>
-        <Button title={"Contact Us"} />
+        <Button title={"Contact Us"} onClick={() => navigate("/contact")} />
       </div>
     </section>
   );
