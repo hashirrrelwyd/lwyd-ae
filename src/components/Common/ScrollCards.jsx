@@ -5,9 +5,13 @@ export default function ScrollCards({Data}) {
   const scrollRef = useRef(null);
   const { scrollXProgress } = useScroll({ container: scrollRef });
 
-  // Scrollbar thumb: a short fixed-width bar (~3/4 of a card, as in Figma) that slides along the track
-  const THUMB_SHARE = 0.29; // share of the track width (Figma)
-  const thumbLeft = useTransform(scrollXProgress, (p) => `${p * (1 - THUMB_SHARE) * 100}%`);
+  // Progress bar: stays anchored on the left and fills towards the right as you scroll,
+  // starting at ~29% of the track (as in Figma) and reaching 100% at the last card
+  const START_SHARE = 0.29; // filled share of the track before scrolling (Figma)
+  const fillWidth = useTransform(
+    scrollXProgress,
+    (p) => `${(START_SHARE + p * (1 - START_SHARE)) * 100}%`
+  );
 
   const isDragging = useRef(false);
   const startX = useRef(0);
@@ -104,11 +108,11 @@ export default function ScrollCards({Data}) {
         </div>
       </div>
 
-      {/* Scroll Indicator: grey track with a yellow thumb that slides as you scroll */}
+      {/* Scroll Indicator: grey track with a yellow bar that fills left to right as you scroll */}
       <div className="relative mb-4 h-[2px] w-full bg-white/15">
         <motion.div
-          className="absolute inset-y-0 bg-lwyd-yellow"
-          style={{ left: thumbLeft, width: `${THUMB_SHARE * 100}%` }}
+          className="absolute inset-y-0 left-0 bg-lwyd-yellow"
+          style={{ width: fillWidth }}
         />
       </div>
     </>

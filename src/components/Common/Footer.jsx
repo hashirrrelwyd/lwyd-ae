@@ -9,7 +9,9 @@ import { useSectionTheme } from "../../hooks/useHeaderThemeSection";
 // Sizes are in rem so the footer scales with the screen (see html font-size in index.css):
 // the values below match the Figma design on a 1920px monitor.
 const linkClass = "text-base md:text-lg font-[400] cursor-pointer";
-const headingClass = "text-lg md:text-xl font-[300] text-[#FFFFFF99]";
+// leading-none: no extra line-height space above the text, so the visible gap above
+// "Explore"/"Inquiries" matches the footer's side padding exactly
+const headingClass = "text-lg md:text-xl leading-none font-[300] text-[#FFFFFF99]";
 const socialClass =
   "bg-white w-8 h-8 rounded-full flex justify-center items-center cursor-pointer hover:rounded-md transition-all duration-300";
 const legalClass = `relative text-sm md:text-[0.9375rem] font-light cursor-pointer text-white hover:text-[#ffcc00]
@@ -22,20 +24,23 @@ export default function Footer() {
   const footerRef = useRef(null)
   useSectionTheme(footerRef, "dark")
   return (
-    <footer ref={footerRef} className="section-padding bg-[#111111] text-white w-full pt-16 pb-12 lg:pt-[max(2.5rem,3.33vw)] lg:pb-[max(2rem,2.5vw)] rounded-t-[2rem] flex flex-col gap-12 lg:gap-[max(2rem,3.33vw)]">
+    // Top and side padding are the same value, so the content sits equally far
+    // from the top edge and the left/right edges (40px on phones/tablets; 64px on a
+    // 1920px monitor, scaling with the screen on laptops)
+    <footer ref={footerRef} className="bg-[#111111] text-white w-full px-10 pt-10 pb-5 lg:px-[max(2.5rem,3.33vw)] lg:pt-[max(2.5rem,3.33vw)] lg:pb-[max(1rem,1.25vw)] rounded-t-[2rem] flex flex-col gap-8 lg:gap-[max(1.5rem,2vw)]">
       {/* Top block: brand + social on the left; lists to the right on desktop.
           On mobile, everything stacks: brand -> social -> Explore -> Inquiries */}
       <div className="flex flex-col md:flex-row md:justify-between gap-10 md:gap-0">
         {/* Brand + Social */}
         <div className="flex flex-col gap-10 lg:gap-[max(1.5rem,2vw)]">
-          {/* lg+: logo sized by screen width — 96px on a 1920px monitor, 64px on a 1280px laptop */}
-          <div className="flex gap-3 items-end cursor-pointer" onClick={() => navigate("/")}>
+          {/* lg+: logo sized by screen width — 46px on a 1920px monitor, ~31px on a 1280px laptop */}
+          <div className="flex gap-2 items-end cursor-pointer" onClick={() => navigate("/")}>
             <img
               src="/icons/logo.png"
               alt="logo"
-              className="w-16 h-16 lg:w-[max(3.5rem,5vw)] lg:h-[max(3.5rem,5vw)]"
+              className="w-9 h-9 lg:w-[max(2.25rem,2.4vw)] lg:h-[max(2.25rem,2.4vw)]"
             />
-            <LogoText className="w-auto h-10 lg:h-[max(2rem,2.7vw)] hidden md:block text-white" />
+            <LogoText className="w-auto h-6 lg:h-[max(1.125rem,1.25vw)] hidden md:block text-white" />
           </div>
 
           <div className="flex items-center gap-4">
@@ -50,9 +55,9 @@ export default function Footer() {
         </div>
 
         {/* Lists: side-by-side on desktop, stacked on mobile (Explore first, then Inquiries) */}
-        <div className="flex flex-col sm:flex-row gap-10 sm:gap-24 lg:gap-[10vw]">
+        <div className="flex flex-col sm:flex-row gap-10 sm:gap-16 lg:gap-[6vw]">
           <ul className="flex flex-col gap-4">
-            <li className={`${headingClass} mb-3`}>Explore</li>
+            <li className={`${headingClass} mb-4`}>Explore</li>
             <NavItem link={"/"} text={"Home"} className={linkClass} />
             <NavItem link={"/about"} text={"About Us"} className={linkClass} />
             <NavItem link={"/service"} text={"Services"} className={linkClass} />
@@ -61,7 +66,7 @@ export default function Footer() {
           </ul>
 
           <ul className="flex flex-col gap-2">
-            <li className={`${headingClass} mb-5`}>Inquiries</li>
+            <li className={`${headingClass} mb-6`}>Inquiries</li>
             <NavItem href={"tel:917019215020"} text={"+91 70192 15020"} className={linkClass} />
             <NavItem href={"tel:919677207522"} text={"+91 96772 07522"} className={linkClass} />
             <NavItem href={"mailto:contact@lwyd.in"} text={"contact@lwyd.in"} className={linkClass} />
@@ -69,7 +74,7 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="flex flex-col gap-10">
+      <div className="flex flex-col gap-4 lg:gap-[max(1rem,1vw)]">
         <hr className="border-white/30" />
 
         {/* Bottom bar: on mobile, show Privacy/Terms centered first, then copyright centered below.

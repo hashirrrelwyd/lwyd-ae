@@ -14,7 +14,8 @@ export default function HeroSection() {
         />
         <div className="absolute inset-0 bg-black/20 rounded-2xl"></div>
         {/* Stacked on mobile/tablet; headline + copy side by side from lg */}
-        <div className="absolute inset-0 flex flex-col items-start justify-end gap-6 lg:flex-row lg:items-end lg:justify-between lg:gap-10 py-8 lg:py-6 section-padding">
+        <div className="absolute inset-0 flex flex-col items-start justify-end gap-6 lg:flex-row lg:items-end lg:justify-between lg:gap-10 pb-[var(--side-padding)] section-padding">
+          {/* bottom padding = side padding, so the text sits the same distance from the bottom and left edges */}
           <div className="min-w-0">
             {/* lg+: 64px on a 1920px screen, shrinking in proportion on laptops */}
             <p className="hero-title text-white">

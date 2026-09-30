@@ -15,17 +15,18 @@ export default function OpenRoles() {
   const locations = ["Location", "Onsite", "Remote"];
 
   return (
-    <section id="open-roles" ref={sectionRef} className="relative h-screen w-full p-1.5">
-      <div className="relative flex h-full w-full flex-col rounded-b-4xl rounded-t-4xl bg-[#111111] px-[calc(var(--side-padding)-6px)] py-12 text-white">
-      <div className="flex shrink-0 justify-between pb-6">
-        <div>
-          <h3 className="section-label text-white mb-8">
-            Open{" "}
-            <span className="text-lwyd-yellow font-[750] italic">Roles</span>
-          </h3>
-        </div>
+    // Height follows the content (no fixed h-screen), so there's no empty space
+    // under a short list on tall screens; a long list scrolls inside (max 70% of the screen)
+    <section id="open-roles" ref={sectionRef} className="relative w-full p-1.5">
+      <div className="relative flex w-full flex-col rounded-4xl bg-[#111111] px-[calc(var(--side-padding)-6px)] py-10 lg:py-[max(2.5rem,3vw)] text-white">
+      {/* Label + filters: side by side, wrapping onto two rows on small screens */}
+      <div className="flex shrink-0 flex-wrap items-center justify-between gap-4 pb-8 lg:pb-[max(2rem,2.5vw)]">
+        <h3 className="section-label text-white">
+          Open{" "}
+          <span className="text-lwyd-yellow font-[750] italic">Roles</span>
+        </h3>
 
-        <div className="flex gap-4 relative">
+        <div className="flex gap-3 sm:gap-4 relative">
           {/* Location Dropdown */}
           <div className="relative">
             <div
@@ -33,7 +34,7 @@ export default function OpenRoles() {
                 setShowLocationDropdown((prev) => !prev);
                 setShowDepartmentDropdown(false);
               }}
-              className="bg-[#FFFFFF1A] px-6 py-2.5 flex gap-3 items-center rounded-full text-lg cursor-pointer"
+              className="bg-[#FFFFFF1A] px-4 sm:px-6 py-2.5 flex gap-2 sm:gap-3 items-center rounded-full text-base sm:text-lg cursor-pointer"
             >
               <p>{selectedLocation}</p>
               <GoChevronDown className="text-2xl" />
@@ -64,7 +65,7 @@ export default function OpenRoles() {
                 setShowDepartmentDropdown((prev) => !prev);
                 setShowLocationDropdown(false);
               }}
-              className="bg-[#FFFFFF1A] px-6 py-2.5 flex gap-3 items-center rounded-full text-lg cursor-pointer"
+              className="bg-[#FFFFFF1A] px-4 sm:px-6 py-2.5 flex gap-2 sm:gap-3 items-center rounded-full text-base sm:text-lg cursor-pointer"
             >
               <p>{selectedDepartment}</p>
               <GoChevronDown className="text-2xl" />
@@ -90,7 +91,9 @@ export default function OpenRoles() {
         </div>
       </div>
 
-      <div className="flex flex-1 flex-col gap-5 overflow-y-auto pr-1">
+      {/* no-scrollbar: the list can still scroll (wheel/touch) when it's taller than 70% of the
+          screen, but the inner scrollbar is hidden */}
+      <div className="no-scrollbar flex max-h-[70vh] flex-col gap-4 lg:gap-5 overflow-y-auto">
         {openRoles
           .filter(
             (role) =>
@@ -108,10 +111,11 @@ export default function OpenRoles() {
               <div key={index} className="group shrink-0">
                 <div
                   onClick={() => window.open(`${role.googleForm}`, "_blank")}
-                  className="flex justify-between items-center py-5 bg-[#292929] rounded-[8px] px-10 transition-all duration-700 ease-in-out hover:rounded-[50px] cursor-pointer"
+                  // phones: title above the tags; sm+: title left, tags right
+                  className="flex flex-col items-start gap-3 sm:flex-row sm:justify-between sm:items-center py-4 sm:py-5 bg-[#292929] rounded-[8px] px-5 sm:px-10 transition-all duration-700 ease-in-out hover:rounded-[50px] cursor-pointer"
                 >
                   {/* Left content: Role */}
-                  <div className="text-white font-light text-xl md:text-2xl">
+                  <div className="text-white font-light text-lg sm:text-xl md:text-2xl">
                     <h3>
                       {restWords && <>{restWords} </>}
                       <span className="relative inline-grid">
@@ -130,16 +134,23 @@ export default function OpenRoles() {
                   </div>
 
                   {/* Right content: Tags and chevron */}
-                  <div className="flex items-center gap-3 transition-all duration-700 ease-in-out group-hover:-translate-x-10">
-                    <div className="bg-[#FFFFFF1A] px-3 py-1.5 rounded-full text-[#7D7D7D] text-base">
-                      {role.department}
-                    </div>
-                    <div className="bg-[#FFFFFF1A] px-3 py-1.5 rounded-full text-[#7D7D7D] text-base">
-                      {role.location}
+                  {/* Tags + chevron. The chevron takes no space until hover, then grows in and
+                      pushes the tags left — so the right padding always equals the left padding */}
+                  <div className="flex shrink-0 items-center">
+                    <div className="flex items-center gap-2 sm:gap-3">
+                      <div className="bg-[#FFFFFF1A] px-3 py-1.5 rounded-full text-[#7D7D7D] text-sm sm:text-base whitespace-nowrap">
+                        {role.department}
+                      </div>
+                      <div className="bg-[#FFFFFF1A] px-3 py-1.5 rounded-full text-[#7D7D7D] text-sm sm:text-base whitespace-nowrap">
+                        {role.location}
+                      </div>
                     </div>
 
                     {/* Chevron icon appears on hover */}
-                    <GoChevronRight className="text-white text-lg opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                    {/* arrow: ~26px on a 1920px monitor, scaling with the screen (min 20px) */}
+                    <span className="flex w-0 items-center justify-end overflow-hidden opacity-0 transition-all duration-700 ease-in-out group-hover:w-[max(2.25rem,2.1vw)] group-hover:opacity-100">
+                      <GoChevronRight className="shrink-0 text-white text-[max(1.25rem,1.35vw)]" />
+                    </span>
                   </div>
                 </div>
               </div>

@@ -8,7 +8,8 @@ export default function HeroSection() {
   const navigate = useNavigate();
   useSectionTheme(sectionRef, "light");
   return (
-    <section ref={sectionRef} className="relative mx-auto grid h-[50vh] grid-cols-1 items-center gap-10 py-12 md:flex justify-between section-padding mt-24">
+    <section ref={sectionRef} className="relative mx-auto grid grid-cols-1 md:items-end gap-10 pt-12 pb-12 lg:pt-[max(3rem,4vw)] lg:pb-[max(3rem,4vw)] md:flex justify-between section-padding mt-24">
+      {/* height follows the content (was a fixed 50vh, which left a big gap above the divider) */}
       <div className="flex flex-col items-start gap-4 md:w-3/6">
         <h2 className="hero-title text-pretty text-[#0F172A] mb-7">
           From the{" "}

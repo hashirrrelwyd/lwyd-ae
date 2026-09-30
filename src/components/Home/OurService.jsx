@@ -56,7 +56,7 @@ export default function OurService() {
           scale: isPhone ? 1.04 : 1.12,
           // color change + weight change
           color: "#ffffff",
-          fontWeight: 300, // hover weight for the white text (lighter than the resting 400)
+          fontWeight: 400, // hover weight for the white text
         },
         0,
       )
@@ -154,7 +154,7 @@ export default function OurService() {
                   return (
                     <>
                       {rest && `${rest} `}
-                      <span className="group-hover:text-yellow-400 group-hover:font-[750] group-hover:italic">
+                      <span className="group-hover:text-yellow-400 group-hover:font-[650] group-hover:italic">
                         {last}
                       </span>
                     </>

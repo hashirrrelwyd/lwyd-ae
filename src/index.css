@@ -6,6 +6,10 @@ html, body {
 body {
   font-family: "Montserrat", sans-serif;
   background-color: #FFFCF5;
+  /* tighter letter spacing for all text (-4%); in em so it scales with each text's size.
+     Every element inherits this (form fields too, via Tailwind's base styles) and no
+     component overrides it. Change this one value to adjust spacing across the whole site. */
+  letter-spacing: -0.04em;
 }
 .section-padding {
   padding-left: var(--side-padding);
@@ -30,35 +34,40 @@ body {
 }
 
 /* Shared style for the main (hero) title at the top of every page, matching the
-   home page / Figma: light weight, 32–44px on phones/tablets, 64px on a 1920px monitor
-   scaling down with the screen on laptops (min 28px). Highlighted words inside use
+   home page / Figma: light weight, 26–36px on phones/tablets, ~53px on a 1920px monitor
+   scaling down with the screen on laptops (min 24px). Highlighted words inside use
    "text-lwyd-yellow font-[700] italic". */
 .hero-title {
-  font-size: clamp(2rem, 5.5vw, 2.75rem);
+  font-size: clamp(1.625rem, 4.6vw, 2.25rem);
   line-height: 1.25;
   font-weight: 300;
 }
 @media (min-width: 1024px) {
   .hero-title {
-    font-size: max(1.75rem, 3.33vw);
+    font-size: max(1.5rem, 2.75vw);
   }
 }
 
-/* Shared style for the short intro text in each hero: 15–16px on phones/tablets,
-   18px on a 1920px monitor scaling down on laptops (min 15px). */
-.hero-text {
-  font-size: 15px;
+/* Shared style for body / intro paragraphs (hero intro text, "We don't bolt drinks…",
+   service descriptions…) so they all match: medium weight (500), 14–15px on phones/tablets,
+   ~17px on a 1920px monitor scaling down on laptops (min 14px).
+   .hero-text and .body-text are the same style. */
+.hero-text,
+.body-text {
+  font-size: 14px;
   line-height: 1.7;
-  font-weight: 300;
+  font-weight: 500;
 }
 @media (min-width: 640px) {
-  .hero-text {
-    font-size: 16px;
+  .hero-text,
+  .body-text {
+    font-size: 15px;
   }
 }
 @media (min-width: 1024px) {
-  .hero-text {
-    font-size: max(15px, 0.94vw);
+  .hero-text,
+  .body-text {
+    font-size: max(14px, 0.875vw);
   }
 }
 

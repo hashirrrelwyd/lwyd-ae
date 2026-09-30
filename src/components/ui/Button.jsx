@@ -2,7 +2,7 @@ export default function Button({ title, onClick }) {
   return (
     <button
       onClick={onClick}
-      className="relative rounded-4xl text-[max(12px,0.875rem)] font-[400] leading-[1.3] whitespace-nowrap hover:rounded-lg bg-lwyd-yellow px-5 py-2.5 text-black cursor-pointer transition-all duration-700 ease-in-out group"
+      className="relative rounded-4xl text-[max(12px,0.875rem)] font-[400] hover:font-[500] leading-[1.3] whitespace-nowrap hover:rounded-lg bg-lwyd-yellow px-5 py-2.5 text-black cursor-pointer transition-all duration-700 ease-in-out group"
     >
       {/* Text wrapper (clipping only text, not button). 1.3em tall so descenders (g, y, p) aren't cut off */}
       <span className="relative flex h-[1.3em] overflow-hidden items-center justify-center">

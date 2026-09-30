@@ -204,32 +204,32 @@ export default function Header() {
             <NavItem
               text="HOME"
               link="/"
-              className="text-3xl md:text-[1.8rem] 2xl:text-[2.5rem] font-semibold tracking-tight"
+              className="text-3xl md:text-[1.8rem] 2xl:text-[2.5rem] font-semibold"
             />
             <NavItem
               text="ABOUT US"
               link="/about"
-              className="text-3xl md:text-[1.8rem] 2xl:text-[2.5rem] font-semibold tracking-tight"
+              className="text-3xl md:text-[1.8rem] 2xl:text-[2.5rem] font-semibold"
             />
             <NavItem
               text="SERVICES"
               link="/service"
-              className="text-3xl md:text-[1.8rem] 2xl:text-[2.5rem] font-semibold tracking-tight"
+              className="text-3xl md:text-[1.8rem] 2xl:text-[2.5rem] font-semibold"
             />
             <NavItem
               text="OUR WORK"
               link="/work"
-              className="text-3xl md:text-[1.8rem] 2xl:text-[2.5rem] font-semibold tracking-tight"
+              className="text-3xl md:text-[1.8rem] 2xl:text-[2.5rem] font-semibold"
             />
             <NavItem
               text="CAREERS"
               link="/careers"
-              className="text-3xl md:text-[1.8rem] 2xl:text-[2.5rem] font-semibold tracking-tight"
+              className="text-3xl md:text-[1.8rem] 2xl:text-[2.5rem] font-semibold"
             />
             <NavItem
               text="CONTACT"
               link="/contact"
-              className="text-3xl md:text-[1.8rem] 2xl:text-[2.5rem] font-semibold tracking-tight"
+              className="text-3xl md:text-[1.8rem] 2xl:text-[2.5rem] font-semibold"
             />
           </ul>
 

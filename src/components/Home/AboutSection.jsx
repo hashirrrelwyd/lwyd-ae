@@ -37,7 +37,7 @@ export default function AboutSection() {
 
           {/* Right: intro copy with the Learn More button below it */}
           <div className="flex flex-col items-start gap-6 lg:w-[28%]">
-            <p className="text-base lg:text-[max(12px,0.94vw)] font-[500] leading-[1.7] text-[#6B7280]">
+            <p className="body-text text-[#6B7280]">
               We don't bolt drinks work onto a generalist playbook. Every strategy, campaign, and platform we build starts from how this industry actually behaves - what sells at the bar, on the shelf, and everywhere in between.
             </p>
             <Button title={"Learn More"} onClick={() => navigate("/about")} />

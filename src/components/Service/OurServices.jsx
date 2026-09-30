@@ -8,7 +8,7 @@ import { useSectionTheme } from "../../hooks/useHeaderThemeSection";
 gsap.registerPlugin(ScrollTrigger);
 
 // the visible "window" the services scroll inside, as a fraction of the viewport height
-const FRAME_VH_FRACTION = 0.7;
+const FRAME_VH_FRACTION = 0.9; // frame height as a share of the screen (less empty space above/below)
 
 const services = [
   {
@@ -141,7 +141,9 @@ export default function OurServices() {
   return (
     <section
       ref={sectionRef}
-      className="relative flex h-screen w-full flex-col items-center justify-center bg-[#FFFBF5] section-padding"
+      // frame sits at the top (small padding) rather than centred, so there's only a
+      // small gap between the divider above and the first service
+      className="relative flex h-screen w-full flex-col items-center justify-start pt-4 lg:pt-[max(1rem,2vw)] bg-[#FFFBF5] section-padding"
     >
       {/* Clipping frame: the services scroll inside this, cut off at its edges */}
       <div
@@ -152,7 +154,7 @@ export default function OurServices() {
           {services.map((service) => (
             <div
               key={service.title}
-              className="flex w-full flex-col justify-between border-b border-black/10 py-10 md:flex-row md:items-center md:gap-12"
+              className="flex w-full flex-col justify-between border-b border-black/10 py-4 lg:py-[max(1rem,1.5vw)] md:flex-row md:items-center md:gap-12"
               style={{ height: `${FRAME_VH_FRACTION * 100}vh` }}
             >
               {/* Left Content */}
@@ -168,18 +170,24 @@ export default function OurServices() {
                 </div>
 
                 {/* Bottom Row: Description + Buttons */}
-                <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+                {/* tags sit right after the description with a fixed gap instead of being
+                    pushed to the far end: ~26px on laptops (up to 1440px wide), and more on
+                    bigger screens (3.5vw: ~54px at 1536px, ~67px at 1920px, ~90px at 2560px) */}
+                <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-start md:gap-[max(1.5rem,2vw)] min-[1440px]:gap-[3.5vw]">
                   {/* Description (Bottom Left) */}
-                  <p className="text-lg text-[#7D7D7D] leading-relaxed max-w-lg">
+                  <p className="body-text text-[#7D7D7D] max-w-lg">
                     {service.desc}
                   </p>
 
                   {/* Buttons (Bottom Right) */}
-                  <div className="flex flex-col gap-2 shrink-0">
+                  {/* Tags (Figma, 1920px frame): hug the text, padding 6px top/bottom and 16px
+                      sides, 30px radius, 10px gap, #E5E3DD at 50%, ~14px text in a 30px line.
+                      Scales with the screen on laptops/monitors, with minimums for small screens. */}
+                  <div className="flex flex-col items-start gap-1.5 lg:gap-[max(0.25rem,0.31vw)] shrink-0">
                     {service.tags.map((tag) => (
                       <button
                         key={tag}
-                        className="px-3 py-2.5 rounded-full bg-[#E5E3DD]/50 text-gray-700 text-xs hover:bg-[#E5E3DD]/80 transition"
+                        className="px-4 lg:px-[max(0.75rem,0.83vw)] py-1.5 lg:py-[max(0.25rem,0.31vw)] rounded-[30px] bg-[#E5E3DD]/50 text-[#111111] font-[400] text-[13px] lg:text-[max(12px,0.73vw)] leading-[2.1] whitespace-nowrap hover:bg-[#E5E3DD]/80 transition"
                       >
                         {tag}
                       </button>

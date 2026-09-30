@@ -28,20 +28,25 @@ export default function HeroSection() {
       const dy = y - lastPosRef.current.y;
       const dist = Math.sqrt(dx * dx + dy * dy);
 
-      // only spawn if moved enough distance
-      if (dist < 150) return;
+      // Trail image width follows the screen: 14% of its width (~179px at 1280px,
+      // ~215px at 1536px), kept between 150px and 240px so it doesn't get too big
+      // on large monitors (240px from ~1714px wide upwards)
+      const baseSize = Math.min(240, Math.max(150, window.innerWidth * 0.14));
+
+      // Gap: the next image appears after the mouse moves one image width + ~20px,
+      // so images sit side by side with just a small gap
+      if (dist < baseSize + 20) return;
 
       lastPosRef.current = { x, y };
 
-      // trail images are 160–220px on a 1920px screen and shrink in proportion on smaller ones
-      const scale = Math.min(1, Math.max(0.6, window.innerWidth / 1920));
       const newImage = {
         id: Date.now() + Math.random(),
         src: sources[Math.floor(Math.random() * sources.length)],
         x,
         y,
         opacity: 1,
-        size: (160 + Math.random() * 60) * scale,
+        // slight random variation (90–110%) so the trail doesn't look uniform
+        size: baseSize * (0.9 + Math.random() * 0.2),
       };
 
       setTrail((prev) => [...prev, newImage]);
@@ -75,7 +80,7 @@ export default function HeroSection() {
           key={img.id}
           src={img.src}
           alt=""
-          className="absolute object-cover rounded-2xl pointer-events-none z-30"
+          className="absolute object-cover rounded-md pointer-events-none z-30"
           style={{
             width: img.size,
             height: "auto",
@@ -100,7 +105,8 @@ export default function HeroSection() {
 
       {/* Paragraph */}
       <div className="absolute bottom-16 left-1/2 -translate-x-1/2 z-20 pointer-events-none w-full section-padding flex justify-center">
-        <p className="hero-text text-[#7D7D7D] max-w-md text-center">
+        {/* wider box on laptops/monitors so the text fits on 2 lines (as in Figma) */}
+        <p className="hero-text text-[#7D7D7D] max-w-md lg:max-w-[32vw] text-center">
           LWYD was built inside the alco-bev world, not adapted for it. Here's who we are and how we work.
         </p>
       </div>
