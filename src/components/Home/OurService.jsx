@@ -8,12 +8,12 @@ import gsap from "gsap"
 import { useSectionTheme } from "../../hooks/useHeaderThemeSection"
 
 const menuItems = [
-  { title: "Creative Studio", link: "#", bg: "/images/creative.webp" },
-  { title: "Retail Theatre", link: "#", bg: "/images/experience.webp" },
-  { title: "Photography & Videography", link: "#", bg: "/images/digital.webp" },
-  { title: "Influencer Marketing", link: "#", bg: "/images/media.webp" },
-  { title: "Social Media Marketing", link: "#", bg: "/images/video.webp" },
-  { title: "Performance Marketing", link: "#", bg: "/images/social.webp" },
+  { title: "Creative Studio", link: "/service", bg: "/images/creative.webp" },
+  { title: "Retail Theatre", link: "/service", bg: "/images/experience.webp" },
+  { title: "Photography & Videography", link: "/service", bg: "/images/digital.webp" },
+  { title: "Influencer Marketing", link: "/service", bg: "/images/media.webp" },
+  { title: "Social Media Marketing", link: "/service", bg: "/images/video.webp" },
+  { title: "Performance Marketing", link: "/service", bg: "/images/social.webp" },
 ]
 
 export default function OurService() {
@@ -56,7 +56,7 @@ export default function OurService() {
           scale: isPhone ? 1.04 : 1.12,
           // color change + weight change
           color: "#ffffff",
-          fontWeight: 600,
+          fontWeight: 500, // hover weight for the white text
         },
         0,
       )
@@ -114,6 +114,11 @@ export default function OurService() {
           <a
             key={item.title}
             href={item.link}
+            // client-side navigation (no full page reload)
+            onClick={(e) => {
+              e.preventDefault()
+              navigate(item.link)
+            }}
             onMouseEnter={() => handleEnter(i)}
             onMouseLeave={() => handleLeave(i)}
             onFocus={() => handleEnter(i)}

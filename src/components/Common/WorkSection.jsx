@@ -100,14 +100,12 @@ export default function WorkSection({ connected = false }) {
                     }`}
                   >
                     {work.title}
-                    {/* inline, so the year always follows the last word, even when the title wraps */}
-                    <span
-                      className={`ml-2 whitespace-nowrap font-normal not-italic text-[max(12px,0.75rem)] transition-colors duration-500 ${
-                        active ? "text-[#BDBDBD]" : "text-[#7D7D7D]"
-                      }`}
-                    >
-                      [{work.year}]
-                    </span>
+                    {/* year shows only on the selected title; inline, so it follows the last word even when the title wraps */}
+                    {active && (
+                      <span className="ml-2 whitespace-nowrap font-normal not-italic text-[max(12px,0.75rem)] text-[#BDBDBD]">
+                        [{work.year}]
+                      </span>
+                    )}
                   </h3>
                 );
               })}

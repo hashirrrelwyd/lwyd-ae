@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import Button from "../ui/Button";
 import { useSectionTheme } from "../../hooks/useHeaderThemeSection";
 
@@ -14,6 +15,7 @@ const countryCodes = [
 
 export default function ContactSection() {
   const sectionRef = useRef(null);
+  const navigate = useNavigate();
   useSectionTheme(sectionRef, "light");
   return (
     <section ref={sectionRef} className="w-full py-12 section-padding pt-24">
@@ -37,7 +39,7 @@ export default function ContactSection() {
             <p className="mb-6 text-sm md:text-base max-w-md leading-relaxed">
               Campaign, partnership, or platform - whatever it is, let's talk. 
             </p>
-            <Button title={"Join Us"} />
+            <Button title={"Join Us"} onClick={() => navigate("/careers")} />
           </div>
         </div>
 

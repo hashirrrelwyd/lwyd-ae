@@ -1,9 +1,11 @@
 import { useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import Button from "../ui/Button";
 import { useSectionTheme } from "../../hooks/useHeaderThemeSection";
 
 export default function HeroSection() {
   const sectionRef = useRef(null);
+  const navigate = useNavigate();
   useSectionTheme(sectionRef, "light");
   return (
     <section ref={sectionRef} className="relative mx-auto grid h-[50vh] grid-cols-1 items-center gap-10 py-12 md:flex justify-between section-padding mt-24">
@@ -29,7 +31,7 @@ export default function HeroSection() {
         <p className="mb-6">
           We don't stop at the concept - we build, shoot, print, and install it too.
         </p>
-        <Button title={"Connect with LWYD"} />
+        <Button title={"Connect with LWYD"} onClick={() => navigate("/contact")} />
       </div>
 
       {/* Section bottom border, inset from the edges */}

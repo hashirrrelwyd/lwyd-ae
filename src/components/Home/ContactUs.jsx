@@ -1,6 +1,7 @@
 "use client";
 
 import { useLayoutEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Button from "../ui/Button";
@@ -19,6 +20,7 @@ gsap.registerPlugin(ScrollTrigger);
  * Add or remove cards by editing the `items` array below.
  */
 export default function ContactUs(props) {
+  const navigate = useNavigate();
   const containerRef = useRef(null);
   const ctaRef = useRef(null);
   const cardsRef = useRef([]);
@@ -201,7 +203,7 @@ export default function ContactUs(props) {
         >
           <Button
             title="Ready to cause a little chaos?"
-            onClick={props.onCtaClick}
+            onClick={props.onCtaClick ?? (() => navigate("/contact"))}
           />
         </div>
       </div>

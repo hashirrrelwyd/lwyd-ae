@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import { useTheme } from "../../context/HeaderThemeContext";
 import NavItem from "../ui/NavItem";
 import LogoText from "../ui/LogoText";
@@ -8,9 +9,12 @@ import LogoText from "../ui/LogoText";
 export default function Header() {
   const [scrolled, setScrolled] = useState(false); // turns on rounded blurred bg + black hamburger
   const [pastHero, setPastHero] = useState(false); // below the first screen: smaller logo
+  const [hidden, setHidden] = useState(false); // past the 2nd section: hide on scroll down, show on scroll up
   const [menuOpen, setMenuOpen] = useState(false); // right-side drawer
   const ticking = useRef(false);
+  const lastY = useRef(0);
   const { theme } = useTheme();
+  const navigate = useNavigate();
 
   // lock body scroll when nav is open
   useEffect(() => {
@@ -38,17 +42,43 @@ export default function Header() {
   }, [menuOpen, onKeyDown]);
 
   useEffect(() => {
+    // Bottom of the page's 2nd section (e.g. hero + about on the home page).
+    // Page sections are the in-flow children of #root; fixed/absolute layers
+    // (this navbar, the menu drawer, the custom cursor) are skipped.
+    const secondSectionBottom = () => {
+      const sections = [...(document.getElementById("root")?.children ?? [])].filter((el) => {
+        const pos = getComputedStyle(el).position;
+        return pos !== "fixed" && pos !== "absolute" && el.offsetHeight > 0;
+      });
+      const second = sections[1];
+      return second
+        ? second.getBoundingClientRect().bottom + window.scrollY
+        : window.innerHeight * 2;
+    };
+
+    lastY.current = window.scrollY;
+
     const onScroll = () => {
       if (ticking.current) return;
       ticking.current = true;
       requestAnimationFrame(() => {
         const y = window.scrollY;
+        const diff = y - lastY.current;
 
         // turn blur on after threshold
         setScrolled(y > 24);
 
         // the hero/banner fills the first screen; shrink the logo once past it
         setPastHero(y > window.innerHeight - 120);
+
+        // before the end of the 2nd section the navbar always stays visible;
+        // after it, hide while scrolling down and bring it back on scroll up
+        if (y < secondSectionBottom()) {
+          setHidden(false);
+        } else if (Math.abs(diff) > 6) {
+          setHidden(diff > 0);
+        }
+        if (Math.abs(diff) > 6) lastY.current = y;
 
         ticking.current = false;
       });
@@ -63,8 +93,13 @@ export default function Header() {
 
   return (
     <>
-      {/* fixed wrapper: the navbar always stays visible */}
-      <div className="fixed inset-x-0 top-0 z-50 flex justify-center">
+      {/* fixed wrapper: slides up out of view when hidden (never while the menu is open) */}
+      <div
+        className={[
+          "fixed inset-x-0 top-0 z-50 flex justify-center transition-transform duration-300",
+          hidden && !menuOpen ? "-translate-y-full" : "translate-y-0",
+        ].join(" ")}
+      >
         {/* Inner bar: becomes rounded + blurred when scrolled.
             Equal padding on all sides, and the bar's margin is side-padding minus that
             padding, so the logo always lines up with the page content.
@@ -81,17 +116,17 @@ export default function Header() {
               : "bg-transparent border-transparent",
           ].join(" ")}
         >
-          <div className="flex gap-2 items-end cursor-pointer">
+          <div className="flex gap-2 items-end cursor-pointer" onClick={() => navigate("/")}>
             <img
               src="/icons/logo.png"
               alt="logo"
               className={`transition-all duration-300 ${
-                pastHero ? "w-9 h-9 md:w-12 md:h-12" : "w-10 h-10 md:w-16 md:h-16"
+                pastHero ? "w-9 h-9 md:w-10 md:h-10" : "w-10 h-10 md:w-12 md:h-12"
               }`}
             />
             <LogoText
               className={`w-auto transition-all duration-300 hidden md:block ${
-                pastHero ? "h-8" : "h-10"
+                pastHero ? "h-6" : "h-8"
               } ${theme === "dark" ? "text-white" : "text-black"}`}
             />
           </div>

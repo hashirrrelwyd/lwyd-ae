@@ -15,7 +15,7 @@ export default function OpenRoles() {
   const locations = ["Location", "Onsite", "Remote"];
 
   return (
-    <section ref={sectionRef} className="relative h-screen w-full p-1.5">
+    <section id="open-roles" ref={sectionRef} className="relative h-screen w-full p-1.5">
       <div className="relative flex h-full w-full flex-col rounded-b-4xl rounded-t-4xl bg-[#111111] px-[calc(var(--side-padding)-6px)] py-12 text-white">
       <div className="flex shrink-0 justify-between pb-6">
         <div>
