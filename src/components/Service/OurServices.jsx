@@ -39,13 +39,13 @@ const services = [
     tags: ["Experiential Design", "Event Management", "Installation"],
     image: "/images/media.webp",
   },
-  {
-    title: "Quick",
-    highlight: "Adapts",
-    desc: "Taking one key visual and adapting it fast, across every size and format it needs to exist in. ",
-    tags: ["Scripting & Storyboarding", "Filming", "Video Production"],
-    image: "/images/video.webp",
-  },
+  // {
+  //   title: "Quick",
+  //   highlight: "Adapts",
+  //   desc: "Taking one key visual and adapting it fast, across every size and format it needs to exist in. ",
+  //   tags: ["Scripting & Storyboarding", "Filming", "Video Production"],
+  //   image: "/images/video.webp",
+  // },
   {
     title: "Social Media",
     highlight: "Marketing",

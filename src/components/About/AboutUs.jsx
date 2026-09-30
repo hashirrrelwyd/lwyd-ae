@@ -110,7 +110,7 @@ export default function AboutUs() {
           <p className="mb-4 text-base font-light leading-6 text-[#6B7280]">
             LWYD Interactive is a Bengaluru-founded creative and digital agency working exclusively in alco-bev bar to retail, concept to production. It's the only space we build for, and it shows in every brief we take on.
           </p>
-          <Button title={"Our Service"} onClick={() => navigate("/service")} />
+          <Button title={"Our Services"} onClick={() => navigate("/service")} />
         </div>
       </div>
 

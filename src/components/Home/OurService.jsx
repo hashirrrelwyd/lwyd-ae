@@ -98,7 +98,7 @@ export default function OurService() {
               className="h-7 w-14 sm:h-8 sm:w-16 mb-2 rounded-full object-cover"
             />
           </span>{" "}
-          Service
+          Services
         </h2>
 
         <Button title={"View All Services"} onClick={() => navigate("/service")} />
