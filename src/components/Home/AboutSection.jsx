@@ -14,9 +14,9 @@ export default function AboutSection() {
     <section ref={sectionRef} className="section-padding">
       <LogosMarquee />
 
-      {/* Two-column, two-row content */}
-      <div className="mx-auto flex flex-col gap-8 py-14">
-        {/* Row 1: headline (left) + intro copy (right) */}
+      {/* bottom padding = gap above Featured Work: ~180px on a 1920px screen (Figma), scales down on laptops */}
+      <div className="mx-auto flex flex-col gap-8 pt-14 pb-20 lg:pb-[max(5rem,9vw)]">
+        {/* headline (left) + intro copy and button (right) */}
         <div className="flex flex-col gap-6 lg:flex-row lg:justify-between lg:gap-12">
           <div className="lg:w-4/12">
             {/* lg+: 48px on a 1920px screen, shrinking in proportion on laptops */}
@@ -35,22 +35,11 @@ export default function AboutSection() {
             </h2>
           </div>
 
-          <div className="lg:w-2/6 text-base lg:text-[max(12px,0.94vw)] font-[500] leading-[1.7] text-[#6B7280]">
-            <p>
+          {/* Right: intro copy with the Learn More button below it */}
+          <div className="flex flex-col items-start gap-6 lg:w-[28%]">
+            <p className="text-base lg:text-[max(12px,0.94vw)] font-[500] leading-[1.7] text-[#6B7280]">
               We don't bolt drinks work onto a generalist playbook. Every strategy, campaign, and platform we build starts from how this industry actually behaves - what sells at the bar, on the shelf, and everywhere in between.
             </p>
-          </div>
-        </div>
-
-        {/* Row 2: small copy (left) + Learn more button, same line */}
-        <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between lg:gap-12">
-          <div className="lg:w-4/12 text-[15px] lg:text-base font-[400] leading-[1.7] text-[#6B7280]">
-            <p>
-              Trusted by brands that own every point of purchase - the bar, the events floor, the retail shelf, and everything people reach for after 7pm.
-            </p>
-          </div>
-
-          <div className="lg:w-2/6 text-base font-[400]">
             <Button title={"Learn More"} onClick={() => navigate("/about")} />
           </div>
         </div>

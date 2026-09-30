@@ -14,7 +14,9 @@ export function useSectionTheme(ref, theme) {
           }
         })
       },
-      { threshold: 0.5 } // section should be at least 50% visible
+      // only the strip at the top of the screen (where the navbar sits) counts,
+      // so the theme follows whichever section is actually behind the navbar
+      { rootMargin: "0px 0px -90% 0px", threshold: 0 }
     )
     observer.observe(ref.current)
     return () => observer.disconnect()

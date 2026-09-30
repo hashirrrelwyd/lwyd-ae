@@ -7,7 +7,8 @@ export default function NavItem({ text, link, href, className = "" }) {
       <a
         href={href}
         onClick={() => link && navigate(link)}
-        className="relative block overflow-hidden h-[1.2em] group"
+        // 1.35em tall so descenders (y, p, g) aren't clipped by overflow-hidden
+        className="relative block overflow-hidden h-[1.35em] leading-[1.35] group"
       >
         {/* Default text */}
         <span className="block transition-transform duration-300 group-hover:-translate-y-full text-white">

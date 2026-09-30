@@ -109,7 +109,7 @@ export default function ContactSection() {
             {/* Button */}
             {/* <button
               type="submit"
-              className="mt-4 w-fit bg-yellow-400 text-black font-medium px-6 py-2 rounded-full hover:bg-yellow-500 transition"
+              className="mt-4 w-fit bg-yellow-400 text-black text-[max(12px,0.875rem)] font-[400] px-6 py-2 rounded-full hover:bg-yellow-500 transition"
             >
               Submit form
             </button> */}

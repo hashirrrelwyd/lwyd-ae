@@ -15,8 +15,6 @@ const worksData = [
   { id: 5, title: "Grey Goose Altius x ICW", year: "2025", image: "/images/social.webp" },
 ];
 
-const ROW_HEIGHT = 60; // px, mask viewport height reference on the left
-const ROW_GAP = 20; // px, equal space between title rows, wrapped or not
 const PEEK = 72; // px of the next image visible at the bottom of the frame
 const IMAGE_GAP = 24; // px, gap between stacked work images
 
@@ -24,20 +22,9 @@ export default function WorkSection({ connected = false }) {
   const sectionRef = useRef(null);
   const frameRef = useRef(null);
   const trackRef = useRef(null);
-  const titleRowRefs = useRef([]);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [rowOffsets, setRowOffsets] = useState([]);
 
   useSectionTheme(sectionRef, "dark");
-
-  useLayoutEffect(() => {
-    const measureRows = () => {
-      setRowOffsets(titleRowRefs.current.map((el) => el?.offsetTop ?? 0));
-    };
-    measureRows();
-    window.addEventListener("resize", measureRows);
-    return () => window.removeEventListener("resize", measureRows);
-  }, []);
 
   useLayoutEffect(() => {
     const section = sectionRef.current;
@@ -94,49 +81,36 @@ export default function WorkSection({ connected = false }) {
         {/* Stacked on mobile (titles above image); side by side from md */}
         <div className="flex min-h-0 flex-1 flex-col md:flex-row items-stretch gap-6 md:gap-10">
           {/* Left: title (top) + work titles (bottom) */}
-          <div className="flex min-w-0 flex-col justify-between gap-4 md:flex-1 md:pb-4">
+          <div className="flex min-w-0 flex-col gap-6 md:flex-1">
             <h2 className="text-xl font-[500] md:text-2xl">
               Featured <span className="italic font-[750] text-lwyd-yellow">Work</span>
             </h2>
 
-            <div
-              className="relative overflow-hidden h-[160px] md:h-[var(--rows-h)]"
-              style={{
-                "--rows-h": `${ROW_HEIGHT * 5}px`,
-                maskImage: "linear-gradient(to bottom, black 75%, transparent 100%)",
-                WebkitMaskImage: "linear-gradient(to bottom, black 75%, transparent 100%)",
-              }}
-            >
-              <div
-                className="flex flex-col transition-transform duration-500 ease-out"
-                style={{
-                  gap: ROW_GAP,
-                  transform: `translateY(-${rowOffsets[currentIndex] ?? 0}px)`,
-                }}
-              >
-                {worksData.map((work, i) => (
-                  <div
+            {/* All titles stay in place; the one matching the current image is highlighted.
+                mt-auto pushes the list to the bottom of the column, level with the image's bottom */}
+            <div className="flex flex-col gap-5 md:gap-[max(1.25rem,2.2vw)] md:mt-auto">
+              {worksData.map((work, i) => {
+                const active = i === currentIndex;
+                return (
+                  <h3
                     key={work.id}
-                    ref={(el) => (titleRowRefs.current[i] = el)}
-                    className="flex items-end gap-2"
+                    // max-w in ch: long titles wrap onto 2 lines instead of running full width
+                    className={`max-w-[30ch] leading-snug transition-colors duration-500 text-[clamp(16px,4.5vw,20px)] md:text-[max(16px,1.67vw)] ${
+                      active ? "font-bold italic text-white" : "font-normal text-[#7D7D7D]"
+                    }`}
                   >
-                    <h3
-                      className={`leading-snug transition-all duration-500 ${
-                        i === currentIndex
-                          ? "text-[clamp(18px,5vw,22px)] font-bold italic text-white md:text-[max(16px,1.67vw)]"
-                          : "text-[clamp(18px,5vw,22px)] font-normal text-[#7D7D7D] md:text-[max(16px,1.67vw)]"
+                    {work.title}
+                    {/* inline, so the year always follows the last word, even when the title wraps */}
+                    <span
+                      className={`ml-2 whitespace-nowrap font-normal not-italic text-[max(12px,0.75rem)] transition-colors duration-500 ${
+                        active ? "text-[#BDBDBD]" : "text-[#7D7D7D]"
                       }`}
                     >
-                      {work.title}
-                    </h3>
-                    {i === currentIndex && (
-                      <span className="whitespace-nowrap text-xs text-[#7D7D7D]">
-                        [{work.year}]
-                      </span>
-                    )}
-                  </div>
-                ))}
-              </div>
+                      [{work.year}]
+                    </span>
+                  </h3>
+                );
+              })}
             </div>
           </div>
 

@@ -7,10 +7,9 @@ import LogoText from "../ui/LogoText";
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false); // turns on rounded blurred bg + black hamburger
-  const [hidden, setHidden] = useState(false); // slide away when scrolling down
+  const [pastHero, setPastHero] = useState(false); // below the first screen: smaller logo
   const [menuOpen, setMenuOpen] = useState(false); // right-side drawer
   const ticking = useRef(false);
-  const lastY = useRef(0);
   const { theme } = useTheme();
 
   // lock body scroll when nav is open
@@ -39,32 +38,23 @@ export default function Header() {
   }, [menuOpen, onKeyDown]);
 
   useEffect(() => {
-    lastY.current = window.scrollY;
-
     const onScroll = () => {
       if (ticking.current) return;
       ticking.current = true;
       requestAnimationFrame(() => {
         const y = window.scrollY;
-        const diff = y - lastY.current;
 
         // turn blur on after threshold
         setScrolled(y > 24);
 
-        // hide on downward scroll (after a small threshold), show on upward
-        if (Math.abs(diff) > 6) {
-          if (diff > 0 && y > 72) {
-            setHidden(true);
-          } else if (diff < 0) {
-            setHidden(false);
-          }
-          lastY.current = y;
-        }
+        // the hero/banner fills the first screen; shrink the logo once past it
+        setPastHero(y > window.innerHeight - 120);
 
         ticking.current = false;
       });
     };
 
+    onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
@@ -73,18 +63,18 @@ export default function Header() {
 
   return (
     <>
-      {/* fixed wrapper that moves in/out based on scroll direction; don't hide when menu is open */}
-      <div
-        className={[
-          "fixed inset-x-0 top-0 z-50 flex justify-center transition-transform duration-300",
-          hidden && !menuOpen ? "-translate-y-full" : "translate-y-0",
-        ].join(" ")}
-      >
-        {/* Inner bar: becomes rounded + blurred when scrolled */}
+      {/* fixed wrapper: the navbar always stays visible */}
+      <div className="fixed inset-x-0 top-0 z-50 flex justify-center">
+        {/* Inner bar: becomes rounded + blurred when scrolled.
+            Equal padding on all sides, and the bar's margin is side-padding minus that
+            padding, so the logo always lines up with the page content.
+            At the very top the logo sits side-padding from both the top and left edges. */}
         <div
           className={[
-            "pointer-events-auto mx-1 md:mx-4 mt-3 w-full",
-            "flex items-center justify-between px-[calc(var(--side-padding)-4px)] md:px-[calc(var(--side-padding)-1rem)] py-3 md:py-2",
+            "pointer-events-auto w-full p-3",
+            "mx-[calc(var(--side-padding)-0.75rem)]",
+            scrolled ? "mt-3" : "mt-[calc(var(--side-padding)-0.75rem)]",
+            "flex items-center justify-between",
             "transition-all duration-300",
             scrolled
               ? "rounded-full bg-white/10 backdrop-blur-3xl shadow-sm"
@@ -95,12 +85,14 @@ export default function Header() {
             <img
               src="/icons/logo.png"
               alt="logo"
-              className="w-8 h-8 md:w-14 md:h-14"
+              className={`transition-all duration-300 ${
+                pastHero ? "w-9 h-9 md:w-12 md:h-12" : "w-10 h-10 md:w-16 md:h-16"
+              }`}
             />
             <LogoText
-              className={`w-full h-8 hidden md:block ${
-                theme === "dark" ? "text-white" : "text-black"
-              }`}
+              className={`w-auto transition-all duration-300 hidden md:block ${
+                pastHero ? "h-8" : "h-10"
+              } ${theme === "dark" ? "text-white" : "text-black"}`}
             />
           </div>
 
@@ -112,8 +104,7 @@ export default function Header() {
             className="cursor-pointer p-1 rounded-md transition-colors duration-200"
           >
             <svg
-              width="32"
-              height="32"
+              className={`transition-all duration-300 ${pastHero ? "w-8 h-8" : "w-9 h-9 md:w-10 md:h-10"}`}
               viewBox="0 0 24 24"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"

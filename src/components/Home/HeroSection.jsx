@@ -26,8 +26,8 @@ export default function HeroSection() {
               </span>
             </p>
           </div>
-          <div className="w-full max-w-md lg:w-[max(16rem,20vw)] lg:shrink-0">
-            <p className="text-white/80 text-[15px] sm:text-base lg:text-[max(12px,0.94vw)] font-[300] leading-[1.7]">
+          <div className="w-full max-w-md lg:w-[max(22rem,20vw)] lg:shrink-0">
+            <p className="text-white/80 text-[15px] sm:text-base lg:text-[max(15px,0.94vw)] font-[300] leading-[1.7]">
               LWYD is a creative and digital agency for the alco-bev space, working out of Bengaluru and Gurugram.
             </p>
           </div>
