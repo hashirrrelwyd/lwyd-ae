@@ -16,12 +16,16 @@ body {
 :root {
   --lwyd-yellow: #ffcc00;
   /* page side padding — change here to adjust every page */
-  --side-padding: 1.25rem;
+  --side-padding: 2.5rem;
 }
 
-@media (min-width: 768px) {
-  :root {
-    --side-padding: 4rem;
+/* Scale the whole UI in proportion to the screen, like the Figma design.
+   Everything sized in rem (Tailwind text, spacing, logo, buttons) follows this:
+   16px on a 1920px monitor, 12.8px at 1536px, 12px at 1280px and below (floor).
+   Phones/tablets keep the default 16px. */
+@media (min-width: 1024px) {
+  html {
+    font-size: clamp(12px, 0.8333vw, 16px);
   }
 }
 

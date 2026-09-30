@@ -91,17 +91,18 @@ export default function WorkSection({ connected = false }) {
       <div
         className={`relative flex h-full w-full overflow-hidden ${connected ? "rounded-b-2xl" : "rounded-2xl"} bg-[#111111] text-white section-padding py-10`}
       >
-        <div className="flex min-h-0 flex-1 items-stretch gap-10">
+        {/* Stacked on mobile (titles above image); side by side from md */}
+        <div className="flex min-h-0 flex-1 flex-col md:flex-row items-stretch gap-6 md:gap-10">
           {/* Left: title (top) + work titles (bottom) */}
-          <div className="flex flex-1 flex-col justify-between pb-4">
+          <div className="flex min-w-0 flex-col justify-between gap-4 md:flex-1 md:pb-4">
             <h2 className="text-xl font-[500] md:text-2xl">
               Featured <span className="italic font-[750] text-lwyd-yellow">Work</span>
             </h2>
 
             <div
-              className="relative overflow-hidden"
+              className="relative overflow-hidden h-[160px] md:h-[var(--rows-h)]"
               style={{
-                height: ROW_HEIGHT * 5,
+                "--rows-h": `${ROW_HEIGHT * 5}px`,
                 maskImage: "linear-gradient(to bottom, black 75%, transparent 100%)",
                 WebkitMaskImage: "linear-gradient(to bottom, black 75%, transparent 100%)",
               }}
@@ -122,8 +123,8 @@ export default function WorkSection({ connected = false }) {
                     <h3
                       className={`leading-snug transition-all duration-500 ${
                         i === currentIndex
-                          ? "text-[22px] font-bold italic text-white md:text-[32px]"
-                          : "text-[22px] font-normal text-[#7D7D7D] md:text-[32px]"
+                          ? "text-[clamp(18px,5vw,22px)] font-bold italic text-white md:text-[max(16px,1.67vw)]"
+                          : "text-[clamp(18px,5vw,22px)] font-normal text-[#7D7D7D] md:text-[max(16px,1.67vw)]"
                       }`}
                     >
                       {work.title}
@@ -140,7 +141,8 @@ export default function WorkSection({ connected = false }) {
           </div>
 
           {/* Right: work images */}
-          <div ref={frameRef} className="relative aspect-square h-full shrink-0 overflow-hidden rounded-2xl">
+          {/* mobile: fills the remaining height; md+: square, capped so titles keep room */}
+          <div ref={frameRef} className="relative min-h-0 w-full flex-1 overflow-hidden rounded-2xl md:flex-none md:aspect-square md:h-full md:w-auto md:max-w-[55%] md:shrink-0">
             <div ref={trackRef} className="absolute inset-x-0 top-0 flex flex-col">
               {worksData.map((work) => (
                 <div key={work.id} className="w-full shrink-0 overflow-hidden rounded-2xl">

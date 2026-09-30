@@ -10,7 +10,7 @@ const logos = [
 ];
 
 export default function LogosMarquee() {
-    const fade = 300; // px fade on both ends
+    const fade = "min(300px, 15%)"; // fade on both ends; shrinks on small screens
   return (
     <div
       className="relative overflow-hidden py-16"
