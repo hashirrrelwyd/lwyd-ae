@@ -19,7 +19,7 @@ export default function OpenRoles() {
       <div className="relative flex h-full w-full flex-col rounded-b-4xl rounded-t-4xl bg-[#111111] px-[calc(var(--side-padding)-6px)] py-12 text-white">
       <div className="flex shrink-0 justify-between pb-6">
         <div>
-          <h3 className="text-[22px] font-[500] text-white mb-8">
+          <h3 className="section-label text-white mb-8">
             Open{" "}
             <span className="text-lwyd-yellow font-[750] italic">Roles</span>
           </h3>

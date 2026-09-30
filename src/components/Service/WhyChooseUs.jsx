@@ -36,7 +36,7 @@ export default function WhyChooseUs() {
     <div ref={sectionRef} className="bg-[#111111] mx-1.5 mt-1.5 px-[calc(var(--side-padding)-6px)] py-12 rounded-4xl text-white">
       {/* Title */}
       <div className="flex">
-        <h3 className="text-[22px] font-[500] text-white mb-8">
+        <h3 className="section-label text-white mb-8">
           Why <span className="text-lwyd-yellow font-[750] italic">Choose</span>{" "}
           Us
         </h3>

@@ -56,7 +56,7 @@ export default function OurService() {
           scale: isPhone ? 1.04 : 1.12,
           // color change + weight change
           color: "#ffffff",
-          fontWeight: 500, // hover weight for the white text
+          fontWeight: 300, // hover weight for the white text (lighter than the resting 400)
         },
         0,
       )
@@ -91,7 +91,7 @@ export default function OurService() {
     <section ref={sectionRef} className="section-padding py-20 md:py-28">
       {/* Header */}
       <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
-        <h2 className="text-pretty text-3xl font-[500] leading-tight text-[#0F172A] md:text-4xl lg:text-[max(1.5rem,2.5vw)]">
+        <h2 className="section-title text-pretty text-[#0F172A]">
           <span className="font-[750] italic text-lwyd-yellow">Our</span>{" "}
           <span className="relative -mb-1 inline-flex align-middle">
             <img

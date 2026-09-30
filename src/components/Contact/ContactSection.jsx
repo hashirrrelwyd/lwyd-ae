@@ -28,7 +28,7 @@ export default function ContactSection() {
             className="absolute inset-0 w-full h-full object-cover -z-10 blur-sm"
           />
           <div>
-            <h2 className="text-3xl md:text-4xl font-[500] leading-snug">
+            <h2 className="section-title">
               <span className="italic text-yellow-400 font-[750]">Tell us</span> what you're
                <br />
               <span className="font-bold text-yellow-400">building</span>

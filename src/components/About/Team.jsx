@@ -70,7 +70,7 @@ export default function Team() {
 
   return (
     <div ref={sectionRef} className="mx-1.5 mb-1.5 flex h-auto flex-col rounded-b-4xl bg-[#111111] px-[calc(var(--side-padding)-6px)] py-10 text-white sm:h-screen">
-      <h3 className="mb-8 text-[20px] lg:text-[max(18px,1.56vw)] font-[500] text-white">
+      <h3 className="section-label mb-8 text-white">
         Meet <span className="text-lwyd-yellow font-[750] italic">Our</span>{" "}
         Team
       </h3>

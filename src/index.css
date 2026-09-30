@@ -29,6 +29,74 @@ body {
   }
 }
 
+/* Shared style for the main (hero) title at the top of every page, matching the
+   home page / Figma: light weight, 32–44px on phones/tablets, 64px on a 1920px monitor
+   scaling down with the screen on laptops (min 28px). Highlighted words inside use
+   "text-lwyd-yellow font-[700] italic". */
+.hero-title {
+  font-size: clamp(2rem, 5.5vw, 2.75rem);
+  line-height: 1.25;
+  font-weight: 300;
+}
+@media (min-width: 1024px) {
+  .hero-title {
+    font-size: max(1.75rem, 3.33vw);
+  }
+}
+
+/* Shared style for the short intro text in each hero: 15–16px on phones/tablets,
+   18px on a 1920px monitor scaling down on laptops (min 15px). */
+.hero-text {
+  font-size: 15px;
+  line-height: 1.7;
+  font-weight: 300;
+}
+@media (min-width: 640px) {
+  .hero-text {
+    font-size: 16px;
+  }
+}
+@media (min-width: 1024px) {
+  .hero-text {
+    font-size: max(15px, 0.94vw);
+  }
+}
+
+/* Shared size for section titles (e.g. "Built by people…", "Got a brand…? Let's talk.")
+   so they match on every page: 30px phones, 36px tablets,
+   48px on a 1920px monitor scaling down with the screen on laptops (min 28px).
+   Change the values here to resize every section title at once. */
+.section-title {
+  font-size: 1.875rem;
+  line-height: 1.3;
+  font-weight: 500;
+}
+@media (min-width: 768px) {
+  .section-title {
+    font-size: 2.25rem;
+  }
+}
+@media (min-width: 1024px) {
+  .section-title {
+    font-size: max(1.75rem, 2.5vw);
+  }
+}
+
+/* Shared size for the small section labels (e.g. "Featured Work", "Who We are",
+   "What Drives Us") so they match on every page: 20px on phones/tablets,
+   30px on a 1920px monitor scaling down with the screen on laptops (min 18px).
+   Change the values here to resize every section label at once. */
+.section-label {
+  font-size: 20px;
+  line-height: 1.3;
+  font-weight: 500;
+}
+@media (min-width: 1024px) {
+  .section-label {
+    font-size: max(18px, 1.56vw);
+  }
+}
+
 .text-lwyd-yellow {
   color: var(--lwyd-yellow);
 }

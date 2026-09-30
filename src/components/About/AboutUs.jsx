@@ -100,21 +100,19 @@ export default function AboutUs() {
     <section ref={sectionRef} className="section-padding pt-16 pb-16 lg:pt-[max(4rem,6vw)] lg:pb-[max(4rem,6.5vw)]">
       <div className="flex flex-col gap-6 md:flex-row md:justify-between mb-14 lg:mb-[max(4rem,6.25vw)]">
         {/* Left: small label */}
-        <h3 className="text-[20px] lg:text-[max(18px,1.56vw)] font-[500] text-gray-800">
+        <h3 className="section-label text-gray-800">
           Who <span className="text-lwyd-yellow font-[750] italic">We</span>{" "}
           are
         </h3>
 
         {/* Right: headline, copy and CTA (~36% of the width on laptops/monitors) */}
         <div className="flex flex-col items-start md:w-1/2 lg:w-[36%]">
-          <h2 className="text-3xl md:text-4xl lg:text-[max(1.75rem,2.5vw)] leading-[1.3] font-[500]">
+          <h2 className="section-title">
             Built by{" "}
             <span className="text-lwyd-yellow italic font-[750]">people</span>{" "}
             who've lived inside this industry
           </h2>
-          <p className="mt-4 lg:mt-[max(1rem,1.25vw)] text-base lg:text-[max(14px,0.94vw)] font-light leading-[1.7] text-[#6B7280]">
-            LWYD Interactive is a Bengaluru-founded creative and digital agency working exclusively in alco-bev bar to retail, concept to production. It's the only space we build for, and it shows in every brief we take on.
-          </p>
+         
           <div className="mt-6 lg:mt-[max(1.5rem,2vw)]">
             <Button title={"Our Services"} onClick={() => navigate("/service")} />
           </div>

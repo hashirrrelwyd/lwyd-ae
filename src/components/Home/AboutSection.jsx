@@ -20,7 +20,7 @@ export default function AboutSection() {
         <div className="flex flex-col gap-6 lg:flex-row lg:justify-between lg:gap-12">
           <div className="lg:w-4/12">
             {/* lg+: 48px on a 1920px screen, shrinking in proportion on laptops */}
-            <h2 className="text-pretty text-[clamp(1.75rem,6vw,2.5rem)] lg:text-[max(1.5rem,2.5vw)] font-[500] leading-tight text-[#0F172A]">
+            <h2 className="section-title text-pretty text-[#0F172A]">
               The{" "}
               <span className="italic text-lwyd-yellow font-[700]">agency</span>{" "}
               that gets what you're actually selling{" "}

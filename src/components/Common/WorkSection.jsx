@@ -82,7 +82,7 @@ export default function WorkSection({ connected = false }) {
         <div className="flex min-h-0 flex-1 flex-col md:flex-row items-stretch gap-6 md:gap-10">
           {/* Left: title (top) + work titles (bottom) */}
           <div className="flex min-w-0 flex-col gap-6 md:flex-1">
-            <h2 className="text-xl font-[500] md:text-2xl">
+            <h2 className="section-label">
               Featured <span className="italic font-[750] text-lwyd-yellow">Work</span>
             </h2>
 

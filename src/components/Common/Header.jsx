@@ -42,19 +42,9 @@ export default function Header() {
   }, [menuOpen, onKeyDown]);
 
   useEffect(() => {
-    // Bottom of the page's 2nd section (e.g. hero + about on the home page).
-    // Page sections are the in-flow children of #root; fixed/absolute layers
-    // (this navbar, the menu drawer, the custom cursor) are skipped.
-    const secondSectionBottom = () => {
-      const sections = [...(document.getElementById("root")?.children ?? [])].filter((el) => {
-        const pos = getComputedStyle(el).position;
-        return pos !== "fixed" && pos !== "absolute" && el.offsetHeight > 0;
-      });
-      const second = sections[1];
-      return second
-        ? second.getBoundingClientRect().bottom + window.scrollY
-        : window.innerHeight * 2;
-    };
+    // Extra scroll after the logo shrinks before the navbar may hide,
+    // so the smaller logo is seen first
+    const HIDE_BUFFER = 250;
 
     lastY.current = window.scrollY;
 
@@ -69,11 +59,12 @@ export default function Header() {
         setScrolled(y > 24);
 
         // the hero/banner fills the first screen; shrink the logo once past it
-        setPastHero(y > window.innerHeight - 120);
+        const shrinkAt = window.innerHeight - 120;
+        setPastHero(y > shrinkAt);
 
-        // before the end of the 2nd section the navbar always stays visible;
-        // after it, hide while scrolling down and bring it back on scroll up
-        if (y < secondSectionBottom()) {
+        // over the banner (and just after the logo shrinks) the navbar stays visible;
+        // further down, hide while scrolling down and bring it back on scroll up
+        if (y < shrinkAt + HIDE_BUFFER) {
           setHidden(false);
         } else if (Math.abs(diff) > 6) {
           setHidden(diff > 0);
@@ -121,7 +112,7 @@ export default function Header() {
               src="/icons/logo.png"
               alt="logo"
               className={`transition-all duration-300 ${
-                pastHero ? "w-9 h-9 md:w-10 md:h-10" : "w-10 h-10 md:w-12 md:h-12"
+                pastHero ? "w-9 h-9 md:w-8 md:h-8" : "w-10 h-10 md:w-10 md:h-10"
               }`}
             />
             <LogoText
