@@ -15,7 +15,7 @@ export default function HeroSection() {
         <div className="absolute inset-0 bg-black/20 rounded-2xl"></div>
         <div className="absolute inset-0 flex items-end justify-between py-6 section-padding">
           <div>
-            <p className="text-[36px] sm:text-[68px] text-white font-[300] leading-[1.3]">
+            <p className="text-[36px] sm:text-[64px] text-white font-[300] leading-[1.3]">
               The agency{" "}
               <span className="text-lwyd-yellow font-[700] italic">built</span>{" "}
               for the <br /> way people{" "}

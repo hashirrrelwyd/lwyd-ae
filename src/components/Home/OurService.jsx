@@ -51,7 +51,7 @@ export default function OurService() {
           scale: 1.12,
           // color change + weight change
           color: "#ffffff",
-          fontWeight: 400,
+          fontWeight: 600,
         },
         0,
       )
@@ -74,7 +74,7 @@ export default function OurService() {
           x: 0,
           scale: 1,
           color: "rgba(125,125,125,0.5)",
-          fontWeight: 300,
+          fontWeight:400, // keep in sync with the title's font-[500] class
         },
         0,
       )
@@ -89,13 +89,13 @@ export default function OurService() {
     <section ref={sectionRef} className="section-padding py-20 md:py-28">
       {/* Header */}
       <div className="flex items-center justify-between mb-8">
-        <h2 className="text-pretty text-3xl font-[500] leading-tight text-[#0F172A] md:text-4xl">
+        <h2 className="text-pretty text-3xl font-[500] leading-tight text-[#0F172A] md:text-5xl">
           <span className="font-[750] italic text-lwyd-yellow">Our</span>{" "}
           <span className="relative -mb-1 inline-flex align-middle">
             <img
               src="/images/button-img.png"
               alt=""
-              className="h-7 w-14 sm:h-8 sm:w-16 mb-2 rounded-full object-cover"
+              className="h-7 w-14 sm:h-14 sm:w-26 mb-2 rounded-full object-cover"
             />
           </span>{" "}
           Services
@@ -118,7 +118,7 @@ export default function OurService() {
                 onMouseLeave={() => handleLeave(i)}
                 onFocus={() => handleEnter(i)}
                 onBlur={() => handleLeave(i)}
-                className="relative group flex items-center w-full justify-between px-7 py-5 md:py-6 border border-[#7D7D7D1A] rounded-full overflow-hidden cursor-pointer"
+                className="relative group flex items-center w-full justify-between px-7 py-5 md:py-5 border border-[#7D7D7D1A] rounded-full overflow-hidden cursor-pointer"
               >
                 {/* Background + dark overlay */}
                 <div className="pointer-events-none absolute inset-0 rounded-full overflow-hidden">
@@ -139,7 +139,7 @@ export default function OurService() {
                   {/* Title */}
                   <span
                     ref={(el) => setTextRef(el, i)}
-                    className="ml-1 font-[300] text-[#7D7D7D80] text-[18px] sm:text-[22px] md:text-[26px] lg:text-[30px] transition-none"
+                    className="ml-1 font-[400] text-[#7D7D7D80] text-[22px] sm:text-[26px] md:text-[32px] lg:text-[38px] transition-none"
                   >
                     {(() => {
                       const words = item.title.split(" ")
@@ -173,7 +173,7 @@ export default function OurService() {
                 onMouseLeave={() => handleLeave(i)}
                 onFocus={() => handleEnter(i)}
                 onBlur={() => handleLeave(i)}
-                className="relative group flex items-center w-full justify-between px-7 py-5 md:py-6 border border-[#7D7D7D1A] rounded-full overflow-hidden cursor-pointer"
+                className="relative group flex items-center w-full justify-between px-7 py-5 md:py-5 border border-[#7D7D7D1A] rounded-full overflow-hidden cursor-pointer"
               >
                 {/* Background + dark overlay */}
                 <div className="pointer-events-none absolute inset-0 rounded-full overflow-hidden">
@@ -192,7 +192,7 @@ export default function OurService() {
 
                   <span
                     ref={(el) => setTextRef(el, i)}
-                    className="ml-1 font-[300] text-[#7D7D7D80] text-[18px] sm:text-[22px] md:text-[26px] lg:text-[30px] transition-none"
+                    className="ml-1 font-[400] text-[#7D7D7D80] text-[22px] sm:text-[26px] md:text-[32px] lg:text-[38px] transition-none"
                   >
                     {(() => {
                       const words = item.title.split(" ")

@@ -1,12 +1,14 @@
 "use client";
 
 import { useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import LogosMarquee from "../Common/LogosMarquee";
 import Button from "../ui/Button";
 import { useSectionTheme } from "../../hooks/useHeaderThemeSection";
 
 export default function AboutSection() {
   const sectionRef = useRef(null);
+  const navigate = useNavigate();
   useSectionTheme(sectionRef, "light");
   return (
     <section ref={sectionRef} className="section-padding">
@@ -47,7 +49,7 @@ export default function AboutSection() {
           </div>
 
           <div className="md:w-2/6 text-base font-[400]">
-            <Button title={"Learn More"} />
+            <Button title={"Learn More"} onClick={() => navigate("/about")} />
           </div>
         </div>
       </div>
