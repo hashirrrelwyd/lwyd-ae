@@ -69,7 +69,7 @@ export default function Team() {
   };
 
   return (
-    <div ref={sectionRef} className="mx-1.5 mb-1.5 flex h-auto flex-col rounded-b-4xl bg-[#111111] px-6 py-10 text-white sm:h-screen md:px-10">
+    <div ref={sectionRef} className="mx-1.5 mb-1.5 flex h-auto flex-col rounded-b-4xl bg-[#111111] px-[calc(var(--side-padding)-6px)] py-10 text-white sm:h-screen">
       <h3 className="mb-8 text-[22px] font-[500] text-white">
         Meet <span className="text-lwyd-yellow font-[750] italic">Our</span>{" "}
         Team

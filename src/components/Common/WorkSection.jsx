@@ -122,8 +122,8 @@ export default function WorkSection({ connected = false }) {
                     <h3
                       className={`leading-snug transition-all duration-500 ${
                         i === currentIndex
-                          ? "text-[22px] font-bold italic text-white md:text-[28px]"
-                          : "text-[22px] font-normal text-[#7D7D7D] md:text-[28px]"
+                          ? "text-[22px] font-bold italic text-white md:text-[32px]"
+                          : "text-[22px] font-normal text-[#7D7D7D] md:text-[32px]"
                       }`}
                     >
                       {work.title}

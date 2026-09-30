@@ -16,7 +16,7 @@ export default function OpenRoles() {
 
   return (
     <section ref={sectionRef} className="relative h-screen w-full p-1.5">
-      <div className="relative flex h-full w-full flex-col rounded-b-4xl rounded-t-4xl bg-[#111111] px-[34px] py-12 text-white">
+      <div className="relative flex h-full w-full flex-col rounded-b-4xl rounded-t-4xl bg-[#111111] px-[calc(var(--side-padding)-6px)] py-12 text-white">
       <div className="flex shrink-0 justify-between pb-6">
         <div>
           <h3 className="text-[22px] font-[500] text-white mb-8">

@@ -83,8 +83,8 @@ export default function Header() {
         {/* Inner bar: becomes rounded + blurred when scrolled */}
         <div
           className={[
-            "pointer-events-auto mx-4 mt-3 w-full",
-            "flex items-center justify-between px-6 py-3 md:py-2",
+            "pointer-events-auto mx-1 md:mx-4 mt-3 w-full",
+            "flex items-center justify-between px-[calc(var(--side-padding)-4px)] md:px-[calc(var(--side-padding)-1rem)] py-3 md:py-2",
             "transition-all duration-300",
             scrolled
               ? "rounded-full bg-white/10 backdrop-blur-3xl shadow-sm"

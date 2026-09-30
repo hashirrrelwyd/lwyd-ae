@@ -5,13 +5,21 @@ body {
   background-color: #FFFCF5;
 }
 .section-padding {
-  padding-left: 2.5rem;
-  padding-right: 2.5rem;
+  padding-left: var(--side-padding);
+  padding-right: var(--side-padding);
   box-sizing: border-box;
 }
 
 :root {
   --lwyd-yellow: #ffcc00;
+  /* page side padding — change here to adjust every page */
+  --side-padding: 1.25rem;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --side-padding: 4rem;
+  }
 }
 
 .text-lwyd-yellow {
