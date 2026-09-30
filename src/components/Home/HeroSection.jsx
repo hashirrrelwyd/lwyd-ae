@@ -15,17 +15,17 @@ export default function HeroSection() {
         <div className="absolute inset-0 bg-black/20 rounded-2xl"></div>
         <div className="absolute inset-0 flex items-end justify-between py-6 section-padding">
           <div>
-            <p className="text-[36px] sm:text-[72px] text-white font-[300]">
+            <p className="text-[36px] sm:text-[68px] text-white font-[300]">
               The agency{" "}
-              <span className="text-lwyd-yellow font-[700] italic">built</span>{" "}
+              <span className="text-lwyd-yellow font-[600] italic">built</span>{" "}
               for the <br /> way people{" "}
-              <span className="text-lwyd-yellow font-[700] italic">
+              <span className="text-lwyd-yellow font-[600] italic">
                 actually drink
               </span>
             </p>
           </div>
           <div>
-            <p className="text-white/70 text-base font-light w-96">
+            <p className="text-white/80 text-lg font-[300] w-96">
               LWYD is a creative and digital agency for the alco-bev space, working out of Bengaluru and Gurugram.
             </p>
           </div>

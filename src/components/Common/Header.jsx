@@ -95,10 +95,10 @@ export default function Header() {
             <img
               src="/icons/logo.png"
               alt="logo"
-              className="w-6 h-6 md:w-7 md:h-7"
+              className="w-8 h-8 md:w-14 md:h-14"
             />
             <LogoText
-              className={`w-full h-6 hidden md:block ${
+              className={`w-full h-8 hidden md:block ${
                 theme === "dark" ? "text-white" : "text-black"
               }`}
             />
