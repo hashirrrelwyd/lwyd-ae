@@ -9,7 +9,7 @@ export default function WorkTogether({ heading }) {
     <section ref={sectionRef} className="grid md:grid-cols-2 gap-12 mb-24 section-padding py-24">
       {/* Left side */}
       <div>
-        <h3 className="text-[22px] font-[500] text-gray-800 mb-2">
+        <h3 className="text-[20px] lg:text-[max(18px,1.56vw)] font-[500] text-gray-800 mb-2">
           Lets <span className="text-lwyd-yellow font-[750] italic">Work</span>{" "}
           Together
         </h3>

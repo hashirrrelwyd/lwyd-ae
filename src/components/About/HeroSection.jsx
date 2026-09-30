@@ -33,13 +33,15 @@ export default function HeroSection() {
 
       lastPosRef.current = { x, y };
 
+      // trail images are 160–220px on a 1920px screen and shrink in proportion on smaller ones
+      const scale = Math.min(1, Math.max(0.6, window.innerWidth / 1920));
       const newImage = {
         id: Date.now() + Math.random(),
         src: sources[Math.floor(Math.random() * sources.length)],
         x,
         y,
         opacity: 1,
-        size: 160 + Math.random() * 60,
+        size: (160 + Math.random() * 60) * scale,
       };
 
       setTrail((prev) => [...prev, newImage]);
@@ -87,24 +89,25 @@ export default function HeroSection() {
       ))}
 
       {/* Title */}
-      <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
-        <h1 className="text-[36px] sm:text-[72px] text-black font-[200] text-center">
+      <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none section-padding">
+        {/* lg+: 72px on a 1920px screen, shrinking in proportion on laptops */}
+        <h1 className="text-[clamp(2rem,7vw,3.5rem)] lg:text-[max(2.25rem,3.75vw)] leading-[1.2] text-black font-[200] text-center">
           We only{" "}
           <span className="text-lwyd-yellow font-[700] italic">built</span>{" "}
-          for one space and <br /> we've gotten
+          for one space and <br className="hidden sm:block" /> we've gotten
           <span className="text-lwyd-yellow font-[700] italic"> very good at it </span>
         </h1>
       </div>
 
       {/* Paragraph */}
-      <div className="absolute bottom-16 left-1/2 -translate-x-1/2 z-20 pointer-events-none">
-        <p className="text-[#7D7D7D] text-base font-normal max-w-md text-center">
-          LWYD was built inside the alco-bev world, not adapted for it. Here's who we are and how we work. 
+      <div className="absolute bottom-16 left-1/2 -translate-x-1/2 z-20 pointer-events-none w-full section-padding flex justify-center">
+        <p className="text-[#7D7D7D] text-[15px] lg:text-[max(14px,1rem)] font-normal max-w-md text-center">
+          LWYD was built inside the alco-bev world, not adapted for it. Here's who we are and how we work.
         </p>
       </div>
 
-      {/* Section bottom border, inset from the edges */}
-      <div className="absolute bottom-0 inset-x-10 h-px bg-black/10 z-20" />
+      {/* Section bottom border, inset to match the page side padding */}
+      <div className="absolute bottom-0 inset-x-[var(--side-padding)] h-px bg-black/10 z-20" />
     </div>
   );
 }

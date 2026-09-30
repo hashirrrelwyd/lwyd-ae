@@ -70,7 +70,7 @@ export default function Team() {
 
   return (
     <div ref={sectionRef} className="mx-1.5 mb-1.5 flex h-auto flex-col rounded-b-4xl bg-[#111111] px-[calc(var(--side-padding)-6px)] py-10 text-white sm:h-screen">
-      <h3 className="mb-8 text-[22px] font-[500] text-white">
+      <h3 className="mb-8 text-[20px] lg:text-[max(18px,1.56vw)] font-[500] text-white">
         Meet <span className="text-lwyd-yellow font-[750] italic">Our</span>{" "}
         Team
       </h3>
@@ -101,7 +101,8 @@ export default function Team() {
               <img
                 src={current?.image}
                 alt={current?.title}
-                className="order-1 h-[300px] w-auto shrink-0 rounded-2xl object-contain sm:order-2 md:h-[340px] md:rounded-3xl lg:h-[380px] 2xl:h-[520px]"
+                // lg+: ~520px on a 1920px monitor, shrinking with the screen and capped by its height
+                className="order-1 h-[300px] w-auto shrink-0 rounded-2xl object-contain sm:order-2 md:h-[340px] md:rounded-3xl lg:h-[min(27vw,52vh)]"
               />
             </div>
 

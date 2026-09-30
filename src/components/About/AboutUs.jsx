@@ -22,9 +22,15 @@ function useOnScreen(ref, rootMargin = "0px", threshold = 0) {
   return isIntersecting;
 }
 
-// Responsive digit size for the rolling counters: small on mobile, full size from md up
+// Responsive digit size for the rolling counters: 56px on mobile, 88px on tablets,
+// and on laptops/monitors 120px at 1920px wide, shrinking in proportion (min 72px)
 function useDigitHeight() {
-  const getHeight = () => (window.innerWidth < 768 ? 56 : 120);
+  const getHeight = () => {
+    const w = window.innerWidth;
+    if (w < 768) return 56;
+    if (w < 1024) return 88;
+    return Math.round(Math.min(120, Math.max(72, (w * 120) / 1920)));
+  };
   const [digitHeight, setDigitHeight] = useState(
     typeof window !== "undefined" ? getHeight() : 120
   );
@@ -91,10 +97,10 @@ export default function AboutUs() {
 
   return (
     <section ref={sectionRef} className="section-padding py-12">
-      <div className="x-auto grid  grid-cols-1 gap-10 py-14 md:flex justify-between mb-24">
+      <div className="mx-auto grid grid-cols-1 gap-10 py-14 md:flex justify-between mb-24">
         {/* Left side: small title (top) + big headline (bottom) */}
         <div className="flex flex-col justify-between md:w-6/12">
-          <h3 className="text-[22px] font-[500] text-gray-800 mb-2">
+          <h3 className="text-[20px] lg:text-[max(18px,1.56vw)] font-[500] text-gray-800 mb-2">
             Who <span className="text-lwyd-yellow font-[750] italic">We</span>{" "}
             are
           </h3>
@@ -155,7 +161,7 @@ export default function AboutUs() {
                 </span>
               )}
             </div>
-            <p className="text-[#7d7d7d] text-[20px]">{stats[i].label}</p>
+            <p className="text-[#7d7d7d] text-base md:text-lg lg:text-[max(14px,1.04vw)]">{stats[i].label}</p>
           </div>
         ))}
       </div>

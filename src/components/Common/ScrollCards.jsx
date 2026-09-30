@@ -47,42 +47,48 @@ export default function ScrollCards({Data}) {
     <>
       {/* Native Scrollable Container with Drag Support */}
       <div ref={scrollRef} className="overflow-x-auto no-scrollbar select-none">
-        <div className="flex gap-8 pb-8" style={{ minWidth: "max-content" }}>
+        <div className="flex gap-6 lg:gap-8 pb-[max(1.5rem,2.2vw)]" style={{ minWidth: "max-content" }}>
           {Data.map((item, index) => (
+            // Card width (as in Figma): 3 cards fill the row on laptops/monitors, 2 on tablets,
+            // one mostly-visible card on phones; the rest scroll. The 28px accounts for the
+            // dark section's outer margin and the page scrollbar.
+            // @container: everything inside is sized relative to the card (cqw / %), so the
+            // number, circles and text all scale together with the card.
             <div
               key={index}
-              className="relative flex-shrink-0 w-[380px] md:w-[400px] h-[400px] 2xl:w-[450px] 2xl:h-[440px] bg-[#1A1A1A] rounded-2xl overflow-hidden"
+              className="@container relative flex-shrink-0 aspect-[578/600] w-[80vw] md:w-[calc((100vw-2*var(--side-padding)-1.5rem-28px)/2)] lg:w-[calc((100vw-2*var(--side-padding)-4rem-28px)/3)] bg-[#212121] rounded-2xl overflow-hidden"
             >
-              {/* Big faded number in background */}
-              <span className="absolute left-[-0.8rem] top-[-2.9rem] text-[100px] font-[500] text-white/20">
+              {/* Big faded number, cut off at the top edge (~150px on a 578px card) */}
+              <span className="absolute left-[-2cqw] top-[-10.5cqw] text-[26cqw] leading-none font-[500] text-white/20">
                 0{index + 1}
               </span>
 
-              {/* 2nd Dashed circle */}
+              {/* 2nd Dashed circle (as wide as the card) */}
               <span
-                className={`absolute w-[450px] h-[450px] border-2 border-dashed border-white/10 rounded-full 
+                className={`absolute w-full aspect-square border-2 border-dashed border-white/10 rounded-full
                         ${
                           index % 2 === 0
-                            ? "left-[-230px] top-[-240px]"
-                            : "right-[-15rem] top-[-15rem]"
+                            ? "left-[-51%] top-[-55%]"
+                            : "right-[-53%] top-[-55%]"
                         }`}
               ></span>
-              {/* 1st Dashed circle */}
+              {/* 1st Dashed circle (~58% of the card) */}
               <span
-                className={`absolute w-[260px] h-[260px] border-2 border-dashed border-white/10 rounded-full 
+                className={`absolute w-[58%] aspect-square border-2 border-dashed border-white/10 rounded-full
                         ${
                           index % 2 === 0
-                            ? "left-[-120px] top-[-121px]"
-                            : "right-[-8rem] top-[-7.5rem]"
+                            ? "left-[-27%] top-[-27.5%]"
+                            : "right-[-28.5%] top-[-27.5%]"
                         }`}
               ></span>
 
               {/* Content */}
-              <div className="absolute bottom-6.5 left-6 right-6">
-                <h3 className="text-lg font-medium text-white mb-3">
+              {/* Content: ~24px title and ~18px copy on a 578px card */}
+              <div className="absolute bottom-[7cqw] left-[5.5cqw] right-[5.5cqw]">
+                <h3 className="text-[max(18px,4.2cqw)] font-[400] text-white mb-[max(0.75rem,5cqw)]">
                   {item.title}
                 </h3>
-                <p className="text-sm text-[#9C9C9C] leading-relaxed">
+                <p className="text-[max(13px,3.1cqw)] text-[#9C9C9C] leading-[1.65]">
                   {item.description}
                 </p>
               </div>
@@ -91,16 +97,13 @@ export default function ScrollCards({Data}) {
         </div>
       </div>
 
-      {/* Scroll Indicator */}
-      <motion.div
-        style={{
-          scaleX: scrollXProgress,
-          transformOrigin: "left",
-          backgroundColor: "#ffcc00",
-          height: 1,
-          marginBottom: "1rem",
-        }}
-      />
+      {/* Scroll Indicator: grey track with the yellow progress on top */}
+      <div className="relative mb-4 h-px w-full bg-white/10">
+        <motion.div
+          className="absolute inset-0 bg-lwyd-yellow"
+          style={{ scaleX: scrollXProgress, transformOrigin: "left" }}
+        />
+      </div>
     </>
   );
 }

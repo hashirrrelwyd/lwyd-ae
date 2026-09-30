@@ -29,10 +29,10 @@ export default function WhatDrivesUs() {
   const sectionRef = useRef(null);
   useSectionTheme(sectionRef, "dark");
   return (
-    <div ref={sectionRef} className="bg-[#111111] mx-1.5 mt-1.5 px-[calc(var(--side-padding)-6px)] py-12 rounded-t-4xl text-white">
-      {/* Title */}
+    <div ref={sectionRef} className="bg-[#111111] mx-1.5 mt-1.5 px-[calc(var(--side-padding)-6px)] pt-12 pb-8 lg:pt-[max(2.5rem,3vw)] rounded-t-4xl text-white">
+      {/* Title: ~30px on a 1920px screen (Figma) */}
       <div className="flex">
-        <h3 className="text-[22px] font-[500] text-white mb-8">
+        <h3 className="text-[20px] lg:text-[max(18px,1.56vw)] font-[500] text-white mb-8 lg:mb-[max(2rem,3.3vw)]">
           What{" "}
           <span className="text-lwyd-yellow font-[750] italic">Drives</span> Us
         </h3>
