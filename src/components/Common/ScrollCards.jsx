@@ -1,9 +1,17 @@
-import { motion, useScroll } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { useEffect, useRef } from "react";
 
 export default function ScrollCards({Data}) {
   const scrollRef = useRef(null);
   const { scrollXProgress } = useScroll({ container: scrollRef });
+
+  // Progress bar: stays anchored on the left and fills towards the right as you scroll,
+  // starting at ~29% of the track (as in Figma) and reaching 100% at the last card
+  const START_SHARE = 0.29; // filled share of the track before scrolling (Figma)
+  const fillWidth = useTransform(
+    scrollXProgress,
+    (p) => `${(START_SHARE + p * (1 - START_SHARE)) * 100}%`
+  );
 
   const isDragging = useRef(false);
   const startX = useRef(0);
@@ -47,42 +55,51 @@ export default function ScrollCards({Data}) {
     <>
       {/* Native Scrollable Container with Drag Support */}
       <div ref={scrollRef} className="overflow-x-auto no-scrollbar select-none">
-        <div className="flex gap-8 pb-8" style={{ minWidth: "max-content" }}>
+        <div className="flex gap-6 lg:gap-8 pb-[max(1.5rem,2.2vw)]" style={{ minWidth: "max-content" }}>
           {Data.map((item, index) => (
+            // Card width (as in Figma): 3 cards fill the row on laptops/monitors, 2 on tablets,
+            // one mostly-visible card on phones; the rest scroll. The 28px accounts for the
+            // dark section's outer margin and the page scrollbar.
+            // @container: everything inside is sized relative to the card (cqw / %), so the
+            // number, circles and text all scale together with the card.
             <div
               key={index}
-              className="relative flex-shrink-0 w-[380px] md:w-[400px] h-[400px] 2xl:w-[450px] 2xl:h-[440px] bg-[#1A1A1A] rounded-2xl overflow-hidden"
+              className="@container relative flex-shrink-0 aspect-[578/600] w-[80vw] md:w-[calc((100vw-2*var(--side-padding)-1.5rem-28px)/2)] lg:w-[calc((100vw-2*var(--side-padding)-4rem-28px)/3)] bg-[#212121] rounded-2xl overflow-hidden"
             >
-              {/* Big faded number in background */}
-              <span className="absolute left-[-0.8rem] top-[-2.9rem] text-[100px] font-[500] text-white/20">
+              {/* Big faded number (~150px on a 578px card). As in Figma it runs past the
+                  card's top-left corner: the "0" is partly cut off and the tops of the digits too */}
+              <span className="absolute left-[-8.6cqw] top-[-9.3cqw] text-[26cqw] leading-none font-[500] text-white/20">
                 0{index + 1}
               </span>
 
-              {/* 2nd Dashed circle */}
+              {/* Dashed circles, centred just outside the top corner (left on odd cards,
+                  right on even), measured from Figma. top % is of the card height. */}
+              {/* Outer circle: radius ~56% of the card width */}
               <span
-                className={`absolute w-[450px] h-[450px] border-2 border-dashed border-white/10 rounded-full 
+                className={`absolute w-[112%] aspect-square border border-dashed border-white/15 rounded-full
                         ${
                           index % 2 === 0
-                            ? "left-[-230px] top-[-240px]"
-                            : "right-[-15rem] top-[-15rem]"
+                            ? "left-[-58%] top-[-59.7%]"
+                            : "right-[-58%] top-[-59.7%]"
                         }`}
               ></span>
-              {/* 1st Dashed circle */}
+              {/* Inner circle: radius ~30% of the card width */}
               <span
-                className={`absolute w-[260px] h-[260px] border-2 border-dashed border-white/10 rounded-full 
+                className={`absolute w-[60%] aspect-square border border-dashed border-white/15 rounded-full
                         ${
                           index % 2 === 0
-                            ? "left-[-120px] top-[-121px]"
-                            : "right-[-8rem] top-[-7.5rem]"
+                            ? "left-[-29.5%] top-[-34.2%]"
+                            : "right-[-29.5%] top-[-34.2%]"
                         }`}
               ></span>
 
               {/* Content */}
-              <div className="absolute bottom-6.5 left-6 right-6">
-                <h3 className="text-lg font-medium text-white mb-3">
+              {/* Content: ~24px title and ~18px copy on a 578px card */}
+              <div className="absolute bottom-[7cqw] left-[5.5cqw] right-[5.5cqw]">
+                <h3 className="text-[max(18px,4.2cqw)] font-[400] text-white mb-[max(0.75rem,5cqw)]">
                   {item.title}
                 </h3>
-                <p className="text-sm text-[#9C9C9C] leading-relaxed">
+                <p className="text-[max(13px,3.1cqw)] text-[#9C9C9C] leading-[1.65]">
                   {item.description}
                 </p>
               </div>
@@ -91,16 +108,13 @@ export default function ScrollCards({Data}) {
         </div>
       </div>
 
-      {/* Scroll Indicator */}
-      <motion.div
-        style={{
-          scaleX: scrollXProgress,
-          transformOrigin: "left",
-          backgroundColor: "#ffcc00",
-          height: 1,
-          marginBottom: "1rem",
-        }}
-      />
+      {/* Scroll Indicator: grey track with a yellow bar that fills left to right as you scroll */}
+      <div className="relative mb-4 h-[2px] w-full bg-white/15">
+        <motion.div
+          className="absolute inset-y-0 left-0 bg-lwyd-yellow"
+          style={{ width: fillWidth }}
+        />
+      </div>
     </>
   );
 }

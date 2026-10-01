@@ -13,19 +13,22 @@ export default function HeroSection() {
           className="h-full object-cover w-full"
         />
         <div className="absolute inset-0 bg-black/50 rounded-2xl"></div>
-        <div className="absolute inset-0 flex items-end justify-between py-6 section-padding">
-          <div>
-            <p className="text-[36px] sm:text-[72px] text-white font-[300]">
+        {/* Same layout as the home hero: stacked on mobile/tablet, side by side from lg */}
+        <div className="absolute inset-0 flex flex-col items-start justify-end gap-6 lg:flex-row lg:items-end lg:justify-between lg:gap-10 pb-[var(--side-padding)] section-padding">
+          {/* bottom padding = side padding, so the text sits the same distance from the bottom and left edges */}
+          <div className="min-w-0">
+            <p className="hero-title text-white">
               Come make{" "}
               <span className="text-lwyd-yellow font-[700] italic">things</span>{" "}
-              people actually <br />
+              people <br className="hidden sm:block" />
+              actually{" "}
               <span className="text-lwyd-yellow font-[700] italic">
                 notice
               </span>
             </p>
           </div>
-          <div>
-            <p className="text-[#FFFFFFB2] text-base font-400 w-96">
+          <div className="w-full max-w-md lg:w-[max(22rem,20vw)] lg:shrink-0">
+            <p className="hero-text text-[#FFFFFFB2]">
               Join a team that ships fast and doesn't sit still.
             </p>
           </div>

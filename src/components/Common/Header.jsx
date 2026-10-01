@@ -1,17 +1,20 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import { useTheme } from "../../context/HeaderThemeContext";
 import NavItem from "../ui/NavItem";
 import LogoText from "../ui/LogoText";
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false); // turns on rounded blurred bg + black hamburger
-  const [hidden, setHidden] = useState(false); // slide away when scrolling down
+  const [pastHero, setPastHero] = useState(false); // below the first screen: smaller logo
+  const [hidden, setHidden] = useState(false); // past the 2nd section: hide on scroll down, show on scroll up
   const [menuOpen, setMenuOpen] = useState(false); // right-side drawer
   const ticking = useRef(false);
   const lastY = useRef(0);
   const { theme } = useTheme();
+  const navigate = useNavigate();
 
   // lock body scroll when nav is open
   useEffect(() => {
@@ -39,6 +42,10 @@ export default function Header() {
   }, [menuOpen, onKeyDown]);
 
   useEffect(() => {
+    // Extra scroll after the logo shrinks before the navbar may hide,
+    // so the smaller logo is seen first
+    const HIDE_BUFFER = 250;
+
     lastY.current = window.scrollY;
 
     const onScroll = () => {
@@ -51,20 +58,24 @@ export default function Header() {
         // turn blur on after threshold
         setScrolled(y > 24);
 
-        // hide on downward scroll (after a small threshold), show on upward
-        if (Math.abs(diff) > 6) {
-          if (diff > 0 && y > 72) {
-            setHidden(true);
-          } else if (diff < 0) {
-            setHidden(false);
-          }
-          lastY.current = y;
+        // the hero/banner fills the first screen; shrink the logo once past it
+        const shrinkAt = window.innerHeight - 120;
+        setPastHero(y > shrinkAt);
+
+        // over the banner (and just after the logo shrinks) the navbar stays visible;
+        // further down, hide while scrolling down and bring it back on scroll up
+        if (y < shrinkAt + HIDE_BUFFER) {
+          setHidden(false);
+        } else if (Math.abs(diff) > 6) {
+          setHidden(diff > 0);
         }
+        if (Math.abs(diff) > 6) lastY.current = y;
 
         ticking.current = false;
       });
     };
 
+    onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
@@ -73,34 +84,41 @@ export default function Header() {
 
   return (
     <>
-      {/* fixed wrapper that moves in/out based on scroll direction; don't hide when menu is open */}
+      {/* fixed wrapper: slides up out of view when hidden (never while the menu is open) */}
       <div
         className={[
           "fixed inset-x-0 top-0 z-50 flex justify-center transition-transform duration-300",
           hidden && !menuOpen ? "-translate-y-full" : "translate-y-0",
         ].join(" ")}
       >
-        {/* Inner bar: becomes rounded + blurred when scrolled */}
+        {/* Inner bar: becomes rounded + blurred when scrolled.
+            Equal padding on all sides, and the bar's margin is side-padding minus that
+            padding, so the logo always lines up with the page content.
+            At the very top the logo sits side-padding from both the top and left edges. */}
         <div
           className={[
-            "pointer-events-auto mx-4 mt-3 w-full",
-            "flex items-center justify-between px-6 py-3 md:py-2",
+            "pointer-events-auto w-full p-3",
+            "mx-[calc(var(--side-padding)-0.75rem)]",
+            scrolled ? "mt-3" : "mt-[calc(var(--side-padding)-0.75rem)]",
+            "flex items-center justify-between",
             "transition-all duration-300",
             scrolled
               ? "rounded-full bg-white/10 backdrop-blur-3xl shadow-sm"
               : "bg-transparent border-transparent",
           ].join(" ")}
         >
-          <div className="flex gap-2 items-end cursor-pointer">
+          <div className="flex gap-2 items-end cursor-pointer" onClick={() => navigate("/")}>
             <img
               src="/icons/logo.png"
               alt="logo"
-              className="w-6 h-6 md:w-7 md:h-7"
+              className={`transition-all duration-300 ${
+                pastHero ? "w-9 h-9 md:w-8 md:h-8" : "w-10 h-10 md:w-10 md:h-10"
+              }`}
             />
             <LogoText
-              className={`w-full h-6 hidden md:block ${
-                theme === "dark" ? "text-white" : "text-black"
-              }`}
+              className={`w-auto transition-all duration-300 hidden md:block ${
+                pastHero ? "h-6" : "h-8"
+              } ${theme === "dark" ? "text-white" : "text-black"}`}
             />
           </div>
 
@@ -112,8 +130,7 @@ export default function Header() {
             className="cursor-pointer p-1 rounded-md transition-colors duration-200"
           >
             <svg
-              width="32"
-              height="32"
+              className={`transition-all duration-300 ${pastHero ? "w-8 h-8" : "w-9 h-9 md:w-10 md:h-10"}`}
               viewBox="0 0 24 24"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
@@ -187,32 +204,32 @@ export default function Header() {
             <NavItem
               text="HOME"
               link="/"
-              className="text-3xl md:text-[1.8rem] 2xl:text-[2.5rem] font-semibold tracking-tight"
+              className="text-3xl md:text-[1.8rem] 2xl:text-[2.5rem] font-semibold"
             />
             <NavItem
               text="ABOUT US"
               link="/about"
-              className="text-3xl md:text-[1.8rem] 2xl:text-[2.5rem] font-semibold tracking-tight"
+              className="text-3xl md:text-[1.8rem] 2xl:text-[2.5rem] font-semibold"
             />
             <NavItem
               text="SERVICES"
               link="/service"
-              className="text-3xl md:text-[1.8rem] 2xl:text-[2.5rem] font-semibold tracking-tight"
+              className="text-3xl md:text-[1.8rem] 2xl:text-[2.5rem] font-semibold"
             />
             <NavItem
               text="OUR WORK"
               link="/work"
-              className="text-3xl md:text-[1.8rem] 2xl:text-[2.5rem] font-semibold tracking-tight"
+              className="text-3xl md:text-[1.8rem] 2xl:text-[2.5rem] font-semibold"
             />
             <NavItem
               text="CAREERS"
               link="/careers"
-              className="text-3xl md:text-[1.8rem] 2xl:text-[2.5rem] font-semibold tracking-tight"
+              className="text-3xl md:text-[1.8rem] 2xl:text-[2.5rem] font-semibold"
             />
             <NavItem
               text="CONTACT"
               link="/contact"
-              className="text-3xl md:text-[1.8rem] 2xl:text-[2.5rem] font-semibold tracking-tight"
+              className="text-3xl md:text-[1.8rem] 2xl:text-[2.5rem] font-semibold"
             />
           </ul>
 

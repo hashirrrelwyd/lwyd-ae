@@ -15,8 +15,6 @@ const worksData = [
   { id: 5, title: "Grey Goose Altius x ICW", year: "2025", image: "/images/social.webp" },
 ];
 
-const ROW_HEIGHT = 60; // px, mask viewport height reference on the left
-const ROW_GAP = 20; // px, equal space between title rows, wrapped or not
 const PEEK = 72; // px of the next image visible at the bottom of the frame
 const IMAGE_GAP = 24; // px, gap between stacked work images
 
@@ -24,20 +22,9 @@ export default function WorkSection({ connected = false }) {
   const sectionRef = useRef(null);
   const frameRef = useRef(null);
   const trackRef = useRef(null);
-  const titleRowRefs = useRef([]);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [rowOffsets, setRowOffsets] = useState([]);
 
   useSectionTheme(sectionRef, "dark");
-
-  useLayoutEffect(() => {
-    const measureRows = () => {
-      setRowOffsets(titleRowRefs.current.map((el) => el?.offsetTop ?? 0));
-    };
-    measureRows();
-    window.addEventListener("resize", measureRows);
-    return () => window.removeEventListener("resize", measureRows);
-  }, []);
 
   useLayoutEffect(() => {
     const section = sectionRef.current;
@@ -91,56 +78,43 @@ export default function WorkSection({ connected = false }) {
       <div
         className={`relative flex h-full w-full overflow-hidden ${connected ? "rounded-b-2xl" : "rounded-2xl"} bg-[#111111] text-white section-padding py-10`}
       >
-        <div className="flex min-h-0 flex-1 items-stretch gap-10">
+        {/* Stacked on mobile (titles above image); side by side from md */}
+        <div className="flex min-h-0 flex-1 flex-col md:flex-row items-stretch gap-6 md:gap-10">
           {/* Left: title (top) + work titles (bottom) */}
-          <div className="flex flex-1 flex-col justify-between pb-4">
-            <h2 className="text-xl font-[500] md:text-2xl">
+          <div className="flex min-w-0 flex-col gap-6 md:flex-1">
+            <h2 className="section-label">
               Featured <span className="italic font-[750] text-lwyd-yellow">Work</span>
             </h2>
 
-            <div
-              className="relative overflow-hidden"
-              style={{
-                height: ROW_HEIGHT * 5,
-                maskImage: "linear-gradient(to bottom, black 75%, transparent 100%)",
-                WebkitMaskImage: "linear-gradient(to bottom, black 75%, transparent 100%)",
-              }}
-            >
-              <div
-                className="flex flex-col transition-transform duration-500 ease-out"
-                style={{
-                  gap: ROW_GAP,
-                  transform: `translateY(-${rowOffsets[currentIndex] ?? 0}px)`,
-                }}
-              >
-                {worksData.map((work, i) => (
-                  <div
+            {/* All titles stay in place; the one matching the current image is highlighted.
+                mt-auto pushes the list to the bottom of the column, level with the image's bottom */}
+            <div className="flex flex-col gap-5 md:gap-[max(1.25rem,2.2vw)] md:mt-auto">
+              {worksData.map((work, i) => {
+                const active = i === currentIndex;
+                return (
+                  <h3
                     key={work.id}
-                    ref={(el) => (titleRowRefs.current[i] = el)}
-                    className="flex items-end gap-2"
+                    // max-w in ch: long titles wrap onto 2 lines instead of running full width
+                    className={`max-w-[30ch] leading-snug transition-colors duration-500 text-[clamp(16px,4.5vw,20px)] md:text-[max(16px,1.67vw)] ${
+                      active ? "font-bold italic text-white" : "font-normal text-[#7D7D7D]"
+                    }`}
                   >
-                    <h3
-                      className={`leading-snug transition-all duration-500 ${
-                        i === currentIndex
-                          ? "text-[22px] font-bold italic text-white md:text-[28px]"
-                          : "text-[22px] font-normal text-[#7D7D7D] md:text-[28px]"
-                      }`}
-                    >
-                      {work.title}
-                    </h3>
-                    {i === currentIndex && (
-                      <span className="whitespace-nowrap text-xs text-[#7D7D7D]">
+                    {work.title}
+                    {/* year shows only on the selected title; inline, so it follows the last word even when the title wraps */}
+                    {active && (
+                      <span className="ml-2 whitespace-nowrap font-normal not-italic text-[max(12px,0.75rem)] text-[#BDBDBD]">
                         [{work.year}]
                       </span>
                     )}
-                  </div>
-                ))}
-              </div>
+                  </h3>
+                );
+              })}
             </div>
           </div>
 
           {/* Right: work images */}
-          <div ref={frameRef} className="relative aspect-square h-full shrink-0 overflow-hidden rounded-2xl">
+          {/* mobile: fills the remaining height; md+: square, capped so titles keep room */}
+          <div ref={frameRef} className="relative min-h-0 w-full flex-1 overflow-hidden rounded-2xl md:flex-none md:aspect-square md:h-full md:w-auto md:max-w-[55%] md:shrink-0">
             <div ref={trackRef} className="absolute inset-x-0 top-0 flex flex-col">
               {worksData.map((work) => (
                 <div key={work.id} className="w-full shrink-0 overflow-hidden rounded-2xl">

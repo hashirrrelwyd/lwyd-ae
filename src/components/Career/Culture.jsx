@@ -34,11 +34,11 @@ const ROW_HEIGHT = 110; // px, height of the title-roll container
 const COLUMN_WIDTH = "clamp(150px, 27vw, 450px)"; // equal width for both title columns, keeps the image centered
 const TITLE_GAP = "clamp(12px, 2.5vw, 32px)"; // space between each title column and the image
 const TITLE_FONT_SIZE = "clamp(1.25rem, 3.2vw, 3.75rem)";
-const SCALE_STEP = 0.2; // each card behind the current one is this much smaller (10 / 8 / 6 ...)
-const Y_STEP_PERCENT = 15; // nudges smaller cards down so there's a visible gap before the next one
+const SCALE_STEP = 0.1; // each card behind the current one is this much smaller (10 / 9 / 8 ...)
+const Y_STEP_PERCENT = 8; // nudges smaller cards down so a thin strip of each peeks below the front one
 const EXIT_Y_PERCENT = 100; // how far the current card slides up as it exits (100 = exactly its own height, fully clear)
 const MAX_DEPTH = 2; // how many stack positions back get a distinct (non-zero) scale step
-const PEEK_FRACTION = 0.24; // the peek/gap reserve stays proportional to the card size at every screen size
+const PEEK_FRACTION = 0.1; // space reserved under the front card for the peeking cards, proportional to the card size
 
 // current (front) card height per device category — the 620px desktop size is unchanged,
 // smaller categories get their own size instead of desktop's fixed value overflowing them
@@ -148,24 +148,26 @@ export default function Culture() {
             className="flex flex-col transition-transform duration-500 ease-out"
             style={{ transform: `translateY(-${currentIndex * ROW_HEIGHT}px)` }}
           >
-            {items.map((item) => (
+            {items.map((item, i) => (
               <div
                 key={item.id}
-                className="flex items-center justify-center gap-2 whitespace-nowrap text-2xl"
-                style={{ height: ROW_HEIGHT }}
+                className="flex items-center justify-center gap-2 whitespace-nowrap text-2xl transition-opacity duration-500"
+                style={{ height: ROW_HEIGHT, opacity: i === currentIndex ? 1 : 0 }}
               >
                 <span className="font-[800] italic text-[#FFCC00]">
                   {item.titleLeft}
                 </span>
-                <span className="font-[400] text-black">{item.titleRight}</span>
+                <span className="font-[500] text-black">{item.titleRight}</span>
               </div>
             ))}
           </div>
         </div>
 
         {/* Left title roll, vertically centered on the current image (not the taller stack frame) */}
+        {/* overflow is clipped vertically only, so italic letters can hang past the edge
+            instead of being cut off; titles fade as they roll so none show half-cut */}
         <div
-          className="hidden shrink-0 overflow-hidden text-right sm:block"
+          className="hidden shrink-0 overflow-x-visible overflow-y-clip text-right sm:block"
           style={{
             height: ROW_HEIGHT,
             width: COLUMN_WIDTH,
@@ -176,11 +178,11 @@ export default function Culture() {
             className="flex flex-col transition-transform duration-500 ease-out"
             style={{ transform: `translateY(-${currentIndex * ROW_HEIGHT}px)` }}
           >
-            {items.map((item) => (
+            {items.map((item, i) => (
               <div
                 key={item.id}
-                className="flex items-center justify-end whitespace-nowrap font-[800] italic text-[#FFCC00]"
-                style={{ height: ROW_HEIGHT, fontSize: TITLE_FONT_SIZE }}
+                className="flex items-center justify-end whitespace-nowrap pr-[0.15em] font-[800] italic text-[#FFCC00] transition-opacity duration-500"
+                style={{ height: ROW_HEIGHT, fontSize: TITLE_FONT_SIZE, opacity: i === currentIndex ? 1 : 0 }}
               >
                 {item.titleLeft}
               </div>
@@ -214,7 +216,7 @@ export default function Culture() {
 
         {/* Right title roll, vertically centered on the current image (not the taller stack frame) */}
         <div
-          className="hidden shrink-0 overflow-hidden text-left sm:block"
+          className="hidden shrink-0 overflow-x-visible overflow-y-clip text-left sm:block"
           style={{
             height: ROW_HEIGHT,
             width: COLUMN_WIDTH,
@@ -225,11 +227,11 @@ export default function Culture() {
             className="flex flex-col transition-transform duration-500 ease-out"
             style={{ transform: `translateY(-${currentIndex * ROW_HEIGHT}px)` }}
           >
-            {items.map((item) => (
+            {items.map((item, i) => (
               <div
                 key={item.id}
-                className="flex items-center whitespace-nowrap font-[400] text-black"
-                style={{ height: ROW_HEIGHT, fontSize: TITLE_FONT_SIZE }}
+                className="flex items-center whitespace-nowrap font-[500] text-black transition-opacity duration-500"
+                style={{ height: ROW_HEIGHT, fontSize: TITLE_FONT_SIZE, opacity: i === currentIndex ? 1 : 0 }}
               >
                 {item.titleRight}
               </div>

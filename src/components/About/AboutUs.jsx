@@ -22,9 +22,15 @@ function useOnScreen(ref, rootMargin = "0px", threshold = 0) {
   return isIntersecting;
 }
 
-// Responsive digit size for the rolling counters: small on mobile, full size from md up
+// Responsive digit size for the rolling counters: 56px on mobile, 88px on tablets,
+// and on laptops/monitors 7% of the screen width (~134px at 1920px, as in Figma; min 72px)
 function useDigitHeight() {
-  const getHeight = () => (window.innerWidth < 768 ? 56 : 120);
+  const getHeight = () => {
+    const w = window.innerWidth;
+    if (w < 768) return 56;
+    if (w < 1024) return 88;
+    return Math.round(Math.max(72, w * 0.07));
+  };
   const [digitHeight, setDigitHeight] = useState(
     typeof window !== "undefined" ? getHeight() : 120
   );
@@ -90,35 +96,37 @@ export default function AboutUs() {
   }, [isVisible, animated]);
 
   return (
-    <section ref={sectionRef} className="section-padding py-12">
-      <div className="x-auto grid  grid-cols-1 gap-10 py-14 md:flex justify-between mb-24">
-        {/* Left side: small title (top) + big headline (bottom) */}
-        <div className="flex flex-col justify-between md:w-6/12">
-          <h3 className="text-[22px] font-[500] text-gray-800 mb-2">
-            Who <span className="text-lwyd-yellow font-[750] italic">We</span>{" "}
-            are
-          </h3>
-          <h2 className="text-3xl md:text-4xl font-[500]">
+    // Layout follows Figma (1920px frame); lg+ sizes are in vw so they scale with the screen
+    <section ref={sectionRef} className="section-padding pt-16 pb-16 lg:pt-[max(4rem,6vw)] lg:pb-[max(4rem,6.5vw)]">
+      <div className="flex flex-col gap-6 md:flex-row md:justify-between mb-14 lg:mb-[max(4rem,6.25vw)]">
+        {/* Left: small label */}
+        <h3 className="section-label text-gray-800">
+          Who <span className="text-lwyd-yellow font-[750] italic">We</span>{" "}
+          are
+        </h3>
+
+        {/* Right: headline, copy and CTA (~36% of the width on laptops/monitors) */}
+        <div className="flex flex-col items-start md:w-1/2 lg:w-[36%]">
+          <h2 className="section-title">
             Built by{" "}
             <span className="text-lwyd-yellow italic font-[750]">people</span>{" "}
             who've lived inside this industry
           </h2>
-        </div>
-
-        {/* Right side: small copy + CTA */}
-        <div className="md:w-6/12 lg:w-4/12">
-          <p className="mb-4 text-base font-light leading-6 text-[#6B7280]">
-            LWYD Interactive is a Bengaluru-founded creative and digital agency working exclusively in alco-bev bar to retail, concept to production. It's the only space we build for, and it shows in every brief we take on.
-          </p>
-          <Button title={"Our Service"} onClick={() => navigate("/service")} />
+         
+          <div className="mt-6 lg:mt-[max(1.5rem,2vw)]">
+            <Button title={"Our Services"} onClick={() => navigate("/service")} />
+          </div>
         </div>
       </div>
 
-      {/* Right side - Counters */}
-      <div ref={ref} className="grid grid-cols-2 sm:grid-cols-4 gap-6 text-center">
+      {/* Counters: 4 equal columns, each with a thin line on the left; left-aligned */}
+      <div ref={ref} className="grid grid-cols-2 lg:grid-cols-4 gap-y-8">
         {counters.map((count, i) => (
-          <div key={i} className="p-4">
-            <div className="flex justify-center">
+          <div
+            key={i}
+            className="border-l border-black/10 pl-5 lg:pl-[max(1.25rem,1.67vw)] pt-6 pb-2 lg:pt-[max(2rem,3.5vw)] lg:pb-[max(0.75rem,1.1vw)]"
+          >
+            <div className="flex justify-start">
               {String(count)
                 .padStart(String(targetNumbers[i]).length, "0") // prevent jump
                 .split("")
@@ -155,7 +163,7 @@ export default function AboutUs() {
                 </span>
               )}
             </div>
-            <p className="text-[#7d7d7d] text-[20px]">{stats[i].label}</p>
+            <p className="mt-3 lg:mt-[max(0.75rem,1.5vw)] text-[#7d7d7d] text-base md:text-lg lg:text-[max(14px,1.04vw)]">{stats[i].label}</p>
           </div>
         ))}
       </div>

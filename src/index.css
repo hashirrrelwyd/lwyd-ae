@@ -1,17 +1,109 @@
 @import "tailwindcss";
+html, body {
+  overflow-x: clip;
+}
 
 body {
   font-family: "Montserrat", sans-serif;
   background-color: #FFFCF5;
+  /* tighter letter spacing for all text (-4%); in em so it scales with each text's size.
+     Every element inherits this (form fields too, via Tailwind's base styles) and no
+     component overrides it. Change this one value to adjust spacing across the whole site. */
+  letter-spacing: -0.04em;
 }
 .section-padding {
-  padding-left: 2.5rem;
-  padding-right: 2.5rem;
+  padding-left: var(--side-padding);
+  padding-right: var(--side-padding);
   box-sizing: border-box;
 }
 
 :root {
   --lwyd-yellow: #ffcc00;
+  /* page side padding — change here to adjust every page */
+  --side-padding: 2.5rem;
+}
+
+/* Scale the whole UI in proportion to the screen, like the Figma design.
+   Everything sized in rem (Tailwind text, spacing, logo, buttons) follows this:
+   16px on a 1920px monitor, 12.8px at 1536px, 12px at 1280px and below (floor).
+   Phones/tablets keep the default 16px. */
+@media (min-width: 1024px) {
+  html {
+    font-size: clamp(12px, 0.8333vw, 16px);
+  }
+}
+
+/* Shared style for the main (hero) title at the top of every page, matching the
+   home page / Figma: light weight, 26–36px on phones/tablets, ~53px on a 1920px monitor
+   scaling down with the screen on laptops (min 24px). Highlighted words inside use
+   "text-lwyd-yellow font-[700] italic". */
+.hero-title {
+  font-size: clamp(1.625rem, 4.6vw, 2.25rem);
+  line-height: 1.25;
+  font-weight: 300;
+}
+@media (min-width: 1024px) {
+  .hero-title {
+    font-size: max(1.5rem, 2.75vw);
+  }
+}
+
+/* Shared style for body / intro paragraphs (hero intro text, "We don't bolt drinks…",
+   service descriptions…) so they all match: medium weight (500), 14–15px on phones/tablets,
+   ~17px on a 1920px monitor scaling down on laptops (min 14px).
+   .hero-text and .body-text are the same style. */
+.hero-text,
+.body-text {
+  font-size: 14px;
+  line-height: 1.7;
+  font-weight: 500;
+}
+@media (min-width: 640px) {
+  .hero-text,
+  .body-text {
+    font-size: 15px;
+  }
+}
+@media (min-width: 1024px) {
+  .hero-text,
+  .body-text {
+    font-size: max(14px, 0.875vw);
+  }
+}
+
+/* Shared size for section titles (e.g. "Built by people…", "Got a brand…? Let's talk.")
+   so they match on every page: 30px phones, 36px tablets,
+   48px on a 1920px monitor scaling down with the screen on laptops (min 28px).
+   Change the values here to resize every section title at once. */
+.section-title {
+  font-size: 1.875rem;
+  line-height: 1.3;
+  font-weight: 500;
+}
+@media (min-width: 768px) {
+  .section-title {
+    font-size: 2.25rem;
+  }
+}
+@media (min-width: 1024px) {
+  .section-title {
+    font-size: max(1.75rem, 2.5vw);
+  }
+}
+
+/* Shared size for the small section labels (e.g. "Featured Work", "Who We are",
+   "What Drives Us") so they match on every page: 20px on phones/tablets,
+   30px on a 1920px monitor scaling down with the screen on laptops (min 18px).
+   Change the values here to resize every section label at once. */
+.section-label {
+  font-size: 20px;
+  line-height: 1.3;
+  font-weight: 500;
+}
+@media (min-width: 1024px) {
+  .section-label {
+    font-size: max(18px, 1.56vw);
+  }
 }
 
 .text-lwyd-yellow {

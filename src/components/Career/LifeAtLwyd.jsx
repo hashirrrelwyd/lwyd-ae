@@ -14,16 +14,22 @@ export default function LifeAtLwyd() {
         <div className="x-auto grid  grid-cols-1 gap-10 pt-12 md:flex justify-between mb-12">
           {/* Left side */}
           <div className="md:w-6/12">
-            <h3 className="text-[22px] font-[500] text-gray-800 mb-2">
+            <h3 className="section-label text-gray-800 mb-2">
               Life at{" "}
               <span className="text-lwyd-yellow font-[750] italic">LWYD</span>
             </h3>
           </div>
           <div className="md:w-6/12 lg:w-4/12">
-            <h2 className="text-3xl md:text-4xl font-[500] mb-4">
+            <h2 className="section-title mb-4">
               Where <span className="text-lwyd-yellow italic font-[750]">bold ideas</span>{" "} turn into things you can actually point to
             </h2>
-            <Button title={"Join Us"} />
+            {/* scrolls down to the Open Roles section on this page */}
+            <Button
+              title={"Join Us"}
+              onClick={() =>
+                document.getElementById("open-roles")?.scrollIntoView({ behavior: "smooth" })
+              }
+            />
           </div>
         </div>
         {/* logos marquee component */}

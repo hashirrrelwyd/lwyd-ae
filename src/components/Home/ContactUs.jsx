@@ -1,6 +1,7 @@
 "use client";
 
 import { useLayoutEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Button from "../ui/Button";
@@ -19,6 +20,7 @@ gsap.registerPlugin(ScrollTrigger);
  * Add or remove cards by editing the `items` array below.
  */
 export default function ContactUs(props) {
+  const navigate = useNavigate();
   const containerRef = useRef(null);
   const ctaRef = useRef(null);
   const cardsRef = useRef([]);
@@ -156,12 +158,14 @@ export default function ContactUs(props) {
             <article
               key={item.id}
               ref={(el) => setCardRef(el, i)}
-              className="group/card pointer-events-auto aspect-square w-[440px] max-w-[90vw] select-none rounded-[20px]"
+              // ~30% of the screen width on laptops/monitors (as in Figma), capped by height;
+              // @container lets the content inside size itself relative to the card (cqw)
+              className="@container group/card pointer-events-auto aspect-square w-[min(88vw,70vh)] md:w-[min(30vw,80vh,36rem)] lg:w-[min(30vw,80vh)] select-none rounded-[20px]"
             >
               {/* Inner wrapper gets the hover lift so GSAP transforms on outer don't conflict */}
               <div
                 tabIndex={0}
-                className={`flex h-full w-full flex-col items-center justify-center gap-8 rounded-[20px] ${wrapperBg} ${borderClass} p-12 outline-none transition-transform duration-200 ease-out focus:-translate-y-2`}
+                className={`flex h-full w-full flex-col items-center justify-center gap-[5cqw] rounded-[20px] ${wrapperBg} ${borderClass} p-[8cqw] outline-none transition-transform duration-200 ease-out focus:-translate-y-2`}
               >
                 <div className="flex shrink-0 items-center justify-center overflow-hidden rounded-[20px]">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -171,18 +175,18 @@ export default function ContactUs(props) {
                       "/placeholder.svg?height=224&width=400&query=contact%20card"
                     }
                     alt=""
-                    className="h-44 w-44 object-cover rounded-[20px]"
+                    className="h-[40cqw] aspect-square object-cover rounded-[20px]"
                     crossOrigin="anonymous"
                   />
                 </div>
-                <div className="flex flex-col items-center gap-4">
+                <div className="flex flex-col items-center gap-[2.5cqw]">
                   <h3
-                    className={`font-sans text-2xl font-normal ${headingColor}`}
+                    className={`text-center text-[max(18px,5.5cqw)] leading-tight font-normal ${headingColor}`}
                   >
                     {item.title}
                   </h3>
                   <p
-                    className={`font-sans text-center text-sm leading-relaxed ${paragraphColor}`}
+                    className={`text-center text-[max(13px,3.2cqw)] leading-relaxed ${paragraphColor}`}
                   >
                     {item.desc}
                   </p>
@@ -199,7 +203,7 @@ export default function ContactUs(props) {
         >
           <Button
             title="Ready to cause a little chaos?"
-            onClick={props.onCtaClick}
+            onClick={props.onCtaClick ?? (() => navigate("/contact"))}
           />
         </div>
       </div>

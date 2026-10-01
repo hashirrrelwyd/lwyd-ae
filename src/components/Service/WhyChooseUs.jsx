@@ -33,10 +33,10 @@ export default function WhyChooseUs() {
   const sectionRef = useRef(null);
   useSectionTheme(sectionRef, "dark");
   return (
-    <div ref={sectionRef} className="bg-[#111111] mx-1.5 mt-1.5 px-[34px] py-12 rounded-t-4xl text-white">
+    <div ref={sectionRef} className="bg-[#111111] mx-1.5 mt-1.5 px-[calc(var(--side-padding)-6px)] py-12 rounded-4xl text-white">
       {/* Title */}
       <div className="flex">
-        <h3 className="text-[22px] font-[500] text-white mb-8">
+        <h3 className="section-label text-white mb-8">
           Why <span className="text-lwyd-yellow font-[750] italic">Choose</span>{" "}
           Us
         </h3>

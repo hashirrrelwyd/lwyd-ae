@@ -10,10 +10,10 @@ const logos = [
 ];
 
 export default function LogosMarquee() {
-    const fade = 300; // px fade on both ends
+    const fade = "min(300px, 15%)"; // fade on both ends; shrinks on small screens
   return (
     <div
-      className="relative overflow-hidden py-12"
+      className="relative overflow-hidden py-16"
       style={{
         maskImage: `linear-gradient(to right, transparent, black ${fade}px, black calc(100% - ${fade}px), transparent)`,
         WebkitMaskImage: `linear-gradient(to right, transparent, black ${fade}px, black calc(100% - ${fade}px), transparent)`,
@@ -27,7 +27,7 @@ export default function LogosMarquee() {
                 key={`${loopIdx}-${i}`}
                 src={`/icons/logo-1.png`}
                 alt={l.alt}
-                className="h-4.5 w-auto opacity-80"
+                className="h-6 w-auto opacity-80"
               />
             ))
           )}

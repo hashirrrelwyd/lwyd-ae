@@ -69,8 +69,8 @@ export default function Team() {
   };
 
   return (
-    <div ref={sectionRef} className="mx-1.5 mb-1.5 flex h-auto flex-col rounded-b-4xl bg-[#111111] px-6 py-10 text-white sm:h-screen md:px-10">
-      <h3 className="mb-8 text-[22px] font-[500] text-white">
+    <div ref={sectionRef} className="mx-1.5 mb-1.5 flex h-auto flex-col rounded-b-4xl bg-[#111111] px-[calc(var(--side-padding)-6px)] py-10 text-white sm:h-screen">
+      <h3 className="section-label mb-8 text-white">
         Meet <span className="text-lwyd-yellow font-[750] italic">Our</span>{" "}
         Team
       </h3>
@@ -90,7 +90,8 @@ export default function Team() {
           >
             <div className="flex w-full flex-col items-center gap-6 sm:w-[70%] sm:flex-row sm:justify-evenly sm:gap-0">
               <div className="order-2 shrink-0 text-center sm:order-1 sm:text-left">
-                <h2 className="text-3xl font-normal text-white md:text-4xl lg:text-5xl 2xl:text-6xl">
+                {/* same size/weight as the other section titles (e.g. "Built by people…") */}
+                <h2 className="section-title text-white">
                   {current?.title}
                 </h2>
                 <p className="mt-3 text-center text-base font-light text-[#7D7D7D] md:text-lg lg:text-xl">
@@ -101,7 +102,8 @@ export default function Team() {
               <img
                 src={current?.image}
                 alt={current?.title}
-                className="order-1 h-[300px] w-auto shrink-0 rounded-2xl object-contain sm:order-2 md:h-[340px] md:rounded-3xl lg:h-[380px] 2xl:h-[520px]"
+                // lg+: ~520px on a 1920px monitor, shrinking with the screen and capped by its height
+                className="order-1 h-[300px] w-auto shrink-0 rounded-2xl object-contain sm:order-2 md:h-[340px] md:rounded-3xl lg:h-[min(27vw,52vh)]"
               />
             </div>
 
