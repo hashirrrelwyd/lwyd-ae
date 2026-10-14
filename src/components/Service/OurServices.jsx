@@ -102,6 +102,13 @@ const services = [
     tags: ["3D Animation", "Motion Graphics", "AI Video Generation"],
     image: "/images/social.webp",
   },
+  {
+    title: "Website",
+    highlight: "Development",
+    desc: "Websites built for performance, accessibility, and the best possible user experience. ",
+    tags: ["UI/UX Design", "Website Development", "Performance Optimization"],
+    image: "/images/social.webp",
+  },
 ];
 
 export default function OurServices() {
