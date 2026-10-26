@@ -204,11 +204,12 @@ export default function OurServices() {
               </div>
 
               {/* Right Image */}
+              {/* image fills its whole half of the row so there's no empty gap between it and the text */}
               <div className="flex h-full flex-1 justify-end py-4">
                 <img
                   src={service.image}
                   alt={`${service.title} ${service.highlight}`}
-                  className="h-full w-[520px] object-cover rounded-xl"
+                  className="h-full w-full object-cover rounded-xl"
                 />
               </div>
             </div>
