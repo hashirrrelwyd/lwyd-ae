@@ -1,223 +1,58 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { motion } from "framer-motion";
 import Button from "../ui/Button";
 import { useSectionTheme } from "../../hooks/useHeaderThemeSection";
 
+// how many projects show at first, and how many each "Load More" click adds
+const PAGE_SIZE = 4;
+
 const worksData = [
-  {
-    id: 1,
-    title: "Lorem ipsum dolor dolor ",
-    year: "2024",
-    image: "/images/media.webp",
-    description: "This is a brief description of Project One.",
-    width: "w-2/6",
-  },
-  {
-    id: 2,
-    title: "Project Two",
-    year: "2025",
-    image: "/images/media.webp",
-    description: "This is a brief description of Project Two.",
-    width: "w-4/6",
-  },
-  {
-    id: 3,
-    title: "Lorem ipsum dolor dolor ",
-    year: "2025",
-    image: "/images/media.webp",
-    description: "This is a brief description of Project Three.",
-    width: "w-2/4",
-  },
-  {
-    id: 4,
-    title: "Project Four",
-    year: "2025",
-    image: "/images/media.webp",
-    description: "This is a brief description of Project Four.",
-    width: "w-2/4",
-  },
-  {
-    id: 5,
-    title: "Project Five",
-    year: "2025",
-    image: "/images/media.webp",
-    description: "This is a brief description of Project Five.",
-    width: "w-4/6",
-  },
-  {
-    id: 6,
-    title: "Lorem ipsum dolor dolor ",
-    year: "2025",
-    image: "/images/media.webp",
-    description: "This is a brief description of Project Six.",
-    width: "w-2/6",
-  },
+  { id: 1, title: "Dry Drnks", category: "Website", image: "/works/dry_drinks.png" },
+  { id: 2, title: "Johnnie Walker", category: "Shoot", image: "/works/project_4.png" },
+  { id: 3, title: "Dry Drnks", category: "Website", image: "/works/project_3.png" },
+  { id: 4, title: "The Bar", category: "Shoot", image: "/works/project_2.png" },
 ];
 
 export default function Works() {
   const sectionRef = useRef(null);
   useSectionTheme(sectionRef, "light");
-  const [visible, setVisible] = useState(4);
-
-  const ballVariants = {
-    initial: { scale: 0, y: 100 },
-    hover: {
-      scale: 15,
-      y: 0,
-      transition: { duration: 0.6, ease: "easeInOut" },
-    },
-  };
+  const [visible, setVisible] = useState(PAGE_SIZE);
 
   return (
-    <section ref={sectionRef} className="section-padding py-12 mx-auto">
-      <div className="hidden lg:flex flex-col gap-6">
-        {/* Group works in pairs (2 per row) */}
-        {Array.from({
-          length: Math.ceil(worksData.slice(0, visible).length / 2),
-        }).map((_, rowIndex) => (
-          <div key={rowIndex} className="flex gap-6">
-            {worksData.slice(rowIndex * 2, rowIndex * 2 + 2).map((work) => (
-              <motion.div
-                key={work.id}
-                className={`relative rounded-2xl overflow-hidden h-[400px] cursor-pointer ${work.width}`}
-                style={{
-                  backgroundImage: `url(${work.image})`,
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                }}
-                initial="initial"
-                whileHover="hover"
-              >
-                {/* Expanding Ball */}
-                <motion.div
-                  className="absolute bottom-0 left-1/2 -translate-x-1/2 w-24 h-24 rounded-full z-10"
-                  style={{ backgroundColor: "#FFCC00" }}
-                  variants={ballVariants}
-                />
+    <section ref={sectionRef} className="section-padding py-12 lg:py-[max(3rem,3vw)] mx-auto">
+      {/* Equal-width grid: 1 column on mobile, 2 from md up */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-8 lg:gap-x-[max(1.5rem,1.25vw)] lg:gap-y-[max(2rem,2vw)]">
+        {worksData.slice(0, visible).map((work) => (
+          <article key={work.id} className="group cursor-pointer">
+            {/* Image box: the image zooms in slightly on hover, clipped by the rounded box */}
+            <div className="relative aspect-[6/5] overflow-hidden rounded-xl">
+              <img
+                src={work.image}
+                alt={work.title}
+                className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+              />
 
-                {/* Content */}
-                <div className="absolute inset-0 z-20 flex flex-col justify-between p-4">
-                  {/* Description */}
-                  <motion.p
-                    className="text-[60px] font-[600] leading-[1.1]"
-                    variants={{
-                      initial: { color: "#00000000", opacity: 0 },
-                      hover: {
-                        color: "#000000",
-                        opacity: 1,
-                        transition: { duration: 0.9 },
-                      },
-                    }}
-                  >
-                    {work.description}
-                  </motion.p>
+              {/* Category chip (top right): cream pill with dark text */}
+              <span className="absolute top-4 right-4 lg:top-[max(1rem,1.25vw)] lg:right-[max(1rem,1.25vw)] rounded-full bg-[#FFFBF5] p-4 lg:p-[max(0.75rem,0.83vw)] text-[12px] lg:text-[max(12px,0.73vw)] font-[400] leading-none text-[#111111]">
+                {work.category}
+              </span>
+            </div>
 
-                  {/* Title + Year */}
-                  <motion.div
-                    className="transition-colors flex gap-2"
-                    variants={{
-                      initial: { color: "#ffffff" },
-                      hover: {
-                        color: "#000000",
-                        transition: { duration: 0.3 },
-                      },
-                    }}
-                  >
-                    <h3 className="text-lg font-[500]">{work.title}</h3>
-                    <span className="text-[10px] flex items-end">
-                      [{work.year}]
-                    </span>
-                  </motion.div>
-                </div>
-
-                {/* Dark overlay */}
-                <motion.div
-                  className="absolute inset-0"
-                  variants={{
-                    initial: { backgroundColor: "rgba(0,0,0,0.3)" },
-                    hover: {
-                      backgroundColor: "rgba(0,0,0,0)",
-                      transition: { duration: 0.3 },
-                    },
-                  }}
-                />
-              </motion.div>
-            ))}
-          </div>
+            {/* Title: Montserrat 400, slants to italic on hover. font-style can't animate,
+                so a skew gives the smooth "slowly turning italic" effect */}
+            <h3 className="mt-3 lg:mt-[max(0.75rem,0.9vw)] text-xl lg:text-[max(1.25rem,1.35vw)] font-[400] text-[#111111] origin-bottom-left transition-transform duration-500 ease-out group-hover:-skew-x-12">
+              {work.title}
+            </h3>
+          </article>
         ))}
       </div>
 
-      {/* Mobile View */}
-      <div className="flex flex-col gap-6 lg:hidden">
-  {worksData.slice(0, visible).map((work) => (
-    <motion.div
-      key={work.id}
-      className="relative rounded-2xl overflow-hidden h-[350px] cursor-pointer w-full"
-      style={{
-        backgroundImage: `url(${work.image})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-      }}
-      initial="initial"
-      whileHover="hover"
-    >
-      {/* Expanding Ball */}
-      <motion.div
-        className="absolute bottom-0 left-1/2 -translate-x-1/2 w-20 h-20 rounded-full z-10"
-        style={{ backgroundColor: "#FFCC00" }}
-        variants={ballVariants}
-      />
-
-      {/* Content */}
-      <div className="absolute inset-0 z-20 flex flex-col justify-between p-4">
-        {/* Description */}
-        <motion.p
-          className="text-[32px] font-[600] leading-[1.1]" // ✅ smaller for mobile
-          variants={{
-            initial: { color: "#00000000", opacity: 0 },
-            hover: {
-              color: "#000000",
-              opacity: 1,
-              transition: { duration: 0.9 },
-            },
-          }}
-        >
-          {work.description}
-        </motion.p>
-
-        {/* Title + Year */}
-        <motion.div
-          className="transition-colors flex gap-2"
-          variants={{
-            initial: { color: "#ffffff" },
-            hover: { color: "#000000", transition: { duration: 0.3 } },
-          }}
-        >
-          <h3 className="text-base font-[500]">{work.title}</h3>
-          <span className="text-[10px] flex items-end">[{work.year}]</span>
-        </motion.div>
-      </div>
-
-      {/* Dark overlay */}
-      <motion.div
-        className="absolute inset-0"
-        variants={{
-          initial: { backgroundColor: "rgba(0,0,0,0.3)" },
-          hover: { backgroundColor: "rgba(0,0,0,0)", transition: { duration: 0.3 } },
-        }}
-      />
-    </motion.div>
-  ))}
-</div>
-
-
-      {/* Load More */}
+      {/* Load More: only shows when there are more than PAGE_SIZE projects, and hides once all are visible */}
       {visible < worksData.length && (
-        <div className="flex justify-center mt-8">
+        <div className="flex justify-center mt-10 lg:mt-[max(2.5rem,3vw)]">
           <Button
-            onClick={() => setVisible((prev) => prev + 2)}
+            onClick={() => setVisible((prev) => prev + PAGE_SIZE)}
             title={"Load More"}
           />
         </div>

@@ -35,6 +35,9 @@ export default function HeroSection() {
       </p>
     </div>
   </div>
+
+  {/* Section bottom border, inset from the edges (same as the service page) */}
+  <div className="absolute bottom-0 inset-x-10 h-px bg-black/10" />
 </section>
 
   );
